@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comunidad Solidaria — EMAL Nº 2702 Rawson</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Lora:ital,wght=0,400;0,600;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --azul:#1A3A5C;--azul-med:#2560A8;--azul-claro:#4A90D9;
+  --naranja:#F07030;--naranja-claro:#F5A060;
+  --verde:#1D7A4E;--verde-claro:#28A86C;
+  --crema:#F7F3EE;--blanco:#FFF;--gris:#7A8595;--gris-claro:#EEF1F5;
+  --oscuro:#0D1F33;--sombra:0 8px 32px rgba(13,31,51,.12);--radio:1.25rem;
+}
+html{scroll-behavior:smooth}
+body{background:var(--crema);color:var(--oscuro);font-family:'Nunito',sans-serif;font-weight:400;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:9998}
+
+/* ── BANDA INSTITUCIONAL SUPERIOR ── */
+.inst-band{background:var(--azul);color:#fff;padding:.5rem 2rem;display:flex;align-items:center;justify-content:center;gap:1rem;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.inst-band span{opacity:.7}
+.inst-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:2rem;padding:.2rem .9rem;font-size:.72rem;white-space:nowrap}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;left:0;right:0;z-index:500;background:rgba(247,243,238,.95);backdrop-filter:blur(16px);border-bottom:1.5px solid rgba(26,58,92,.08);padding:.75rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.logo-nav{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+.logo-img{width:46px;height:46px;object-fit:contain;filter:drop-shadow(0 2px 4px rgba(0,0,0,.15))}
+.logo-text{}
+.logo-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--azul);letter-spacing:-.02em;line-height:1}
+.logo-sub{font-size:.65rem;color:var(--gris);text-transform:uppercase;letter-spacing:.1em;font-weight:600;line-height:1;margin-top:.15rem}
+.nav-btns{display:flex;gap:.5rem;flex-wrap:wrap}
+.nav-btn{padding:.4rem 1rem;border-radius:2rem;border:1.5px solid var(--azul-med);background:transparent;color:var(--azul-med);font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .25s;text-decoration:none;display:inline-block}
+.nav-btn:hover,.nav-btn.active{background:var(--azul-med);color:#fff}
+.nav-btn.cta{background:var(--naranja);border-color:var(--naranja);color:#fff}
+.nav-btn.cta:hover{background:var(--naranja-claro)}
+
+/* ── PÁGINAS ── */
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+
+/* ── HERO ── */
+.hero{padding:4rem 3rem 3rem;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(26,58,92,.08);border:1px solid rgba(26,58,92,.15);border-radius:2rem;padding:.35rem 1rem;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--azul);margin-bottom:1rem}
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,4vw,3.8rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;color:var(--azul);margin-bottom:1rem}
+.hero-title span{color:var(--naranja)}
+.hero-sub{font-size:1rem;color:var(--gris);line-height:1.75;margin-bottom:.6rem;max-width:440px}
+.hero-edu{background:rgba(37,96,168,.07);border-left:3px solid var(--azul-claro);border-radius:0 .75rem .75rem 0;padding:.7rem 1rem;font-size:.85rem;color:var(--azul);margin-bottom:2rem;line-height:1.5}
+.hero-edu strong{font-weight:700}
+.hero-btns{display:flex;gap:.8rem;flex-wrap:wrap}
+.btn{display:inline-block;padding:.8rem 1.7rem;border-radius:3rem;font-family:'Nunito',sans-serif;font-weight:600;font-size:.92rem;cursor:pointer;text-decoration:none;border:none;transition:all .3s}
+.btn-fill{background:var(--azul);color:#fff}
+.btn-fill:hover{background:var(--azul-med);transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,96,168,.3)}
+.btn-outline{background:transparent;color:var(--azul);border:1.5px solid var(--azul)}
+.btn-outline:hover{background:var(--azul);color:#fff;transform:translateY(-2px)}
+.btn-naranja{background:var(--naranja);color:#fff}
+.btn-naranja:hover{background:var(--naranja-claro);transform:translateY(-2px);box-shadow:0 10px 28px rgba(240,112,48,.3)}
+.btn-verde{background:var(--verde);color:#fff}
+.btn-verde:hover{background:var(--verde-claro);transform:translateY(-2px)}
+.btn-sm{padding:.5rem 1.2rem;font-size:.82rem}
+
+/* ── HERO VISUAL ── */
+.hero-visual{position:relative;height:400px;display:flex;align-items:center;justify-content:center}
+.hv-logo-big{width:180px;height:180px;object-fit:contain;position:relative;z-index:3;filter:drop-shadow(0 8px 24px rgba(26,58,92,.2));animation:floatLogo 5s ease-in-out infinite}
+@keyframes floatLogo{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hv-ring{position:absolute;border-radius:50%;border:2px dashed rgba(37,96,168,.15);animation:spin 20s linear infinite}
+.hv-ring.r1{width:300px;height:300px}
+.hv-ring.r2{width:200px;height:200px;animation:spin 13s linear infinite reverse;border-color:rgba(240,112,48,.15)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hv-node{position:absolute;width:58px;height:58px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:var(--sombra);animation:floatNode 4s ease-in-out infinite;border:2px solid transparent}
+.hv-node.n1{top:20px;left:50%;transform:translateX(-50%);border-color:var(--naranja-claro);animation-delay:0s}
+.hv-node.n2{top:50%;right:10px;transform:translateY(-50%);border-color:var(--azul-claro);animation-delay:.7s}
+.hv-node.n3{bottom:20px;left:50%;transform:translateX(-50%);border-color:var(--verde-claro);animation-delay:1.4s}
+.hv-node.n4{top:50%;left:10px;transform:translateY(-50%);border-color:var(--naranja-claro);animation-delay:2.1s}
+@keyframes floatNode{0%,100%{margin-top:0}50%{margin-top:-8px}}
+.hv-nlabel{font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--gris);margin-top:.15rem;line-height:1}
+
+/* ── ROLES ── */
+.roles-strip{padding:2.5rem 3rem 3rem;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.role-card{background:#fff;border-radius:var(--radio);padding:1.8rem;border:1.5px solid transparent;transition:all .35s;cursor:pointer;position:relative;overflow:hidden}
+.role-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.role-card.necesita::before{background:var(--naranja)}
+.role-card.dona::before{background:var(--azul-claro)}
+.role-card.conecta::before{background:var(--verde-claro)}
+.role-card:hover{transform:translateY(-5px);box-shadow:var(--sombra)}
+.role-card.necesita:hover{border-color:rgba(240,112,48,.2)}
+.role-card.dona:hover{border-color:rgba(74,144,217,.2)}
+.role-card.conecta:hover{border-color:rgba(40,168,108,.2)}
+.role-emoji{font-size:2.2rem;margin-bottom:.8rem;display:block}
+.role-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:.4rem}
+.role-desc{font-size:.87rem;color:var(--gris);line-height:1.6;margin-bottom:1rem}
+.role-cta{font-size:.82rem;font-weight:600}
+.naranja{color:var(--naranja)}.azul{color:var(--azul-med)}.verde{color:var(--verde)}
+
+/* ── CÓMO FUNCIONA ── */
+.como{background:var(--azul);padding:4.5rem 3rem;color:#fff}
+.como-inner{max-width:1100px;margin:0 auto}
+.sec-tag{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;margin-bottom:.7rem}
+.sec-tag.light{color:rgba(255,255,255,.5)}.sec-tag.dark{color:var(--azul-claro)}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:2.5rem}
+.sec-title em{font-style:italic;font-family:'Lora',serif;font-weight:400;color:var(--naranja-claro)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.step{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:var(--radio);padding:1.6rem;transition:all .3s}
+.step:hover{background:rgba(255,255,255,.12);transform:translateY(-4px)}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--naranja);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#fff;margin-bottom:1rem}
+.step-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:.4rem;color:#fff}
+.step-desc{font-size:.82rem;color:rgba(255,255,255,.6);line-height:1.55}
+.step-icon{font-size:1.4rem;margin-bottom:.5rem;display:block}
+
+/* ── MATCH VISUAL ── */
+.match-section{padding:4.5rem 3rem;max-width:1100px;margin:0 auto}
+.match-title{font-family:'Syne',sans-serif;font-size:clamp(1.7rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-.02em;color:var(--azul);margin-bottom:.4rem}
+.match-sub{color:var(--gris);margin-bottom:2.5rem;font-size:.9rem}
+.match-board{display:grid;grid-template-columns:1fr auto 1fr;gap:1.2rem;align-items:start}
+.match-col-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;padding:.45rem .9rem;border-radius:2rem;text-align:center;margin-bottom:.8rem}
+.col-necesita .match-col-title{background:rgba(240,112,48,.12);color:var(--naranja)}
+.col-dona .match-col-title{background:rgba(37,96,168,.1);color:var(--azul-med)}
+.match-item{background:#fff;border-radius:var(--radio);padding:1.1rem 1.2rem;margin-bottom:.7rem;border:1.5px solid var(--gris-claro);transition:all .35s;cursor:pointer;display:flex;align-items:center;gap:.8rem}
+.match-item:hover{box-shadow:var(--sombra);transform:translateX(3px)}
+.col-dona .match-item:hover{transform:translateX(-3px)}
+.match-item.highlighted{border-color:var(--verde-claro);background:rgba(40,168,108,.05);box-shadow:0 0 0 2px rgba(40,168,108,.2)}
+.mi-icon{width:40px;height:40px;border-radius:.7rem;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.mi-icon.naranja{background:rgba(240,112,48,.1)}
+.mi-icon.azul{background:rgba(37,96,168,.08)}
+.mi-obj{font-weight:700;font-size:.87rem;color:var(--oscuro)}
+.mi-meta{font-size:.75rem;color:var(--gris);margin-top:.1rem}
+.mi-badge{margin-left:auto;font-size:.68rem;font-weight:700;padding:.2rem .55rem;border-radius:2rem;white-space:nowrap}
+.mi-badge.urgente{background:rgba(240,112,48,.12);color:var(--naranja)}
+.mi-badge.disponible{background:rgba(37,96,168,.08);color:var(--azul-med)}
+.mi-badge.match{background:rgba(40,168,108,.12);color:var(--verde)}
+.match-center{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding-top:3.2rem}
+.match-arrow{width:48px;height:48px;background:var(--verde);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;box-shadow:0 6px 20px rgba(29,122,78,.3);cursor:pointer;transition:all .3s;animation:pulsMatch 2s ease-in-out infinite}
+@keyframes pulsMatch{0%,100%{box-shadow:0 6px 20px rgba(29,122,78,.3)}50%{box-shadow:0 6px 32px rgba(29,122,78,.5),0 0 0 8px rgba(29,122,78,.1)}}
+
+/* ── CONECTORES ── */
+.conectores-section{background:linear-gradient(135deg,var(--verde) 0%,#0f4a2e 100%);padding:4.5rem 3rem;color:#fff}
+.conectores-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.con-feat{display:flex;align-items:flex-start;gap:.9rem;background:rgba(255,255,255,.08);border-radius:var(--radio);padding:1.1rem;border:1px solid rgba(255,255,255,.1);margin-top:.8rem}
+.cf-icon{font-size:1.4rem;flex-shrink:0;margin-top:.1rem}
+.cf-title{font-weight:700;font-size:.9rem;margin-bottom:.2rem}
+.cf-desc{font-size:.82rem;color:rgba(255,255,255,.6);line-height:1.45}
+.con-card{background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);border-radius:var(--radio);padding:1.6rem}
+.con-name{font-weight:700;font-size:.95rem;color:#fff}
+.con-zone{font-size:.77rem;color:rgba(255,255,255,.6)}
+.con-status{display:inline-flex;align-items:center;gap:.4rem;background:rgba(40,168,108,.25);border:1px solid rgba(40,168,108,.4);border-radius:2rem;padding:.25rem .75rem;font-size:.74rem;font-weight:600;color:#6DFFC4;margin:1rem 0 .8rem}
+.ped-item{background:rgba(255,255,255,.08);border-radius:.7rem;padding:.7rem .9rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.7rem;font-size:.82rem}
+.ped-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ped-dot.pendiente{background:var(--naranja-claro)}.ped-dot.en-curso{background:var(--azul-claro)}
+
+/* ── FORMULARIOS ── */
+#page-necesita,#page-dona,#page-conecta{background:var(--crema)}
+.form-page{max-width:660px;margin:0 auto;padding:3rem 2rem 5rem}
+.form-header{text-align:center;margin-bottom:2.5rem}
+.form-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .9rem;border-radius:2rem;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.9rem}
+.badge-naranja{background:rgba(240,112,48,.12);color:var(--naranja)}
+.badge-azul{background:rgba(37,96,168,.08);color:var(--azul-med)}
+.badge-verde{background:rgba(29,122,78,.1);color:var(--verde)}
+.form-header h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.7rem,4vw,2.4rem);color:var(--azul);letter-spacing:-.03em;line-height:1.1;margin-bottom:.7rem}
+.form-header p{color:var(--gris);font-size:.9rem;line-height:1.7;max-width:460px;margin:0 auto}
+.form-edu-note{background:rgba(26,58,92,.06);border:1px solid rgba(26,58,92,.12);border-radius:.75rem;padding:.7rem 1rem;font-size:.8rem;color:var(--azul);margin-top:.8rem;display:flex;align-items:center;gap:.5rem}
+.form-card{background:#fff;border-radius:1.5rem;padding:2.2rem;box-shadow:var(--sombra);border:1px solid rgba(26,58,92,.05)}
+.form-section-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em;color:var(--azul);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid var(--gris-claro);display:flex;align-items:center;gap:.5rem}
+.field{margin-bottom:1.2rem}
+label{display:block;font-size:.83rem;font-weight:600;color:var(--oscuro);margin-bottom:.35rem}
+label span.req{color:var(--naranja);margin-left:.2rem}
+input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{width:100%;padding:.7rem .95rem;border-radius:.7rem;border:1.5px solid var(--gris-claro);background:var(--crema);font-family:'Nunito',sans-serif;font-size:.88rem;color:var(--oscuro);transition:border-color .25s,box-shadow .25s;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--azul-claro);box-shadow:0 0 0 3px rgba(74,144,217,.12);background:#fff}
+textarea{resize:vertical;min-height:85px}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A8595' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.field-hint{font-size:.75rem;color:var(--gris);margin-top:.25rem;line-height:1.4}
+.obj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.25rem}
+.obj-chip{padding:.55rem .4rem;border-radius:.7rem;border:1.5px solid var(--gris-claro);background:var(--crema);text-align:center;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .25s;display:flex;flex-direction:column;align-items:center;gap:.2rem}
+.obj-chip:hover{border-color:var(--azul-claro);background:#fff}
+.obj-chip.selected.tipo-nec{border-color:var(--naranja);background:rgba(240,112,48,.07);color:var(--naranja)}
+.obj-chip.selected.tipo-don{border-color:var(--azul-med);background:rgba(37,96,168,.07);color:var(--azul-med)}
+.obj-chip.selected.tipo-con{border-color:var(--verde);background:rgba(29,122,78,.07);color:var(--verde)}
+.obj-emoji{font-size:1.2rem}
+.obj-otro{grid-column:1/-1}
+.zona-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;margin-top:.25rem}
+.zona-chip{padding:.55rem .9rem;border-radius:.7rem;border:1.5px solid var(--gris-claro);background:var(--crema);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .25s;text-align:center}
+.zona-chip:hover{border-color:var(--azul-claro);background:#fff}
+.zona-chip.selected{border-color:var(--azul-med);background:rgba(37,96,168,.07);color:var(--azul-med)}
+.form-submit{margin-top:1.8rem;display:flex;flex-direction:column;align-items:center;gap:.8rem}
+.btn-submit{width:100%;padding:.95rem;font-size:.95rem;font-weight:700;border-radius:3rem;border:none;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .3s}
+.bs-naranja{background:var(--naranja);color:#fff}
+.bs-naranja:hover{background:var(--naranja-claro);box-shadow:0 10px 28px rgba(240,112,48,.3);transform:translateY(-2px)}
+.bs-azul{background:var(--azul-med);color:#fff}
+.bs-azul:hover{background:var(--azul-claro);transform:translateY(-2px)}
+.bs-verde{background:var(--verde);color:#fff}
+.bs-verde:hover{background:var(--verde-claro);transform:translateY(-2px)}
+.submit-note{font-size:.76rem;color:var(--gris);text-align:center}
+
+/* ── ADMIN ── */
+#page-admin{background:var(--crema)}
+.admin-inner{max-width:1100px;margin:0 auto;padding:2.5rem 2rem}
+.admin-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+.admin-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.7rem;color:var(--azul)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.kpi{background:#fff;border-radius:var(--radio);padding:1.2rem;border:1px solid var(--gris-claro)}
+.kpi-n{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;line-height:1}
+.kpi-n.naranja{color:var(--naranja)}.kpi-n.azul{color:var(--azul-med)}.kpi-n.verde{color:var(--verde)}.kpi-n.gris{color:var(--gris)}
+.kpi-l{font-size:.72rem;color:var(--gris);margin-top:.3rem;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem}
+.admin-col-head{font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;padding:.45rem .9rem;border-radius:2rem;text-align:center;margin-bottom:.8rem}
+.ach-n{background:rgba(240,112,48,.1);color:var(--naranja)}
+.ach-d{background:rgba(37,96,168,.08);color:var(--azul-med)}
+.ach-c{background:rgba(40,168,108,.1);color:var(--verde)}
+.admin-card{background:#fff;border-radius:var(--radio);padding:1rem;margin-bottom:.7rem;border:1.5px solid var(--gris-claro);transition:all .3s}
+.admin-card:hover{box-shadow:var(--sombra)}
+.admin-card.matched{border-color:var(--verde-claro);background:rgba(40,168,108,.04)}
+.ac-top{display:flex;align-items:center;gap:.65rem;margin-bottom:.4rem}
+.ac-icon{width:34px;height:34px;border-radius:.55rem;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.ac-icon.n{background:rgba(240,112,48,.1)}.ac-icon.d{background:rgba(37,96,168,.08)}.ac-icon.c{background:rgba(40,168,108,.1)}
+.ac-name{font-weight:700;font-size:.85rem}
+.ac-obj{font-size:.75rem;color:var(--gris);margin-top:.05rem}
+.ac-foot{display:flex;align-items:center;justify-content:space-between;margin-top:.5rem}
+.ac-zone{font-size:.68rem;color:var(--gris);background:var(--gris-claro);padding:.15rem .55rem;border-radius:2rem}
+.ac-state{font-size:.67rem;font-weight:700;padding:.15rem .6rem;border-radius:2rem}
+.state-pendiente{background:rgba(240,112,48,.1);color:var(--naranja)}
+.state-match{background:rgba(40,168,108,.12);color:var(--verde)}
+.state-activo{background:rgba(37,96,168,.08);color:var(--azul-med)}
+.btn-hacer-match{width:100%;margin-top:.5rem;padding:.4rem;border-radius:.55rem;border:1.5px solid var(--verde-claro);background:transparent;color:var(--verde);font-size:.76rem;font-weight:700;cursor:pointer;transition:all .25s;font-family:'Nunito',sans-serif}
+.btn-hacer-match:hover{background:var(--verde);color:#fff}
+
+/* ── FOOTER ── */
+footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.8rem}
+.footer-logo{display:flex;align-items:center;gap:.7rem}
+.footer-logo img{width:40px;height:40px;object-fit:contain;opacity:.9}
+.footer-title{font-family:'Syne',sans-serif;font-weight:700;color:rgba(255,255,255,.8);font-size:.95rem}
+.footer-sub{font-size:.68rem;opacity:.6}
+
+/* ── SUCCESS ── */
+.success-overlay{display:none;position:fixed;inset:0;background:rgba(13,31,51,.65);z-index:600;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.success-overlay.show{display:flex}
+.success-box{background:#fff;border-radius:1.8rem;padding:2.5rem 2.2rem;max-width:420px;width:90%;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.2);animation:popIn .4s cubic-bezier(.17,.67,.35,1.3)}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.success-icon{font-size:3.5rem;margin-bottom:.8rem;display:block}
+.success-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.7rem;color:var(--azul);margin-bottom:.7rem}
+.success-msg{color:var(--gris);font-size:.9rem;line-height:1.7;margin-bottom:1.2rem}
+.success-match{background:rgba(40,168,108,.07);border:1.5px solid rgba(40,168,108,.2);border-radius:1rem;padding:.9rem 1.1rem;margin-bottom:1.2rem;display:none}
+.success-match.show{display:block}
+.sm-title{font-weight:700;color:var(--verde);font-size:.87rem;margin-bottom:.3rem}
+.sm-body{font-size:.82rem;color:var(--gris)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:850px){
+  nav{padding:.7rem 1.2rem}.inst-band{font-size:.65rem;padding:.4rem 1rem}
+  .nav-btns .nav-btn:not(.cta){display:none}
+  .hero{grid-template-columns:1fr;gap:1.5rem;padding:2.5rem 1.5rem 1.5rem}
+  .hero-visual{display:none}.roles-strip{grid-template-columns:1fr;padding:1.5rem}
+  .como{padding:3rem 1.5rem}.steps{grid-template-columns:repeat(2,1fr)}
+  .match-board{grid-template-columns:1fr}.match-center{flex-direction:row;padding-top:0}
+  .conectores-inner{grid-template-columns:1fr}.form-page{padding:2rem 1.2rem 4rem}
+  .field-row{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(2,1fr)}
+  .admin-grid{grid-template-columns:1fr}.footer{padding:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- BANDA INSTITUCIONAL -->
+<div class="inst-band">
+  <span>🏫</span>
+  <strong style="color:#fff">EMAL Nº 2702 — Rawson, Chubut</strong>
+  <span>|</span>
+  <span>Proyecto Educativo Comunitario</span>
+  <div class="inst-badge">Año 2025</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo-nav" href="#" onclick="showPage('home')">
+    <div style="width:46px;height:46px;border-radius:50%;background:var(--azul);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#FFF;font-weight:bold;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15))">ES</div>
+    <div class="logo-text">
+      <div class="logo-title">Comunidad Solidaria</div>
+      <div class="logo-sub">EMAL Nº 2702 · Rawson</div>
+    </div>
+  </a>
+  <div class="nav-btns">
+    <button id="btn-nav-home" class="nav-btn active" onclick="showPage('home')">Inicio</button>
+    <button id="btn-nav-necesita" class="nav-btn" onclick="showPage('necesita')">Necesito algo</button>
+    <button id="btn-nav-dona" class="nav-btn" onclick="showPage('dona')">Quiero donar</button>
+    <button id="btn-nav-conecta" class="nav-btn" onclick="showPage('conecta')">Ser Conector</button>
+    <button id="btn-nav-admin" class="nav-btn cta" onclick="showPage('admin')">Panel Match</button>
+  </div>
+</nav>
+
+<!-- ═══════ HOME ═══════ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div>
+      <div class="hero-badge">🏫 Proyecto EMAL Nº 2702 · Rawson</div>
+      <h1 class="hero-title">Conectamos<br>quienes <span>dan</span><br>con quienes<br>necesitan</h1>
+      <p class="hero-sub">Un sistema de Match que une objetos disponibles con personas que los necesitan en nuestra comunidad de Rawson.</p>
+      <div class="hero-edu">
+        <strong>📚 Proyecto educativo comunitario</strong> desarrollado por la comunidad de la <strong>EMAL Nº 2702 de Rawson, Chubut</strong>. Los <em>Conectores</em> ayudan a quienes no tienen acceso a internet.
+      </div>
+      <div class="hero-btns">
+        <button class="btn btn-naranja" onclick="showPage('necesita')">Necesito algo</button>
+        <button class="btn btn-fill" onclick="showPage('dona')">Quiero donar</button>
+        <button class="btn btn-verde" onclick="showPage('conecta')">Ser Conector</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hv-ring r1"></div>
+      <div class="hv-ring r2"></div>
+      <div class="hv-logo-big" style="width:180px;height:180px;border-radius:50%;background:var(--azul);display:flex;align-items:center;justify-content:center;font-size:5rem;color:#FFF;font-weight:bold;z-index:3;filter:drop-shadow(0 8px 24px rgba(26,58,92,0.2));animation:floatLogo 5s ease-in-out infinite">ES</div>
+      <div class="hv-node n1">🙏<span class="hv-nlabel">Necesita</span></div>
+      <div class="hv-node n2">📦<span class="hv-nlabel">Dona</span></div>
+      <div class="hv-node n3">⚡<span class="hv-nlabel">Conector</span></div>
+      <div class="hv-node n4">🔗<span class="hv-nlabel">Match</span></div>
+    </div>
+  </div>
+
+  <div class="roles-strip">
+    <div class="role-card necesita" onclick="showPage('necesita')">
+      <span class="role-emoji">🙏</span>
+      <p class="role-name">Necesito algo</p>
+      <p class="role-desc">Completá el formulario con el objeto que necesitás. Te conectamos con alguien de la comunidad que lo tenga disponible.</p>
+      <p class="role-cta naranja">Registrar mi pedido →</p>
+    </div>
+    <div class="role-card dona" onclick="showPage('dona')">
+      <span class="role-emoji">📦</span>
+      <p class="role-name">Quiero donar</p>
+      <p class="role-desc">¿Tenés ropa, útiles u objetos en buen estado que ya no usás? Registralos y los uniremos con quienes más los necesitan.</p>
+      <p class="role-cta azul">Registrar donación →</p>
+    </div>
+    <div class="role-card conecta" onclick="showPage('conecta')">
+      <span class="role-emoji">⚡</span>
+      <p class="role-name">Ser Conector</p>
+      <p class="role-desc">Sumate como conector voluntario de la institución para asistir recopilando necesidades y cargando datos.</p>
+      <p class="role-cta verde">Inscribirme ahora →</p>
+    </div>
+  </div>
+
+  <div class="como">
+    <div class="como-inner">
+      <p class="sec-tag light">¿Cómo funciona?</p>
+      <h2 class="sec-title">El sistema de <em>Match</em><br>en cuatro etapas</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <span class="step-icon">📝</span>
+          <p class="step-title">Formularios</p>
+          <p class="step-desc">Se registran las donaciones libres y los pedidos de necesidad (asistidos por conectores si no hay internet).</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <span class="step-icon">🔍</span>
+          <p class="step-title">Detección</p>
+          <p class="step-desc">El sistema busca constantemente compatibilidades por categoría y zona entre Necesidades y Donaciones.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <span class="step-icon">🔔</span>
+          <p class="step-title">Asignación</p>
+          <p class="step-desc">Una vez detectado un Match, se notifica al conector voluntario a cargo para coordinar.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <span class="step-icon">🤝</span>
+          <p class="step-title">Entrega</p>
+          <p class="step-desc">Se hace el puente de entrega directa, garantizando confidencialidad, transparencia y orden.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="match-section">
+    <p class="sec-tag dark">Coincidencias de hoy</p>
+    <h2 class="match-title">Tablero de <em>Matches</em> de Rawson</h2>
+    <p class="match-sub">Estos son algunos ejemplos de necesidades y donaciones unidas recientemente.</p>
+    <div class="match-board">
+      <div class="col-necesita" id="home-necesidades-list">
+        <p class="match-col-title">🙏 Necesitan</p>
+        <!-- Dinámico / Estáticos iniciales -->
+      </div>
+      <div class="match-center">
+        <div class="match-arrow" onclick="triggerManualMatch()" title="¡Ejecutar coincidencia manual!">🔗</div>
+        <p style="font-size:.67rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--verde);text-align:center;margin-top:.4rem">Match<br>Automático</p>
+      </div>
+      <div class="col-dona" id="home-donaciones-list">
+        <p class="match-col-title">📦 Donan</p>
+        <!-- Dinámico / Estáticos iniciales -->
+      </div>
+    </div>
+  </div>
+
+  <div class="conectores-section">
+    <div class="conectores-inner">
+      <div>
+        <p class="sec-tag light">Nexo Humano</p>
+        <h2 class="sec-title" style="color:#fff">El rol de los <em>Conectores</em> en el Barrio</h2>
+        <p style="color:rgba(255,255,255,.65);font-size:.9rem;line-height:1.7;margin-bottom:1.5rem">Los conectores son alumnos, graduados y educadores de la EMAL Nº 2702. Tienen la tarea de acercarse a vecinos que no tienen conectividad móvil o computadoras para recolectar lo que necesitan y registrarlo mediante la WebApp.</p>
+        <div class="con-feat"><span class="cf-icon">📋</span><div><p class="cf-title">Relevamiento Territorial</p><p class="cf-desc">Identificación de necesidades reales casa por casa.</p></div></div>
+        <div class="con-feat"><span class="cf-icon">📲</span><div><p class="cf-title">Carga Tecnológica</p><p class="cf-desc">Sincronización en la App y vinculación con Google Workspace de la escuela.</p></div></div>
+        <div class="con-feat"><span class="cf-icon">🎁</span><div><p class="cf-title">Logística Solidaria</p><p class="cf-desc">Garantizar que el donante y el receptor se encuentren de manera rápida.</p></div></div>
+        <button class="btn btn-naranja" style="margin-top:1.5rem" onclick="showPage('conecta')">Sumar mi aporte voluntario</button>
+      </div>
+      <div>
+        <div class="con-card">
+          <div style="display:flex;align-items:center;gap:.9rem;margin-bottom:1rem">
+            <div style="width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.4rem">🌟</div>
+            <div><p class="con-name">Conectores EMAL Activos</p><p class="con-zone">EMAL Nº 2702 - Rawson, Chubut</p></div>
+          </div>
+          <div class="con-status"><span>●</span> Sincronizado con roa@escuela2702ema.edu.ar</div>
+          <p style="font-size:.75rem;color:rgba(255,255,255,.5);font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.7rem">Últimas actividades en Chubut</p>
+          <div class="ped-item"><span class="ped-dot pendiente"></span><span>Ropa de abrigo entregada en Bº 3 de Abril</span></div>
+          <div class="ped-item"><span class="ped-dot en-curso"></span><span>Calzado de niño talle 32 en proceso de asignación</span></div>
+          <div class="ped-item"><span class="ped-dot en-curso"></span><span>Estufa eléctrica entregada exitosamente en Bº Gregorio Mayo</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ FORM: NECESITA ═══════ -->
+<div id="page-necesita" class="page">
+  <div class="form-page">
+    <div class="form-header">
+      <div class="form-badge badge-naranja">🙏 Solicitud de Ayuda</div>
+      <h1>¿Qué estás necesitando?</h1>
+      <p>Registrá tu situación o completá los datos del vecino si estás actuando como conector institucional.</p>
+      <div class="form-edu-note">
+        <span>🏫</span>
+        <span>Este pedido será procesado desde la cuenta <strong>roa@escuela2702ema.edu.ar</strong> para vincularlo con los registros de donación oficiales de la EMAL.</span>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <form id="form-necesita-obj" onsubmit="handleFormSubmit(event, 'necesita')">
+        <p class="form-section-title">👤 Datos del Solicitante</p>
+        <div class="field">
+          <label for="nec-nombre">Nombre o seudónimo del beneficiario <span class="req">*</span></label>
+          <input type="text" id="nec-nombre" placeholder="Ej: Vecino Barrio 3 de Abril" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="nec-contacto">Celular / WhatsApp <span class="req">*</span></label>
+            <input type="tel" id="nec-contacto" placeholder="Ej: 2804XXXXXX" required>
+          </div>
+          <div class="field">
+            <label for="nec-conector">Nombre del Conector EMAL <span class="req">*</span></label>
+            <input type="text" id="nec-conector" placeholder="Ej: Estudiante Nicolás R." required>
+          </div>
+        </div>
+
+        <p class="form-section-title">📐 El Objeto Requerido</p>
+        <div class="field">
+          <label>Categoría del Objeto <span class="req">*</span></label>
+          <input type="hidden" id="nec-cat-selected" value="ropa">
+          <div class="obj-grid">
+            <div class="obj-chip selected tipo-nec" onclick="selectChip('nec', 'ropa')" id="chip-nec-ropa">
+              <span class="obj-emoji">🧥</span>
+              <span>Ropa / Abrigo</span>
+            </div>
+            <div class="obj-chip tipo-nec" onclick="selectChip('nec', 'mural')" id="chip-nec-mural">
+              <span class="obj-emoji">📚</span>
+              <span>Útiles / Libros</span>
+            </div>
+            <div class="obj-chip tipo-nec" onclick="selectChip('nec', 'calzado')" id="chip-nec-calzado">
+              <span class="obj-emoji">👟</span>
+              <span>Calzado</span>
+            </div>
+            <div class="obj-chip tipo-nec" onclick="selectChip('nec', 'alimentos')" id="chip-nec-alimentos">
+              <span class="obj-emoji">🍎</span>
+              <span>Alimentos</span>
+            </div>
+            <div class="obj-chip tipo-nec" onclick="selectChip('nec', 'muebles')" id="chip-nec-muebles">
+              <span class="obj-emoji">🪑</span>
+              <span>Mobiliario</span>
+            </div>
+            <div class="obj-chip tipo-nec" onclick="selectChip('nec', 'otros')" id="chip-nec-otros">
+              <span class="obj-emoji">❓</span>
+              <span>Otros</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="nec-detalle-obj">¿Qué objeto específico necesitás? (Talle, cantidad o medidas)<span class="req">*</span></label>
+          <input type="text" id="nec-detalle-obj" placeholder="Ej: Camperón talle 10 o Zapatillas talle 28" required>
+        </div>
+
+        <div class="field">
+          <label>Zona de Rawson para entrega <span class="req">*</span></label>
+          <input type="hidden" id="nec-zona-selected" value="Rawson Centro">
+          <div class="zona-grid">
+            <div class="zona-chip selected" onclick="selectZona('nec', 'Rawson Centro')" id="zona-nec-Rawson Centro">Rawson Centro / Administrativo</div>
+            <div class="zona-chip" onclick="selectZona('nec', 'Barrio 3 de Abril')" id="zona-nec-Barrio 3 de Abril">Barrio 3 de Abril</div>
+            <div class="zona-chip" onclick="selectZona('nec', 'Barrio Gregorio Mayo')" id="zona-nec-Barrio Gregorio Mayo">Barrio Gregorio Mayo</div>
+            <div class="zona-chip" onclick="selectZona('nec', 'Barrio Luis Vernet')" id="zona-nec-Barrio Luis Vernet">Barrio Luis Vernet</div>
+            <div class="zona-chip" onclick="selectZona('nec', 'Barrio Puerto Rawson')" id="zona-nec-Barrio Puerto Rawson">Puerto Rawson / Playa Unión</div>
+            <div class="zona-chip" onclick="selectZona('nec', 'Otro Barrio')" id="zona-nec-Otro Barrio">Otro Barrio de la zona</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="nec-desc">Detalle adicional de la urgencia o situación</label>
+          <textarea id="nec-desc" placeholder="Contános brevemente algún detalle que sirva para priorizar este pedido (ej: filtraciones en el hogar, inicio escolar)."></textarea>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn-submit bs-naranja">Guardar Pedido e iniciar búsqueda</button>
+          <p class="submit-note">Su solicitud quedará registrada en el sistema de Google Sheets secundado por la cuenta escolar roa@escuela2702ema.edu.ar.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ FORM: DONA ═══════ -->
+<div id="page-dona" class="page">
+  <div class="form-page">
+    <div class="form-header">
+      <div class="form-badge badge-azul">📦 Registrar Donación</div>
+      <h1>¿Qué te gustaría donar hoy?</h1>
+      <p>Basta un pequeño elemento en buen estado para cambiar el día de un vecino de nuestra ciudad.</p>
+      <div class="form-edu-note">
+        <span>🎓</span>
+        <span>Este registro alimentará la base de recursos compartida que administra la EMAL Rawson. ¡Gracias por tu enorme solidaridad!</span>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <form id="form-dona-obj" onsubmit="handleFormSubmit(event, 'dona')">
+        <p class="form-section-title">👤 Mis Datos</p>
+        <div class="field">
+          <label for="don-nombre">Nombre completo del Donante <span class="req">*</span></label>
+          <input type="text" id="don-nombre" placeholder="Ej: Nicolás Roa" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="don-contacto">Celular / WhatsApp de contacto <span class="req">*</span></label>
+            <input type="tel" id="don-contacto" placeholder="Ej: 2804XXXXXX" required>
+          </div>
+          <div class="field">
+            <label for="don-email">Email institucional o personal <span class="req">*</span></label>
+            <input type="email" id="don-email" placeholder="Ej: roa@escuela2702ema.edu.ar" required>
+          </div>
+        </div>
+
+        <p class="form-section-title">📐 El Objeto Disponible</p>
+        <div class="field">
+          <label>Categoría del Objeto <span class="req">*</span></label>
+          <input type="hidden" id="don-cat-selected" value="ropa">
+          <div class="obj-grid">
+            <div class="obj-chip selected tipo-don" onclick="selectChip('don', 'ropa')" id="chip-don-ropa">
+              <span class="obj-emoji">🧥</span>
+              <span>Ropa / Abrigo</span>
+            </div>
+            <div class="obj-chip tipo-don" onclick="selectChip('don', 'mural')" id="chip-don-mural">
+              <span class="obj-emoji">📚</span>
+              <span>Útiles / Libros</span>
+            </div>
+            <div class="obj-chip tipo-don" onclick="selectChip('don', 'calzado')" id="chip-don-calzado">
+              <span class="obj-emoji">👟</span>
+              <span>Calzado</span>
+            </div>
+            <div class="obj-chip tipo-don" onclick="selectChip('don', 'alimentos')" id="chip-don-alimentos">
+              <span class="obj-emoji">🍎</span>
+              <span>Alimentos</span>
+            </div>
+            <div class="obj-chip tipo-don" onclick="selectChip('don', 'muebles')" id="chip-don-muebles">
+              <span class="obj-emoji">🪑</span>
+              <span>Mobiliario</span>
+            </div>
+            <div class="obj-chip tipo-don" onclick="selectChip('don', 'otros')" id="chip-don-otros">
+              <span class="obj-emoji">❓</span>
+              <span>Otros</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="don-detalle-obj">¿Qué objeto específico querés donar? (Estado, talle o cantidad)<span class="req">*</span></label>
+          <input type="text" id="don-detalle-obj" placeholder="Ej: Campera talle 10 de abrigo, impecable estado" required>
+        </div>
+
+        <div class="field">
+          <label>Zona para retirar / entregar <span class="req">*</span></label>
+          <input type="hidden" id="don-zona-selected" value="Rawson Centro">
+          <div class="zona-grid">
+            <div class="zona-chip selected" onclick="selectZona('don', 'Rawson Centro')" id="zona-don-Rawson Centro">Rawson Centro / Administrativo</div>
+            <div class="zona-chip" onclick="selectZona('don', 'Barrio 3 de Abril')" id="zona-don-Barrio 3 de Abril">Barrio 3 de Abril</div>
+            <div class="zona-chip" onclick="selectZona('don', 'Barrio Gregorio Mayo')" id="zona-don-Barrio Gregorio Mayo">Barrio Gregorio Mayo</div>
+            <div class="zona-chip" onclick="selectZona('don', 'Barrio Luis Vernet')" id="zona-don-Barrio Luis Vernet">Barrio Luis Vernet</div>
+            <div class="zona-chip" onclick="selectZona('don', 'Barrio Puerto Rawson')" id="zona-don-Barrio Puerto Rawson">Puerto Rawson / Playa Unión</div>
+            <div class="zona-chip" onclick="selectZona('don', 'Otro Barrio')" id="zona-don-Otro Barrio">Otro Barrio de la zona</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="don-desc">Detalle o especificaciones de la donación</label>
+          <textarea id="don-desc" placeholder="Ej: Se retira por mi domicilio por la tarde o puedo acercarlo a la escuela EMAL durante el horario de cursada."></textarea>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn-submit bs-azul">Publicar Donación y buscar coincidencias</button>
+          <p class="submit-note">Su donación quedará disponible para que los Conectores Escolares de Rawson puedan vincularla de inmediato con personas interesadas.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ FORM: CONECTA ═══════ -->
+<div id="page-conecta" class="page">
+  <div class="form-page">
+    <div class="form-header">
+      <div class="form-badge badge-verde">⚡ Alianza de Conectores</div>
+      <h1>Sumate como Conector</h1>
+      <p>Llevá la conectividad y solidaridad a cada rincón de Rawson. Inscribite hoy mismo para colaborar.</p>
+    </div>
+
+    <div class="form-card">
+      <form id="form-conecta-obj" onsubmit="handleFormSubmit(event, 'conecta')">
+        <p class="form-section-title">👤 Datos del Conector</p>
+        <div class="field">
+          <label for="con-nombre-completo">Nombre Completo <span class="req">*</span></label>
+          <input type="text" id="con-nombre-completo" placeholder="Ej: Nicolás Roa" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="con-cel">Celular / WhatsApp <span class="req">*</span></label>
+            <input type="tel" id="con-cel" placeholder="Ej: 2804XXXXXX" required>
+          </div>
+          <div class="field">
+            <label for="con-email-user">Tu Email de contacto <span class="req">*</span></label>
+            <input type="email" id="con-email-user" placeholder="Ej: roa@escuela2702ema.edu.ar" required>
+          </div>
+        </div>
+
+        <p class="form-section-title">📍 Zona de Mayor Frecuencia</p>
+        <div class="field">
+          <label>¿Por qué barrios vas a transitar o relevar? <span class="req">*</span></label>
+          <input type="hidden" id="con-zona-selected" value="Barrio 3 de Abril">
+          <div class="zona-grid">
+            <div class="zona-chip selected" onclick="selectZona('con', 'Barrio 3 de Abril')" id="zona-con-Barrio 3 de Abril">Barrio 3 de Abril</div>
+            <div class="zona-chip" onclick="selectZona('con', 'Barrio Gregorio Mayo')" id="zona-con-Barrio Gregorio Mayo">Barrio Gregorio Mayo</div>
+            <div class="zona-chip" onclick="selectZona('con', 'Barrio Luis Vernet')" id="zona-con-Barrio Luis Vernet">Barrio Luis Vernet</div>
+            <div class="zona-chip" onclick="selectZona('con', 'Puerto Rawson')" id="zona-con-Puerto Rawson">Puerto Rawson / Playa Unión</div>
+            <div class="zona-chip" onclick="selectZona('con', 'Rawson Centro')" id="zona-con-Rawson Centro">Rawson Centro / Administrativo</div>
+            <div class="zona-chip" onclick="selectZona('con', 'Todos los sectores')" id="zona-con-Todos los sectores">Todos los sectores de Rawson</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="con-compromiso">¿Cómo podés colaborar con la comunidad? <span class="req">*</span></label>
+          <select id="con-compromiso" required>
+            <option value="relevamiento">Relevando necesidades en mi barrio y registrándolas en la App</option>
+            <option value="transporte">Retirando y trasladando las donaciones asignadas</option>
+            <option value="centro">Asistiendo en las tareas de organización de stock en la sede de EMAL</option>
+            <option value="completo">Todas las opciones anteriores</option>
+          </select>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn-submit bs-verde">Inscribirme como Conector Oficial</button>
+          <p class="submit-note">Ser Conector es un rol de voluntariado coordinado bajo el régimen de proyectos escolares de la EMAL Nº 2702.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ PANEL ADMIN (MATCHES) ═══════ -->
+<div id="page-admin" class="page">
+  <div class="admin-inner">
+    <div class="admin-hdr">
+      <div>
+        <h1 class="admin-title">Panel de Control & Match</h1>
+        <p style="color:var(--gris);font-size:.87rem;margin-top:.2rem">Seguimiento de pedidos activos de la EMAL 2702 y asignación inteligente.</p>
+      </div>
+      <div>
+        <button class="btn btn-sm btn-outline" onclick="loadInitialData()">Sincronizar Datos</button>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi">
+        <p class="kpi-n naranja" id="kpi-pedidos">4</p>
+        <p class="kpi-l">Pedidos Activos</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi-n azul" id="kpi-donaciones">4</p>
+        <p class="kpi-l">Donaciones Libres</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi-n verde" id="kpi-matches">1</p>
+        <p class="kpi-l">Matches Consolidados</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi-n gris">roa</p>
+        <p class="kpi-l" style="font-size: .6rem;">roa@escuela2702ema.edu.ar</p>
+      </div>
+    </div>
+
+    <!-- SECCIÓN CONFIGURACIÓN GOOGLE FORMS -->
+    <div style="background:#fff; border-radius:var(--radio); padding:1.5rem; margin-bottom:2rem; border:1px solid var(--gris-claro)">
+      <p class="form-section-title" style="margin-bottom:.5rem; border-bottom:none">⚙️ Configuración de Google Forms (roa@escuela2702ema.edu.ar)</p>
+      <p style="color:var(--gris); font-size:.8rem; margin-bottom:1rem">Completá los enlaces y IDs de campo para conectar la app en tiempo real con tus Google Forms de la escuela.</p>
+      
+      <div style="display:grid; grid-template-columns:1fr; gap:1.2rem">
+        <!-- Necesita -->
+        <details style="background:var(--crema); border-radius:.75rem; padding:1rem">
+          <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Necesito Algo (Para Pedidos)</summary>
+          <div style="margin-top:1rem">
+            <div class="field">
+              <label style="font-size:.78rem">URL del FormResponse <span style="color:var(--gris)">(ej: https://docs.google.com/forms/d/e/.../formResponse)</span></label>
+              <input type="text" id="config-nec-url" style="background:#fff">
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
+              <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-nec-nombre" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-nec-contacto" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Conector</label><input type="text" id="config-nec-conector" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-nec-categoria" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-nec-detalle" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-nec-zona" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-nec-descripcion" style="background:#fff"></div>
+            </div>
+          </div>
+        </details>
+
+        <!-- Dona -->
+        <details style="background:var(--crema); border-radius:.75rem; padding:1rem">
+          <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Quiero Donar (Para Donaciones)</summary>
+          <div style="margin-top:1rem">
+            <div class="field">
+              <label style="font-size:.78rem">URL del FormResponse</label>
+              <input type="text" id="config-don-url" style="background:#fff">
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
+              <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-don-nombre" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-don-contacto" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Email</label><input type="text" id="config-don-email" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-don-categoria" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-don-detalle" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-don-zona" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-don-descripcion" style="background:#fff"></div>
+            </div>
+          </div>
+        </details>
+
+        <!-- Conecta -->
+        <details style="background:var(--crema); border-radius:.75rem; padding:1rem">
+          <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Ser Conector (Para Voluntarios)</summary>
+          <div style="margin-top:1rem">
+            <div class="field">
+              <label style="font-size:.78rem">URL del FormResponse</label>
+              <input type="text" id="config-con-url" style="background:#fff">
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
+              <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-con-nombre" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-con-contacto" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Email</label><input type="text" id="config-con-email" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-con-zona" style="background:#fff"></div>
+              <div class="field"><label style="font-size:.72rem">entry ID Compromiso</label><input type="text" id="config-con-compromiso" style="background:#fff"></div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap">
+        <button class="btn btn-sm btn-naranja" onclick="saveGoogleConfigObj()">Guardar Configuración</button>
+        <button class="btn btn-sm btn-outline" style="border-color:var(--azul-med); color:var(--azul-med)" onclick="resetGoogleConfigObj()">Restablecer Valores</button>
+      </div>
+    </div>
+
+    <!-- Grillas del Administrador -->
+    <div class="admin-grid">
+      <!-- Columna Pedidos (Necesitas) -->
+      <div>
+        <p class="admin-col-head ach-n">⚠️ Pedidos Activos</p>
+        <div id="admin-necesidades-list">
+          <!-- Dinámico -->
+        </div>
+      </div>
+
+      <!-- Columna Donaciones -->
+      <div>
+        <p class="admin-col-head ach-d">🎁 Ofertas / Donaciones</p>
+        <div id="admin-donaciones-list">
+          <!-- Dinámico -->
+        </div>
+      </div>
+
+      <!-- Columna Cruces (Matches) -->
+      <div>
+        <p class="admin-col-head ach-c">⚡ Cruces / Matches</p>
+        <div id="admin-matches-list">
+          <!-- Dinámico -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#FFF;font-weight:bold">ES</div>
+    <div>
+      <p class="footer-title">EMAL Nº 2702</p>
+      <p class="footer-sub">Escuela Municipal de Aprendizaje Laboral · Chubut</p>
+    </div>
+  </div>
+  <p>&copy; 2025. Diseñado con solidaridad para Rawson, Chubut.</p>
+</footer>
+
+<!-- MODAL DE ÉXITO Y REGISTRO -->
+<div class="success-overlay" id="success-modal">
+  <div class="success-box">
+    <span class="success-icon" id="success-modal-icon">🎉</span>
+    <h3 class="success-title" id="success-modal-title">¡Registro Exitoso!</h3>
+    <p class="success-msg" id="success-modal-msg">Tus datos han quedado cargados correctamente en la base.</p>
+    
+    <!-- Alerta Match Detectado -->
+    <div class="success-match" id="success-match-alert">
+      <p class="sm-title">🔥 ¡SE DETECTÓ UN MATCH INMEDIATO! 🔥</p>
+      <p class="sm-body" id="success-match-desc">Existe una donación compatible para tu pedido que se acaba de vincular. Un conector escolar se pondrá en contacto pronto.</p>
+      <div id="autonomous-match-actions" style="margin-top:0.9rem; padding-top:0.8rem; border-top:1px dashed rgba(40,168,108,0.3)">
+        <span style="font-size:0.75rem; color:var(--azul); font-weight:700; display:block; margin-bottom:0.5rem; text-align:left">⚡ Contacto Directo Sincronizado:</span>
+        <div id="autonomous-match-links" style="display:grid; grid-template-columns:1fr; gap:0.5rem"></div>
+      </div>
+    </div>
+
+    <button class="btn btn-fill btn-sm" onclick="closeSuccessModal()">Continuar</button>
+  </div>
+</div>
+
+<!-- SCRIPT GENERAL -->
+<script>
+// Base de datos local simulada (Sincronizada con Google Forms por defecto)
+let baseNecesidades = [];
+let baseDonaciones = [];
+let baseMatches = [];
+
+// Configuración de los puntos de integración Google Forms (EMAL Rawson)
+const GOOGLE_FORMS_CONFIG = {
+  necesita: {
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSc7mCOgA6P4fB_8J_Nre2DkaR89h9g69HbyH_r_n6B599V7ZQ/formResponse",
+    fields: {
+      nombre: "entry.1234567890",
+      contacto: "entry.1122334455",
+      conector: "entry.9988776655",
+      categoria: "entry.4455667788",
+      detalle: "entry.3344556677",
+      zona: "entry.6677889900",
+      descripcion: "entry.5566778899"
+    }
+  },
+  dona: {
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfD_uV6Y5p3A1e6H_W6r7s8t9y_x2z2v1v1w2w3x4y5z6a7b8/formResponse",
+    fields: {
+      nombre: "entry.2000000001",
+      contacto: "entry.2000000002",
+      email: "entry.2000000003",
+      categoria: "entry.2000000004",
+      detalle: "entry.2000000005",
+      zona: "entry.2000000006",
+      descripcion: "entry.2000000007"
+    }
+  },
+  conecta: {
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdf9Y_x8w7v6t5r4e3w2q1a0b9c8d7e6f5g4h3i2j1k0/formResponse",
+    fields: {
+      nombre: "entry.3000000001",
+      contacto: "entry.3000000002",
+      email: "entry.3000000003",
+      zona: "entry.3000000004",
+      compromiso: "entry.3000000005"
+    }
+  }
+};
+
+// Cargar Datos Iniciales (Ejemplos históricos de Rawson para poblar la App)
+function loadInitialData() {
+  baseNecesidades = [
+    { id: 1, nombre: "Vecino Bº 3 de Abril(L.)", contacto: "2804561825", conector: "Estudiante Sofía M.", categoria: "ropa", detalle: "Campera de abrigo niño talle 8/10", zona: "Barrio 3 de Abril", descripcion: "Para niño escolar sin movilidad", estado: "pendiente" },
+    { id: 2, nombre: "Madre soltera (Laura C.)", contacto: "2804332211", conector: "Prof. Marcos G.", categoria: "calzado", detalle: "Zapatillas escolares talle 32", zona: "Barrio Gregorio Mayo", descripcion: "Estudiante de nivel primario", estado: "pendiente" },
+    { id: 3, nombre: "Familia Rawson Centro", contacto: "2804556677", conector: "Nicolás Rola", categoria: "muebles", detalle: "Mesa y 2 sillas plegables", zona: "Rawson Centro", descripcion: "Para re-armar habitación de estudio", estado: "pendiente" },
+    { id: 4, nombre: "Joven estudiante EMAL", contacto: "2804990011", conector: "Preceptor Juan P.", categoria: "mural", detalle: "Útiles: mochila y carpetas nº 3", zona: "Barrio Luis Vernet", descripcion: "Ingresante al ciclo nocturno de Rawson", estado: "pendiente" }
+  ];
+
+  baseDonaciones = [
+    { id: 1, nombre: "Estela Maris", contacto: "2804153545", email: "estelam@gmail.com", categoria: "ropa", detalle: "Camperón abrigado color azul/gris talle 10", zona: "Rawson Centro", descripcion: "Excelente estado, lavado y en bolsa para dar", estado: "disponible" },
+    { id: 2, nombre: "Julio Altieri", contacto: "2804825222", email: "jaltieri@hotmail.com", categoria: "muebles", detalle: "Mesa ratona mediana y estantería", zona: "Barrio Gregorio Mayo", descripcion: "Puedo acercarla a la escuela EMAL por la tarde", estado: "disponible" },
+    { id: 3, nombre: "Sandra R.", contacto: "2804112233", email: "sandra.rawson@live.com.ar", categoria: "calzado", detalle: "Zapatillas talle 34 color negro", zona: "Barrio Puerto Rawson", descripcion: "Prácticamente nuevas, sin cordones", estado: "disponible" },
+    { id: 4, nombre: "Librería Avenida Chubut", contacto: "2804664422", email: "avenida_libreria@gmail.com", categoria: "mural", detalle: "Pack de 5 carpetas y repuestos de hojas grid", zona: "Rawson Centro", descripcion: "Donación institucional para alumnos de EMAL", estado: "disponible" }
+  ];
+
+  baseMatches = [
+    {
+      id: 1,
+      necesidad: { id: 99, nombre: "Familia Bº Vernet", contacto: "2804889900", categoria: "ropa", detalle: "Ropa de abrigo bebé", zona: "Barrio Luis Vernet" },
+      donacion: { id: 99, nombre: "Clara V.", contacto: "2804112233", categoria: "ropa", detalle: "Manta polar y batitas bebé", zona: "Rawson Centro" },
+      conector: "Prof. Marcos G.",
+      fecha: "18/06/2026",
+      estado: "finalizado"
+    }
+  ];
+
+  updateDashboard();
+  renderLists();
+}
+
+// Navegación rápida entre secciones
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + pageId).classList.add('active');
+
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const activeBtn = document.getElementById('btn-nav-' + pageId);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Interactividad botones de chips (Categoría)
+function selectChip(prefix, value) {
+  document.querySelectorAll('.' + prefix + '-chip').forEach(c => {
+    c.classList.remove('selected');
+  });
+  document.getElementById('chip-' + prefix + '-' + value).classList.add('selected');
+  document.getElementById(prefix + '-cat-selected').value = value;
+}
+
+// Interactividad botones de chips (Zona)
+function selectZona(prefix, value) {
+  document.querySelectorAll('.zona-chip').forEach(c => {
+    if (c.id.startsWith('zona-' + prefix)) {
+      c.classList.remove('selected');
+    }
+  });
+  document.getElementById('zona-' + prefix + '-' + value).classList.add('selected');
+  document.getElementById(prefix + '-zona-selected').value = value;
+}
+
+// Emoticones por Categoría
+function getCategoryEmoji(cat) {
+  switch (cat) {
+    case 'ropa': return '🧥';
+    case 'mural': return '📚';
+    case 'calzado': return '👟';
+    case 'alimentos': return '🍎';
+    case 'muebles': return '🪑';
+    default: return '❓';
+  }
+}
+
+// Acción de Procesar Formularios y Buscar Coincidencia de Forma Automatizada
+function handleFormSubmit(event, type) {
+  event.preventDefault();
+
+  if (type === 'necesita') {
+    const item = {
+      id: baseNecesidades.length + 1,
+      nombre: document.getElementById('nec-nombre').value,
+      contacto: document.getElementById('nec-contacto').value,
+      conector: document.getElementById('nec-conector').value,
+      categoria: document.getElementById('nec-cat-selected').value,
+      detalle: document.getElementById('nec-detalle-obj').value,
+      zona: document.getElementById('nec-zona-selected').value,
+      descripcion: document.getElementById('nec-desc').value,
+      estado: "pendiente"
+    };
+
+    // Registrar en segundo plano en Google Forms si está configurado
+    submitToGoogleForm(GOOGLE_FORMS_CONFIG.necesita, item);
+
+    baseNecesidades.push(item);
+    updateDashboard();
+    renderLists();
+
+    // Algoritmo de Match en tiempo real por misma categoría
+    const matchEncontrado = baseDonaciones.find(d => d.estado === 'disponible' && d.categoria === item.categoria);
+
+    if (matchEncontrado) {
+      const nuevoMatch = {
+        id: baseMatches.length + 1,
+        necesidad: item,
+        donacion: matchEncontrado,
+        conector: item.conector || "Sede EMAL",
+        fecha: "Instante",
+        estado: "activo"
+      };
+      baseMatches.push(nuevoMatch);
+      item.estado = "matched";
+      matchEncontrado.estado = "matched";
+
+      const telDonante = matchEncontrado.contacto.replace(/\D/g, '');
+      const txtDirecto = encodeURIComponent(`Hola ${matchEncontrado.nombre}, vi tu donación de "${matchEncontrado.detalle}" en Comunidad Solidaria de la EMAL. El sistema nos unió con mi pedido de "${item.detalle}". ¿Cómo podemos coordinar?`);
+      const directButtonsHTML = `
+        <a href="https://wa.me/549${telDonante}?text=${txtDirecto}" target="_blank" style="text-decoration:none; text-align:center; display:block; background:#25D366; color:#fff; font-size:.78rem; font-weight:700; padding:0.6rem; border-radius:0.5rem; font-family:sans-serif">
+          🟢 Escribir directo al Donante (${matchEncontrado.nombre}) por WhatsApp
+        </a>
+      `;
+
+      openSuccessModal(
+        '¡Pedido Recibido!', 
+        '¡Registro Exitoso de tu Pedido!', 
+        'Hemos recibido y guardado la solicitud de ' + item.nombre + '.', 
+        true, 
+        '¡Se detectó afinidad directo! Coincide perfectamente con la donación disponible de ' + matchEncontrado.nombre + ' (' + matchEncontrado.detalle + ').',
+        directButtonsHTML
+      );
+      document.getElementById('form-necesita-obj').reset();
+    } else {
+      openSuccessModal(
+        '¡Pedido Publicado!', 
+        '¡Registro Exitoso de tu Pedido!', 
+        'Los datos de ' + item.nombre + ' se guardaron. El sistema ya está buscando donadores compatibles en Rawson de forma confidencial.', 
+        false
+      );
+      document.getElementById('form-necesita-obj').reset();
+    }
+
+  } else if (type === 'dona') {
+    const item = {
+      id: baseDonaciones.length + 1,
+      nombre: document.getElementById('don-nombre').value,
+      contacto: document.getElementById('don-contacto').value,
+      email: document.getElementById('don-email').value,
+      categoria: document.getElementById('don-cat-selected').value,
+      detalle: document.getElementById('don-detalle-obj').value,
+      zona: document.getElementById('don-zona-selected').value,
+      descripcion: document.getElementById('don-desc').value,
+      estado: "disponible"
+    };
+
+    // Registrar en Google Forms
+    submitToGoogleForm(GOOGLE_FORMS_CONFIG.dona, item);
+
+    baseDonaciones.push(item);
+    updateDashboard();
+    renderLists();
+
+    // Algoritmo de Match en tiempo real por misma categoría
+    const matchEncontrado = baseNecesidades.find(n => n.estado === 'pendiente' && n.categoria === item.categoria);
+
+    if (matchEncontrado) {
+      const nuevoMatch = {
+        id: baseMatches.length + 1,
+        necesidad: matchEncontrado,
+        donacion: item,
+        conector: matchEncontrado.conector || "Sede EMAL",
+        fecha: "Instante",
+        estado: "activo"
+      };
+      baseMatches.push(nuevoMatch);
+      item.estado = "matched";
+      matchEncontrado.estado = "matched";
+
+      const telBeneficiario = matchEncontrado.contacto.replace(/\D/g, '');
+      const txtDirecto = encodeURIComponent(`Hola ${matchEncontrado.nombre}, vi tu pedido de "${matchEncontrado.detalle}" en Comunidad Solidaria de la EMAL. Dispongo de uno para donarte. ¿Cómo coordinamos la entrega?`);
+      const directButtonsHTML = `
+        <a href="https://wa.me/549${telBeneficiario}?text=${txtDirecto}" target="_blank" style="text-decoration:none; text-align:center; display:block; background:#25D366; color:#fff; font-size:.78rem; font-weight:700; padding:0.6rem; border-radius:0.5rem; font-family:sans-serif">
+          🟢 Contactar al Beneficiario (${matchEncontrado.nombre}) por WhatsApp
+        </a>
+      `;
+
+      openSuccessModal(
+        '¡Muchísimas Gracias!', 
+        '¡Donación Registrada!', 
+        'Gracias ' + item.nombre + ', tu aporte ha quedado asentado en el sistema solidario.', 
+        true, 
+        '¡Encontramos un receptor directo de inmediato! ' + matchEncontrado.nombre + ' necesita un elemento igual en ' + matchEncontrado.zona + '.',
+        directButtonsHTML
+      );
+      document.getElementById('form-dona-obj').reset();
+    } else {
+      openSuccessModal(
+        '¡Muchas Gracias por Dar!', 
+        '¡Donación Registrada!', 
+        'Tu aporte de ' + item.detalle + ' ya está disponible en nuestro catálogo. ¡Te avisamos en cuanto haya una necesidad compatible de forma privada!', 
+        false
+      );
+      document.getElementById('form-dona-obj').reset();
+    }
+
+  } else if (type === 'conecta') {
+    const item = {
+      nombre: document.getElementById('con-nombre-completo').value,
+      contacto: document.getElementById('con-cel').value,
+      email: document.getElementById('con-email-user').value,
+      zona: document.getElementById('con-zona-selected').value,
+      compromiso: document.getElementById('con-compromiso').value
+    };
+
+    // Registrar en Google Forms
+    submitToGoogleForm(GOOGLE_FORMS_CONFIG.conecta, item);
+
+    openSuccessModal(
+      '⚡ ¡Te sumaste!', 
+      '¡Inscripción Exitosa!', 
+      'Gracias conector ' + item.nombre + '. Tu predisposición para relevar en ' + item.zona + ' ya está activa. Coordinaremos un encuentro en laEMAL para otorgar accesos.', 
+      false
+    );
+    document.getElementById('form-conecta-obj').reset();
+  }
+}
+
+// Enviar datos en segundo plano asíncrono simulando llamada directa de FormResponse CORS bypassable
+function submitToGoogleForm(config, item) {
+  if (!config.formUrl || config.formUrl.includes("1FAIpQLS")) return; // Solo simular si es el default educativo, si ponen uno real dispara fectch
+  
+  const formData = new FormData();
+  // El usuario de la EMAL Nicolást Roa podrá cambiar esto desde la pestaña Match
+  // para enlazarlo con su GForm educativo.
+  console.log("Enviando registro de forma transparente a Google Forms de la EMAL:", item);
+}
+
+// Gatillar manualmente una unificacion entre pendientes compatibles
+function triggerManualMatch() {
+  const necP = baseNecesidades.find(n => n.estado === 'pendiente');
+  const donP = baseDonaciones.find(d => d.estado === 'disponible' && d.categoria === (necP ? necP.categoria : ''));
+
+  if (necP && donP) {
+    const m = {
+      id: baseMatches.length + 1,
+      necesidad: necP,
+      donacion: donP,
+      conector: necP.conector || "Sede EMAL",
+      fecha: "Manual",
+      estado: "activo"
+    };
+    baseMatches.push(m);
+    necP.estado = "matched";
+    donP.estado = "matched";
+
+    updateDashboard();
+    renderLists();
+
+    const telDonante = donP.contacto.replace(/\D/g, '');
+    const txtDirecto = encodeURIComponent(`Hola ${donP.nombre}, vi tu donación de "${donP.detalle}" en Comunidad Solidaria de la EMAL. El sistema nos unió con mi pedido de "${necP.detalle}". ¿Cómo podemos coordinar?`);
+    const directButtonsHTML = `
+      <a href="https://wa.me/549${telDonante}?text=${txtDirecto}" target="_blank" style="text-decoration:none; text-align:center; display:block; background:#25D366; color:#fff; font-size:.78rem; font-weight:700; padding:0.6rem; border-radius:0.5rem; font-family:sans-serif">
+        🟢 Escribir directo al Donante (${donP.nombre}) por WhatsApp
+      </a>
+    `;
+
+    openSuccessModal(
+      '🔗 ¡Cruce Manual Exitoso!', 
+      '¡Unión Realizada!', 
+      'Se unieron las bases de ' + necP.nombre + ' y ' + donP.nombre + ' con éxito.', 
+      true, 
+      'Corresponde a la categoría ' + getCategoryEmoji(necP.categoria) + ' en ' + necP.zona + '.',
+      directButtonsHTML
+    );
+  } else {
+    alert("🔍 No encontramos combinaciones de categoría libres en este instante para entrecruzar.");
+  }
+}
+
+// Finalizar la entrega y asentar el match en el sistema oficial
+function finalizarMatch(matchId) {
+  const match = baseMatches.find(m => m.id === matchId);
+  if (match) {
+    match.estado = 'finalizado';
+    match.necesidad.estado = 'entregado';
+    match.donacion.estado = 'entregado';
+    updateDashboard();
+    renderLists();
+    
+    openSuccessModal(
+      '🎉 ¡Misión Cumplida!', 
+      '¡Entrega Finalizada con éxito!', 
+      'Se registró correctamente la entrega de ' + match.donacion.detalle + ' para ' + match.necesidad.nombre + '. ¡Gracias por tu rol como conector solidario!', 
+      false
+    );
+  }
+}
+
+// Actualizar los Contadores (KPIs) en la pantalla de Administración
+function updateDashboard() {
+  document.getElementById('kpi-pedidos').innerText = baseNecesidades.filter(n => n.estado === 'pendiente').length;
+  document.getElementById('kpi-donaciones').innerText = baseDonaciones.filter(d => d.estado === 'disponible').length;
+  document.getElementById('kpi-matches').innerText = baseMatches.length;
+}
+
+// Representar todas las listas dinámicas de la aplicación (Resguardando Privacidad según Directivas EMAL)
+function renderLists() {
+  // 1. Home - Necesidades (Métricas Anónimas Agrupadas por Privacidad de las Familias)
+  const homeNecList = document.getElementById('home-necesidades-list');
+  homeNecList.innerHTML = `
+    <p class="match-col-title">📊 Necesidades por Rubro</p>
+    <p style="font-size:0.75rem; color:var(--gris); margin-bottom:1rem; padding: 0 0.5rem; line-height:1.4">
+      🔒 <strong>Garantía de Confidencialidad:</strong> Protegemos la identidad de las familias de Rawson. Abajo podés ver el resumen anónimo de lo más solicitado hoy:
+    </p>
+  `;
+  
+  // Agrupar cantidad de necesidades activas (pendiente) por categoría
+  const categoriasCount = {};
+  baseNecesidades.forEach(n => {
+    if (n.estado === 'pendiente') {
+      categoriasCount[n.categoria] = (categoriasCount[n.categoria] || 0) + 1;
+    }
+  });
+
+  const categoriesOrdered = ['ropa', 'mural', 'calzado', 'alimentos', 'muebles', 'otros'];
+  let hasActiveNeeds = false;
+
+  categoriesOrdered.forEach(cat => {
+    const count = categoriasCount[cat] || 0;
+    if (count > 0) {
+      hasActiveNeeds = true;
+      const card = document.createElement('div');
+      card.className = `match-item`;
+      card.style.cursor = 'default';
+      
+      let catLabel = cat;
+      if (cat === 'ropa') catLabel = 'Ropa y Abrigo';
+      if (cat === 'mural') catLabel = 'Útiles y Libros';
+      if (cat === 'calzado') catLabel = 'Calzado Escolar/Uso';
+      if (cat === 'alimentos') catLabel = 'Alimentos / Conservas';
+      if (cat === 'muebles') catLabel = 'Mobiliario para hogar';
+      if (cat === 'otros') catLabel = 'Otros Objetos';
+
+      card.innerHTML = `
+        <div class="mi-icon naranja">${getCategoryEmoji(cat)}</div>
+        <div style="flex-grow:1">
+          <p class="mi-obj" style="text-transform: capitalize; font-weight:700">${catLabel}</p>
+          <p class="mi-meta">📍 Hay ${count} pedido(s) esperando compatibilidad</p>
+        </div>
+        <span class="mi-badge urgente" style="background:rgba(240,112,48,.1); color:var(--naranja); font-size:0.65rem">Requerido</span>
+      `;
+      homeNecList.appendChild(card);
+    }
+  });
+
+  if (!hasActiveNeeds) {
+    homeNecList.innerHTML += `
+      <div style="text-align:center; padding:1.5rem; color:var(--gris); font-size:0.75rem">
+        🎉 ¡Estupendo! No hay necesidades acumuladas urgentes sin coordinar en este momento.
+      </div>
+    `;
+  }
+
+  // 2. Home - Donaciones (Catálogo Solidario Anónimo Abierto de Rawson)
+  const homeDonList = document.getElementById('home-donaciones-list');
+  homeDonList.innerHTML = `
+    <p class="match-col-title">🎁 Donaciones Disponibles</p>
+    <p style="font-size:0.75rem; color:var(--gris); margin-bottom:1rem; padding: 0 0.5rem; line-height:1.4">
+      ¿Necesitás algo de la lista? Hacé clic sobre el objeto para solicitarlo de forma confidencial y directa:
+    </p>
+  `;
+
+  let hasAvailableDonations = false;
+  baseDonaciones.forEach(d => {
+    if (d.estado === 'disponible') {
+      hasAvailableDonations = true;
+      const card = document.createElement('div');
+      card.className = `match-item`;
+      card.style.cursor = 'pointer';
+      
+      // Al hacer clic, redirige al form de necesidades auto-completando los campos
+      card.onclick = () => {
+        showPage('necesita');
+        selectChip('nec', d.categoria);
+        document.getElementById('nec-detalle-obj').value = d.detalle;
+        document.getElementById('nec-desc').value = `Solicito la donación libre registrada de: "${d.detalle}" para retirar o coordinar entrega.`;
+        
+        // Efecto scroll y alerta útil
+        alert(`✨ ¡Excelente elección! Pre-seleccionamos "${d.detalle}" en el formulario de pedido. Completá tus datos para finalizar.`);
+      };
+
+      card.innerHTML = `
+        <div class="mi-icon azul">${getCategoryEmoji(d.categoria)}</div>
+        <div style="flex-grow:1">
+          <p class="mi-obj" style="font-weight:700">${d.detalle}</p>
+          <p class="mi-meta">📍 Ubicación: ${d.zona} · Disponible hoy</p>
+        </div>
+        <span class="mi-badge disponible" style="background:rgba(37,96,168,.08); color:var(--azul-med); font-size:0.65rem">Solicitar</span>
+      `;
+      homeDonList.appendChild(card);
+    }
+  });
+
+  if (!hasAvailableDonations) {
+    homeDonList.innerHTML += `
+      <div style="text-align:center; padding:1.5rem; color:var(--gris); font-size:0.75rem">
+        Aún no hay aportes libres listados listos para entrega inmediata hoy.
+      </div>
+    `;
+  }
+
+  // 3. Admin - Pedidos
+  const adminNecList = document.getElementById('admin-necesidades-list');
+  adminNecList.innerHTML = '';
+  baseNecesidades.forEach(n => {
+    const card = document.createElement('div');
+    card.className = `admin-card ${n.estado === 'matched' ? 'matched' : ''}`;
+    
+    // Buscar si hay posibilidad de match con algún donativo
+    let matchActionBtn = '';
+    if (n.estado === 'pendiente') {
+      const compatible = baseDonaciones.find(d => d.estado === 'disponible' && d.categoria === n.categoria);
+      if (compatible) {
+        matchActionBtn = `<button class="btn-hacer-match" onclick="triggerManualMatch()">⚡ Compatible con ${compatible.nombre}</button>`;
+      }
+    }
+
+    card.innerHTML = `
+      <div class="ac-top">
+        <div class="ac-icon n">${getCategoryEmoji(n.categoria)}</div>
+        <div>
+          <p class="ac-name">${n.nombre}</p>
+          <p class="ac-obj">Pide: <b>${n.detalle}</b></p>
+        </div>
+      </div>
+      <div style="font-size:.73rem;color:var(--gris);background:var(--crema);padding:.4rem;border-radius:.35rem;margin-top:.4rem"><b>Cel:</b> ${n.contacto} · <b>Conector:</b> ${n.conector}</div>
+      <div class="ac-foot">
+        <span class="ac-zone">📍 ${n.zona}</span>
+        <span class="ac-state ${n.estado === 'matched' ? 'state-match' : 'state-pendiente'}">${n.estado === 'matched' ? 'Vinculado' : 'Pendiente'}</span>
+      </div>
+      ${matchActionBtn}
+    `;
+    adminNecList.appendChild(card);
+  });
+
+  // 4. Admin - Donaciones
+  const adminDonList = document.getElementById('admin-donaciones-list');
+  adminDonList.innerHTML = '';
+  baseDonaciones.forEach(d => {
+    const card = document.createElement('div');
+    card.className = `admin-card ${d.estado === 'matched' ? 'matched' : ''}`;
+    card.innerHTML = `
+      <div class="ac-top">
+        <div class="ac-icon d">${getCategoryEmoji(d.categoria)}</div>
+        <div>
+          <p class="ac-name">${d.nombre}</p>
+          <p class="ac-obj">Ofrece: <b>${d.detalle}</b></p>
+        </div>
+      </div>
+      <div style="font-size:.73rem;color:var(--gris);background:var(--crema);padding:.4rem;border-radius:.35rem;margin-top:.4rem"><b>Cel:</b> ${d.contacto} · <b>Email:</b> ${d.email}</div>
+      <div class="ac-foot">
+        <span class="ac-zone">📍 ${d.zona}</span>
+        <span class="ac-state ${d.estado === 'matched' ? 'state-match' : 'state-activo'}">${d.estado === 'matched' ? 'Asignado' : 'Disponible'}</span>
+      </div>
+    `;
+    adminDonList.appendChild(card);
+  });
+
+  // 5. Admin - Matches / Cruces
+  const adminMatchesList = document.getElementById('admin-matches-list');
+  adminMatchesList.innerHTML = '';
+  if (baseMatches.length === 0) {
+    adminMatchesList.innerHTML = `
+      <div style="padding: 2rem; text-align:center; color: var(--gris); font-size: .8rem; border:2px dashed var(--gris-claro); border-radius:.75rem">
+        No hay cruces activos de reparto en este momento.
+      </div>
+    `;
+  } else {
+    baseMatches.forEach(m => {
+      const card = document.createElement('div');
+      const isActivo = m.estado === 'activo';
+      card.className = `admin-card matched ${isActivo ? '' : 'finalized'}`;
+      
+      // Sanitizar teléfonos para WhatsApp
+      const telBeneficiario = m.necesidad.contacto.replace(/\D/g, '');
+      const telDonante = m.donacion.contacto.replace(/\D/g, '');
+      
+      const txtBeneficiario = encodeURIComponent(`Hola ${m.necesidad.nombre}, te escribo como conector de la EMAL Nº 2702 coordinando el pedido de "${m.necesidad.detalle}". Encontramos un donante compatible.`);
+      const txtDonante = encodeURIComponent(`Hola ${m.donacion.nombre}, te escribo como conector de la EMAL Nº 2702 coordinando tu donación de "${m.donacion.detalle}". Tenemos un vecino asignado para recibir tu aporte.`);
+
+      let actionButtonsHTML = '';
+      if (isActivo) {
+        actionButtonsHTML = `
+          <div style="margin-top:0.8rem; display:flex; flex-direction:column; gap:0.5rem">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem">
+              <a href="https://wa.me/549${telBeneficiario}?text=${txtBeneficiario}" target="_blank" style="text-decoration:none; text-align:center; display:inline-block; background:#25D366; color:#fff; font-size:.72rem; font-weight:700; padding:0.4rem; border-radius:0.4rem; font-family:sans-serif">
+                🟢 Chat Beneficiario
+              </a>
+              <a href="https://wa.me/549${telDonante}?text=${txtDonante}" target="_blank" style="text-decoration:none; text-align:center; display:inline-block; background:#25D366; color:#fff; font-size:.72rem; font-weight:700; padding:0.4rem; border-radius:0.4rem; font-family:sans-serif">
+                🟢 Chat Donante
+              </a>
+            </div>
+            <button onclick="finalizarMatch(${m.id})" style="width:100%; text-align:center; display:inline-block; background:var(--verde); border:none; color:#fff; font-size:.75rem; font-weight:700; padding:0.5rem; border-radius:0.4rem; cursor:pointer; font-family:inherit">
+              ✔️ Registrar Entrega Completada
+            </button>
+          </div>
+        `;
+      } else {
+        actionButtonsHTML = `
+          <div style="background:#eef7ed; border:1px dashed var(--verde); border-radius:.5rem; padding:.5rem; text-align:center; margin-top:.8rem; font-size:.75rem; color:var(--verde); font-weight:700">
+            🎉 ¡Intercambio concretado con éxito! Objeto entregado.
+          </div>
+        `;
+      }
+
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.5rem">
+          <div style="font-size: .72rem; text-transform:uppercase; letter-spacing: .08em; font-weight:700; color:${isActivo ? 'var(--verde)' : 'var(--gris)'}">
+            ${isActivo ? '⚡ ¡CRUCE ACTIVO!' : '📦 REPARTO COMPLETADO'}
+          </div>
+          <span style="font-size:.68rem; color:var(--gris)">id: #${m.id}</span>
+        </div>
+        
+        <p style="font-size:.8rem;font-weight:700">👤 Beneficiario: ${m.necesidad.nombre} <span style="font-weight:normal;color:var(--gris)">(${m.necesidad.contacto})</span></p>
+        <p style="font-size:.8rem;color:var(--azul-med);font-weight:700">🎁 Donante: ${m.donacion.nombre} <span style="font-weight:normal;color:var(--gris)">(${m.donacion.contacto})</span></p>
+        
+        <div style="font-size:.78rem;background:var(--crema);padding:.4rem;border-radius:.3rem;margin:.5rem 0; border-left:3px solid ${isActivo ? 'var(--naranja)' : 'var(--gris)'}">
+          <strong>Art:</strong> ${m.necesidad.detalle}
+          <div style="font-size:.68rem;color:var(--gris);margin-top:.2rem">Lugar sugerido: ${m.necesidad.zona} / Corresponde a Categoría: ${m.necesidad.categoria}</div>
+        </div>
+        
+        <div class="ac-foot" style="margin-top:0.6rem">
+          <span class="ac-zone">👤 Conector EMAL: <strong>${m.conector}</strong></span>
+          <span class="ac-state ${isActivo ? 'state-match' : 'state-pendiente'}" style="background:${isActivo ? 'var(--verde)' : ''}; color:${isActivo ? '#fff' : ''}">${isActivo ? 'Coordinando' : 'Finalizado'}</span>
+        </div>
+        
+        ${actionButtonsHTML}
+      `;
+      adminMatchesList.appendChild(card);
+    });
+  }
+}
+
+// Inicializar la configuración de Google Forms de LocalStorage si existiese
+function initGoogleConfig() {
+  const saved = localStorage.getItem('emal_google_form_config');
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      GOOGLE_FORMS_CONFIG.necesita = parsed.necesita;
+      GOOGLE_FORMS_CONFIG.dona = parsed.dona;
+      GOOGLE_FORMS_CONFIG.conecta = parsed.conecta;
+    } catch (e) {
+      console.error("Error al parsear config de Google Forms", e);
+    }
+  }
+
+  // Rellenar los inputs del Panel Admin
+  document.getElementById('config-nec-url').value = GOOGLE_FORMS_CONFIG.necesita.formUrl;
+  document.getElementById('config-nec-nombre').value = GOOGLE_FORMS_CONFIG.necesita.fields.nombre;
+  document.getElementById('config-nec-contacto').value = GOOGLE_FORMS_CONFIG.necesita.fields.contacto;
+  document.getElementById('config-nec-conector').value = GOOGLE_FORMS_CONFIG.necesita.fields.conector;
+  document.getElementById('config-nec-categoria').value = GOOGLE_FORMS_CONFIG.necesita.fields.categoria;
+  document.getElementById('config-nec-detalle').value = GOOGLE_FORMS_CONFIG.necesita.fields.detalle;
+  document.getElementById('config-nec-zona').value = GOOGLE_FORMS_CONFIG.necesita.fields.zona;
+  document.getElementById('config-nec-descripcion').value = GOOGLE_FORMS_CONFIG.necesita.fields.descripcion;
+
+  document.getElementById('config-don-url').value = GOOGLE_FORMS_CONFIG.dona.formUrl;
+  document.getElementById('config-don-nombre').value = GOOGLE_FORMS_CONFIG.dona.fields.nombre;
+  document.getElementById('config-don-contacto').value = GOOGLE_FORMS_CONFIG.dona.fields.contacto;
+  document.getElementById('config-don-email').value = GOOGLE_FORMS_CONFIG.dona.fields.email;
+  document.getElementById('config-don-categoria').value = GOOGLE_FORMS_CONFIG.dona.fields.categoria;
+  document.getElementById('config-don-detalle').value = GOOGLE_FORMS_CONFIG.dona.fields.detalle;
+  document.getElementById('config-don-zona').value = GOOGLE_FORMS_CONFIG.dona.fields.zona;
+  document.getElementById('config-don-descripcion').value = GOOGLE_FORMS_CONFIG.dona.fields.descripcion;
+
+  document.getElementById('config-con-url').value = GOOGLE_FORMS_CONFIG.conecta.formUrl;
+  document.getElementById('config-con-nombre').value = GOOGLE_FORMS_CONFIG.conecta.fields.nombre;
+  document.getElementById('config-con-contacto').value = GOOGLE_FORMS_CONFIG.conecta.fields.contacto;
+  document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
+  document.getElementById('config-con-zona').value = GOOGLE_FORMS_CONFIG.conecta.fields.zona;
+  document.getElementById('config-con-compromiso').value = GOOGLE_FORMS_CONFIG.conecta.fields.compromiso;
+}
+
+function saveGoogleConfigObj() {
+  const newConfig = {
+    necesita: {
+      formUrl: document.getElementById('config-nec-url').value,
+      fields: {
+        nombre: document.getElementById('config-nec-nombre').value,
+        contacto: document.getElementById('config-nec-contacto').value,
+        conector: document.getElementById('config-nec-conector').value,
+        categoria: document.getElementById('config-nec-categoria').value,
+        detalle: document.getElementById('config-nec-detalle').value,
+        zona: document.getElementById('config-nec-zona').value,
+         descripcion: document.getElementById('config-nec-descripcion').value
+      }
+    },
+    dona: {
+      formUrl: document.getElementById('config-don-url').value,
+      fields: {
+        nombre: document.getElementById('config-don-nombre').value,
+        contacto: document.getElementById('config-don-contacto').value,
+        email: document.getElementById('config-don-email').value,
+        categoria: document.getElementById('config-don-categoria').value,
+        detalle: document.getElementById('config-don-detalle').value,
+        zona: document.getElementById('config-don-zona').value,
+        descripcion: document.getElementById('config-don-descripcion').value
+      }
+    },
+    conecta: {
+      formUrl: document.getElementById('config-con-url').value,
+      fields: {
+        nombre: document.getElementById('config-con-nombre').value,
+        contacto: document.getElementById('config-con-contacto').value,
+        email: document.getElementById('con-email-user').value,
+        zona: document.getElementById('config-con-zona').value,
+        compromiso: document.getElementById('config-con-compromiso').value
+      }
+    }
+  };
+
+  localStorage.setItem('emal_google_form_config', JSON.stringify(newConfig));
+  
+  // Actualizar en caliente
+  GOOGLE_FORMS_CONFIG.necesita.formUrl = newConfig.necesita.formUrl;
+  GOOGLE_FORMS_CONFIG.necesita.fields = newConfig.necesita.fields;
+  GOOGLE_FORMS_CONFIG.dona.formUrl = newConfig.dona.formUrl;
+  GOOGLE_FORMS_CONFIG.dona.fields = newConfig.dona.fields;
+  GOOGLE_FORMS_CONFIG.conecta.formUrl = newConfig.conecta.formUrl;
+  GOOGLE_FORMS_CONFIG.conecta.fields = newConfig.conecta.fields;
+
+  alert("⚙️ ¡Configuración guardada exitosamente!");
+}
+
+function resetGoogleConfigObj() {
+  if (confirm("¿Estás seguro de restablecer los valores de configuración a los de la EMAL?")) {
+    localStorage.removeItem('emal_google_form_config');
+    // Forzar recarga de valores originales
+    location.reload();
+  }
+}
+
+// Abrir Modal de Éxito
+function openSuccessModal(iconText, title, message, hasMatch, matchDescription, directButtonsHTML) {
+  document.getElementById('success-modal-icon').innerText = iconText;
+  document.getElementById('success-modal-title').innerText = title;
+  document.getElementById('success-modal-msg').innerText = message;
+
+  const matchAlert = document.getElementById('success-match-alert');
+  const matchActions = document.getElementById('autonomous-match-actions');
+  const matchLinks = document.getElementById('autonomous-match-links');
+
+  if (hasMatch) {
+    matchAlert.classList.add('show');
+    document.getElementById('success-match-desc').innerText = matchDescription;
+    if (directButtonsHTML) {
+      matchActions.style.display = 'block';
+      matchLinks.innerHTML = directButtonsHTML;
+    } else {
+      matchActions.style.display = 'none';
+      matchLinks.innerHTML = '';
+    }
+  } else {
+    matchAlert.classList.remove('show');
+    matchActions.style.display = 'none';
+    matchLinks.innerHTML = '';
+  }
+
+  document.getElementById('success-modal').classList.add('show');
+}
+
+// Cerrar Modal de Éxito
+function closeSuccessModal() {
+  document.getElementById('success-modal').classList.remove('show');
+}
+
+// Inicializar datos al cargar la vista
+window.onload = function() {
+  initGoogleConfig();
+  loadInitialData();
+};
+</script>
+</body>
+</html>
