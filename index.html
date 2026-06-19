@@ -810,7 +810,6 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
               <div class="field"><label for="config-con-nombre" style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-con-nombre" style="background:#fff"></div>
               <div class="field"><label for="config-con-contacto" style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-con-contacto" style="background:#fff"></div>
               <div class="field"><label for="config-con-email" style="font-size:.72rem">entry ID Email</label><input type="text" id="config-con-email" style="background:#fff"></div>
-              <div class="field"><label for="config-con-detalle" style="font-size:.72rem">entry ID Objeto</label><input type="text" id="config-con-detalle" style="background:#fff"></div>
               <div class="field"><label for="config-con-zona" style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-con-zona" style="background:#fff"></div>
               <div class="field"><label for="config-con-compromiso" style="font-size:.72rem">entry ID Compromiso</label><input type="text" id="config-con-compromiso" style="background:#fff"></div>
             </div>
@@ -821,6 +820,38 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
       <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap">
         <button class="btn btn-sm btn-naranja" onclick="saveGoogleConfigObj()">Guardar Configuración</button>
         <button class="btn btn-sm btn-outline" style="border-color:var(--azul-med); color:var(--azul-med)" onclick="resetGoogleConfigObj()">Restablecer Valores</button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN CONFIGURACIÓN GOOGLE SHEETS -->
+    <div id="config-google-sheets" style="background:#fff; border-radius:var(--radio); padding:1.5rem; margin-bottom:2rem; border:1px solid var(--gris-claro)">
+      <p class="form-section-title" style="margin-bottom:.5rem; border-bottom:none">📊 Sincronización en Tiempo Real (Google Sheets CSV)</p>
+      <p style="color:var(--gris); font-size:.8rem; margin-bottom:1rem">
+        Publicá tus pestañas de Google Sheets como CSV ("Archivo" &gt; "Compartir" &gt; "Publicar en la Web" &gt; formato CSV por hoja) para sincronizar en tiempo real los pedidos y donaciones activas de toda la comunidad en cualquier celular.
+      </p>
+
+      <div id="config-sheets-inputs-container" style="display:grid; grid-template-columns:1fr; gap:1.2rem">
+        <div class="field">
+          <label for="config-sheet-nec-url" style="font-size:.78rem; font-weight:bold; color:var(--azul-med)">1. Enlace CSV de Necesidades (Pedidos)</label>
+          <input type="text" id="config-sheet-nec-url" placeholder="Ej: https://docs.google.com/spreadsheets/d/.../pub?gid=0&output=csv" style="background:#fff">
+        </div>
+        <div class="field">
+          <label for="config-sheet-don-url" style="font-size:.78rem; font-weight:bold; color:var(--azul-med)">2. Enlace CSV de Donaciones</label>
+          <input type="text" id="config-sheet-don-url" placeholder="Ej: https://docs.google.com/spreadsheets/d/.../pub?gid=583321&output=csv" style="background:#fff">
+        </div>
+        <div class="field">
+          <label for="config-sheet-con-url" style="font-size:.78rem; font-weight:bold; color:var(--azul-med)">3. Enlace CSV de Conectores (Voluntarios)</label>
+          <input type="text" id="config-sheet-con-url" placeholder="Ej: https://docs.google.com/spreadsheets/d/.../pub?gid=192801&output=csv" style="background:#fff">
+        </div>
+        <div class="field">
+          <label for="config-sheet-mat-url" style="font-size:.78rem; font-weight:bold; color:var(--azul-med)">4. Enlace CSV de Matches Coordinados</label>
+          <input type="text" id="config-sheet-mat-url" placeholder="Ej: https://docs.google.com/spreadsheets/d/.../pub?gid=912230&output=csv" style="background:#fff">
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap">
+        <button class="btn btn-sm btn-naranja" id="btn-sync-sheets" onclick="sincronizarGoogleSheets()">🔄 Sincronizar Hojas Ahora</button>
+        <button class="btn btn-sm btn-outline" id="btn-clear-sheets" style="border-color:var(--azul-med); color:var(--azul-med)" onclick="eliminarSincronizacionSheets()">Revertir a Datos Locales Simulados</button>
       </div>
     </div>
 
@@ -888,30 +919,6 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
   </div>
 </footer>
 
-<!-- MODAL DE ÉXITO Y FEEDBACK -->
-<div class="success-overlay" id="success-modal">
-  <div class="success-box">
-    <span class="success-icon" id="success-modal-icon">🎉</span>
-    <h2 class="success-title" id="success-modal-title">¡Registro Exitoso!</h2>
-    <p class="success-msg" id="success-modal-msg">Tus datos han sido procesados correctamente.</p>
-
-    <!-- Alerta de Match Autónomo -->
-    <div id="success-match-alert" class="success-match" style="display:none; background:rgba(37,168,103,0.05); border:1px solid rgba(37,168,103,0.2); padding:1.2rem; border-radius:1rem; margin-top:1.5rem; text-align:left">
-      <p style="color:var(--verde); font-weight:800; font-size:0.85rem; margin-bottom:0.4rem; display:flex; align-items:center; gap:0.4rem">
-        <span>🔗</span> COINCIDENCIA DETECTADA
-      </p>
-      <p id="success-match-desc" style="font-size:0.78rem; color:var(--gris); line-height:1.5"></p>
-
-      <div id="autonomous-match-actions" style="margin-top:1rem; display:none">
-        <p style="font-size:0.65rem; color:var(--gris); margin-bottom:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.03em">Acción Directa Recomendada:</p>
-        <div id="autonomous-match-links"></div>
-      </div>
-    </div>
-
-    <button class="btn btn-fill" onclick="closeSuccessModal()" style="margin-top:1.8rem; width:100%">Entendido</button>
-  </div>
-</div>
-
 <!-- MODAL DE LOGIN INSTITUCIONAL -->
 <div class="success-overlay" id="login-modal" style="display:none; position:fixed; inset:0; background:rgba(13,31,51,0.8); z-index:1000; align-items:center; justify-content:center; backdrop-filter:blur(6px)">
   <div class="success-box" style="max-width:440px; padding:2rem; box-shadow:0 24px 80px rgba(0,0,0,0.4)">
@@ -967,76 +974,326 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
  * el cual los cargará utilizando tus credenciales de "roa@escuela2702ema.edu.ar" de manera segura.
  */
 
+const GOOGLE_FORMS_CONFIG = {
   // CONFIGURACIÓN DE FORMULARIO - "NECESITA ALGO"
   necesita: {
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSd-dJfJE55gU7lmsZ7Val-mjMH6gOdVHnonoBRhBWJHM8f6FQ/formResponse",
-    sheetCsvUrl: "", // URL de "Publicar en la web" como CSV
+    // Reemplazar con el ID de tu formulario de Google para necesidades
+    formUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfp_your_form_necesita_id_here/formResponse", 
+    // Mapeá los entry IDs correspondientes del formulario de Google (ver en el html inspeccionando el Form)
     fields: {
-      nombre: "entry.291855479",
-      contacto: "entry.1861795326",
-      conector: "entry.3780034",
-      categoria: "entry.306821300",
-      detalle: "entry.1029237954",
-      zona: "entry.1204601316",
-      descripcion: "entry.520352941"
+      nombre: "entry.1000001",    // ID de la pregunta "Nombre de Beneficiario"
+      contacto: "entry.1000002",  // ID de la pregunta "Celular / WhatsApp"
+      conector: "entry.1000003",  // ID de la pregunta "Nombre del Conector"
+      categoria: "entry.1000004", // ID de la pregunta "Categoría de Objeto"
+      detalle: "entry.1000005",   // ID de la pregunta "Objeto Específico"
+      zona: "entry.1000006",      // ID de la pregunta "Zona para entrega"
+      descripcion: "entry.1000007"// ID de la pregunta "Detalle adicional"
     }
   },
 
   // CONFIGURACIÓN DE FORMULARIO - "DONACIONES"
   dona: {
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeCHz7ixNqYRYHUrUPcKMQ7JzVTKDNpCtOcX4rXq7PianwpiQ/formResponse",
-    sheetCsvUrl: "", // URL de "Publicar en la web" como CSV
+    // Reemplazar con el ID de tu formulario de Google para donaciones
+    formUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfp_your_form_donaciones_id_here/formResponse",
     fields: {
-      nombre: "entry.291855479",
-      contacto: "entry.1861795326",
-      email: "entry.3780034",
-      categoria: "entry.306821300",
-      detalle: "entry.1029237954",
-      zona: "entry.1204601316",
-      descripcion: "entry.520352941"
+      nombre: "entry.2000001",
+      contacto: "entry.2000002",
+      email: "entry.2000003",
+      categoria: "entry.2000004",
+      detalle: "entry.2000005",
+      zona: "entry.2000006",
+      descripcion: "entry.2000007"
     }
   },
 
   // CONFIGURACIÓN DE FORMULARIO - "CONECTORES"
   conecta: {
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSflN43TZwoJzjoDyOwCw2VXKftsYsZHhYu12T0eW1bylCyr2w/formResponse",
-    sheetCsvUrl: "", // URL de "Publicar en la web" como CSV
+    // Reemplazar con el ID de tu formulario de Google para inscripción de Conectores
+    formUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfp_your_form_conectores_id_here/formResponse",
     fields: {
-      nombre: "entry.291855479",
-      contacto: "entry.1861795326",
-      email: "entry.3780034",
-      detalle: "entry.1029237954",
-      zona: "entry.1204601316",
-      compromiso: "entry.520352941"
+      nombre: "entry.3000001",
+      contacto: "entry.3000002",
+      email: "entry.3000003",
+      zona: "entry.3000004",
+      compromiso: "entry.3000005"
     }
   }
 };
 
-// Bases de datos locales en memoria
+// Bases de datos locales en memoria para simular el comportamiento de la App en tiempo real
 let baseNecesidades = [];
 let baseDonaciones = [];
 let baseConectores = [];
 let baseMatches = [];
 
-// Carga inicial - Ahora vacía para que sea "Real" y solo use datos nuevos
-function loadInitialData() {
-  const localNec = localStorage.getItem('emal_data_necesidades');
-  const localDon = localStorage.getItem('emal_data_donaciones');
-  const localMat = localStorage.getItem('emal_data_matches');
+// Cargar datos previamente sincronizados desde Google Sheets si existen
+function loadStoredSheetsData() {
+  const storedNeeds = localStorage.getItem('emal_sheets_needs');
+  const storedDons = localStorage.getItem('emal_sheets_donations');
+  const storedConnectors = localStorage.getItem('emal_sheets_connectors');
+  const storedMatches = localStorage.getItem('emal_sheets_matches');
 
-  if (localNec) baseNecesidades = JSON.parse(localNec);
-  if (localDon) baseDonaciones = JSON.parse(localDon);
-  if (localMat) baseMatches = JSON.parse(localMat);
+  if (storedNeeds) {
+    try { baseNecesidades = JSON.parse(storedNeeds); } catch(e) {}
+  }
+  if (storedDons) {
+    try { baseDonaciones = JSON.parse(storedDons); } catch(e) {}
+  }
+  if (storedConnectors) {
+    try { baseConectores = JSON.parse(storedConnectors); } catch(e) {}
+  }
+  if (storedMatches) {
+    try { baseMatches = JSON.parse(storedMatches); } catch(e) {}
+  }
+}
+
+// Carga inicial de datos de ejemplo para que la App no se vea vacía o de datos sincronizados
+function loadInitialData() {
+  loadStoredSheetsData();
+
+  if (baseNecesidades.length === 0) {
+    baseNecesidades = [
+      { id: 1, nombre: "Vecino Bº 3 de Abril", contacto: "2804221199", conector: "Nicolás R.", categoria: "ropa", detalle: "Abrigo niño talle 8", zona: "Barrio 3 de Abril", descripcion: "Familia numerosa con escasos recursos para afrontar el invierno del sur.", estado: "pendiente" },
+      { id: 2, nombre: "Familia Bº Gregorio Mayo", contacto: "2804557711", conector: "Marcos R.", categoria: "mural", detalle: "Manuales escolares 6º grado", zona: "Barrio Gregorio Mayo", descripcion: "Tres niños en primaria que necesitan libros.", estado: "pendiente" },
+      { id: 3, nombre: "Estudiante EMAL", contacto: "2804990022", conector: "Prof. Laura G.", categoria: "calzado", detalle: "Zapatillas talle 38", zona: "Rawson Centro", descripcion: "Para poder asistir a educación física.", estado: "pendiente" },
+      { id: 4, nombre: "Madre Sola Bº Vernet", contacto: "2804884433", conector: "Nicolás R.", categoria: "muebles", detalle: "Cuna o practicuna de bebé", zona: "Barrio Luis Vernet", descripcion: "Bebe recién nacido.", estado: "pendiente" }
+    ];
+  }
+
+  if (baseDonaciones.length === 0) {
+    baseDonaciones = [
+      { id: 1, nombre: "Marta Gómez", contacto: "2804558833", email: "marta@gmail.com", categoria: "ropa", detalle: "Campera de abrigo talle 8", zona: "Barrio 3 de Abril", descripcion: "Casi nueva, color azul.", estado: "disponible" },
+      { id: 2, nombre: "Carlos Pérez", contacto: "2804443311", email: "carlos@hotmail.com", categoria: "alimentos", detalle: "Leche larga vida x 12 unidades", zona: "Barrio Gregorio Mayo", descripcion: "Vence a fin de año.", estado: "disponible" },
+      { id: 3, nombre: "Elena Ramos", contacto: "2804929211", email: "elena@yahoo.com.ar", categoria: "muebles", detalle: "Cuna de madera sólida", zona: "Barrio Luis Vernet", descripcion: "Se puede desarmar para transporte.", estado: "disponible" },
+      { id: 4, nombre: "Papelería Rawson", contacto: "2804818133", email: "ventas@papeleria.com", categoria: "mural", detalle: "Lote de mochilas y carpetas", zona: "Rawson Centro", descripcion: "Donación corporativa para el inicio de clases.", estado: "disponible" }
+    ];
+  }
+
+  if (baseMatches.length === 0) {
+    baseMatches = [
+      { id: 1, necesidad: baseNecesidades[0], donacion: baseDonaciones[0], conector: "Nicolás R.", fecha: "Hoy", estado: "activo" }
+    ];
+  }
 
   updateDashboard();
   renderLists();
 }
 
-// Persistir datos localmente para que no se borren al refrescar en este dispositivo
-function persistLocalData() {
-  localStorage.setItem('emal_data_necesidades', JSON.stringify(baseNecesidades));
-  localStorage.setItem('emal_data_donaciones', JSON.stringify(baseDonaciones));
-  localStorage.setItem('emal_data_matches', JSON.stringify(baseMatches));
+// Analizador de CSV con soporte para comillas gringas y punto-y-coma local
+function parseCSV(text) {
+  if (!text) return [];
+  const lines = text.split(/\r?\n/);
+  if (lines.length === 0) return [];
+  
+  const firstLine = lines[0];
+  const commaCount = (firstLine.match(/,/g) || []).length;
+  const semiCount = (firstLine.match(/;/g) || []).length;
+  const separator = semiCount > commaCount ? ';' : ',';
+
+  const result = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    
+    const row = [];
+    let inQuotes = false;
+    let currentVal = '';
+    
+    for (let j = 0; j < line.length; j++) {
+      const char = line[j];
+      if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === separator && !inQuotes) {
+        row.push(currentVal.trim().replace(/^"|"$/g, ''));
+        currentVal = '';
+      } else {
+        currentVal += char;
+      }
+    }
+    row.push(currentVal.trim().replace(/^"|"$/g, ''));
+    result.push(row);
+  }
+  return result;
+}
+
+// Convertir las filas leídas de Google Sheets al formato JSON de la app
+function mapCSVToJSON(csvRows) {
+  if (csvRows.length < 2) return [];
+  const headers = csvRows[0].map(h => h.toLowerCase().trim());
+  const dataRows = csvRows.slice(1);
+  
+  const getIndex = (aliases) => {
+    return headers.findIndex(h => aliases.some(alias => h.includes(alias)));
+  };
+
+  const nombreIdx = getIndex(['nombre', 'beneficiario', 'donante', 'completo']);
+  const contactoIdx = getIndex(['contacto', 'celular', 'whatsapp', 'teléfono', 'telefono', 'tel']);
+  const emailIdx = getIndex(['email', 'correo', 'mail']);
+  const conectorIdx = getIndex(['conector', 'recolector', 'docente', 'usuario']);
+  const categoriaIdx = getIndex(['categoria', 'categoría', 'rubro', 'tipo']);
+  const detalleIdx = getIndex(['detalle', 'objeto', 'específico', 'especifico', 'que objeto', 'qué objeto']);
+  const zonaIdx = getIndex(['zona', 'barrio', 'dirección', 'direccion']);
+  const descripcionIdx = getIndex(['descripcion', 'descripción', 'comentario', 'detalles', 'adicional']);
+  const estadoIdx = getIndex(['estado', 'situacion', 'situación']);
+  const compromisoIdx = getIndex(['compromiso', 'disponibilidad', 'horas']);
+
+  return dataRows.map((row, idx) => {
+    const valByIdx = (index, fallbackCol) => {
+      if (index !== -1 && index < row.length) return row[index];
+      if (fallbackCol < row.length) return row[fallbackCol];
+      return '';
+    };
+
+    const rawEstado = valByIdx(estadoIdx, 8).toLowerCase();
+    
+    return {
+      id: idx + 1,
+      nombre: valByIdx(nombreIdx, 0) || ("Usuario " + (idx + 1)),
+      contacto: valByIdx(contactoIdx, 1),
+      email: valByIdx(emailIdx, 2),
+      conector: valByIdx(conectorIdx, 3) || "General EMAL",
+      categoria: (valByIdx(categoriaIdx, 4) || "otros").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+      detalle: valByIdx(detalleIdx, 5),
+      zona: valByIdx(zonaIdx, 6) || "Rawson Centro",
+      descripcion: valByIdx(descripcionIdx, 7),
+      estado: rawEstado || "pendiente",
+      compromiso: valByIdx(compromisoIdx, 4)
+    };
+  });
+}
+
+// Acción de sincronizar hojas en caliente desde la web en cualquier dispositivo
+async function sincronizarGoogleSheets() {
+  const necUrl = document.getElementById('config-sheet-nec-url').value.trim();
+  const donUrl = document.getElementById('config-sheet-don-url').value.trim();
+  const conUrl = document.getElementById('config-sheet-con-url').value.trim();
+  const matUrl = document.getElementById('config-sheet-mat-url').value.trim();
+
+  // Guardar configuración
+  const sheetsConfig = {
+    necesitaSheetUrl: necUrl,
+    donaSheetUrl: donUrl,
+    conectaSheetUrl: conUrl,
+    matchesSheetUrl: matUrl
+  };
+  localStorage.setItem('emal_sheets_config', JSON.stringify(sheetsConfig));
+
+  if (!necUrl && !donUrl && !conUrl && !matUrl) {
+    alert("⚠️ Por favor, ingresá al menos una URL de Google Sheets publicada como CSV para sincronizar.");
+    return;
+  }
+
+  let summary = "";
+  const btn = document.getElementById('btn-sync-sheets');
+  const origText = btn.innerText;
+  btn.innerText = "⏳ Sincronizando datos...";
+  btn.disabled = true;
+
+  try {
+    if (necUrl) {
+      try {
+        const res = await fetch(necUrl);
+        const text = await res.text();
+        const rows = parseCSV(text);
+        if (rows.length > 0) {
+          const mapped = mapCSVToJSON(rows);
+          baseNecesidades = mapped;
+          localStorage.setItem('emal_sheets_needs', JSON.stringify(baseNecesidades));
+          summary += `✅ Se sincronizaron ${baseNecesidades.length} Pedidos / Necesidades.\n`;
+        }
+      } catch (e) {
+        summary += `❌ Error al sincronizar Pedidos: ${e.message}\n`;
+      }
+    }
+
+    if (donUrl) {
+      try {
+        const res = await fetch(donUrl);
+        const text = await res.text();
+        const rows = parseCSV(text);
+        if (rows.length > 0) {
+          const mapped = mapCSVToJSON(rows);
+          baseDonaciones = mapped;
+          localStorage.setItem('emal_sheets_donations', JSON.stringify(baseDonaciones));
+          summary += `✅ Se sincronizaron ${baseDonaciones.length} Donaciones.\n`;
+        }
+      } catch (e) {
+        summary += `❌ Error al sincronizar Donaciones: ${e.message}\n`;
+      }
+    }
+
+    if (conUrl) {
+      try {
+        const res = await fetch(conUrl);
+        const text = await res.text();
+        const rows = parseCSV(text);
+        if (rows.length > 0) {
+          const mapped = mapCSVToJSON(rows);
+          baseConectores = mapped;
+          localStorage.setItem('emal_sheets_connectors', JSON.stringify(baseConectores));
+          summary += `✅ Se sincronizaron ${baseConectores.length} Conectores.\n`;
+        }
+      } catch (e) {
+        summary += `❌ Error al sincronizar Conectores: ${e.message}\n`;
+      }
+    }
+
+    if (matUrl) {
+      try {
+        const res = await fetch(matUrl);
+        const text = await res.text();
+        const rows = parseCSV(text);
+        if (rows.length > 0) {
+          const mapped = mapCSVToJSON(rows);
+          baseMatches = mapped;
+          localStorage.setItem('emal_sheets_matches', JSON.stringify(baseMatches));
+          summary += `✅ Se sincronizaron ${baseMatches.length} Matches Históricos.\n`;
+        }
+      } catch (e) {
+        summary += `❌ Error al sincronizar Matches: ${e.message}\n`;
+      }
+    }
+
+    updateDashboard();
+    renderLists();
+
+    alert(`📊 Resultados de Sincronización:\n\n${summary}`);
+  } catch (error) {
+    alert("❌ Error letal durante la sincronización: " + error.message);
+  } finally {
+    btn.innerText = origText;
+    btn.disabled = false;
+  }
+}
+
+// Borrar config de sheets y reestablecer mock data
+function eliminarSincronizacionSheets() {
+  if (confirm("¿Estás seguro de que querés borrar los datos sincronizados y volver a los datos simulados de ejemplo?")) {
+    localStorage.removeItem('emal_sheets_needs');
+    localStorage.removeItem('emal_sheets_donations');
+    localStorage.removeItem('emal_sheets_connectors');
+    localStorage.removeItem('emal_sheets_matches');
+    localStorage.removeItem('emal_sheets_config');
+    
+    // Limpiar inputs
+    const elNec = document.getElementById('config-sheet-nec-url');
+    if (elNec) elNec.value = '';
+    const elDon = document.getElementById('config-sheet-don-url');
+    if (elDon) elDon.value = '';
+    const elCon = document.getElementById('config-sheet-con-url');
+    if (elCon) elCon.value = '';
+    const elMat = document.getElementById('config-sheet-mat-url');
+    if (elMat) elMat.value = '';
+
+    baseNecesidades = [];
+    baseDonaciones = [];
+    baseConectores = [];
+    baseMatches = [];
+
+    // Forzar recarga cargará los locales
+    loadInitialData();
+    alert("♻️ Datos sincronizados borrados. Se restablecieron los datos locales de prueba.");
+  }
 }
 
 // Cambiar de pantalla / navegación SPA
@@ -1178,14 +1435,12 @@ function handleFormSubmit(event, formType) {
       estado: "pendiente"
     };
     baseNecesidades.push(payload);
-    persistLocalData(); // Guardar en el navegador
-
+    
     // Intento de envío a Google Forms (Background POST en AJAX sin bloqueo CORS)
     enviarAGoogleForms(formType, payload);
 
     // Revisar si hay un Match automático de inmediato
     checkMatchInmediato(payload, 'necesidad');
-    persistLocalData(); // Guardar cambios de estado si hubo match
 
   } else if (formType === 'dona') {
     const cat = document.getElementById('don-cat-selected').value;
@@ -1211,11 +1466,9 @@ function handleFormSubmit(event, formType) {
       estado: "disponible"
     };
     baseDonaciones.push(payload);
-    persistLocalData(); // Guardar en el navegador
 
     enviarAGoogleForms(formType, payload);
     checkMatchInmediato(payload, 'donacion');
-    persistLocalData(); // Guardar cambios de estado si hubo match
 
   } else if (formType === 'conecta') {
     const zona = document.getElementById('con-zona-selected').value;
@@ -1254,18 +1507,6 @@ function enviarAGoogleForms(formType, payload) {
       return;
     }
 
-    // Traducción de categorías internas a etiquetas de Google Forms para que coincidan con las opciones del formulario
-    const catMap = {
-      'ropa': 'Ropa / Abrigo',
-      'mural': 'Útiles / Libros',
-      'calzado': 'Calzado',
-      'alimentos': 'Alimentos',
-      'muebles': 'Mobiliario',
-      'otros': 'Otros'
-    };
-
-    const categoriaLimpia = catMap[payload.categoria] || payload.categoria;
-
     // Preparamos los datos del formulario como URLSearchParams
     const formData = new URLSearchParams();
     
@@ -1274,7 +1515,7 @@ function enviarAGoogleForms(formType, payload) {
         if (config.fields.nombre) formData.append(config.fields.nombre, payload.nombre || '');
         if (config.fields.contacto) formData.append(config.fields.contacto, payload.contacto || '');
         if (config.fields.conector) formData.append(config.fields.conector, payload.conector || '');
-        if (config.fields.categoria) formData.append(config.fields.categoria, categoriaLimpia);
+        if (config.fields.categoria) formData.append(config.fields.categoria, payload.categoria || '');
         if (config.fields.detalle) formData.append(config.fields.detalle, payload.detalle || '');
         if (config.fields.zona) formData.append(config.fields.zona, payload.zona || '');
         if (config.fields.descripcion) formData.append(config.fields.descripcion, payload.descripcion || '');
@@ -1282,7 +1523,7 @@ function enviarAGoogleForms(formType, payload) {
         if (config.fields.nombre) formData.append(config.fields.nombre, payload.nombre || '');
         if (config.fields.contacto) formData.append(config.fields.contacto, payload.contacto || '');
         if (config.fields.email) formData.append(config.fields.email, payload.email || '');
-        if (config.fields.categoria) formData.append(config.fields.categoria, categoriaLimpia);
+        if (config.fields.categoria) formData.append(config.fields.categoria, payload.categoria || '');
         if (config.fields.detalle) formData.append(config.fields.detalle, payload.detalle || '');
         if (config.fields.zona) formData.append(config.fields.zona, payload.zona || '');
         if (config.fields.descripcion) formData.append(config.fields.descripcion, payload.descripcion || '');
@@ -1290,7 +1531,6 @@ function enviarAGoogleForms(formType, payload) {
         if (config.fields.nombre) formData.append(config.fields.nombre, payload.nombre || '');
         if (config.fields.contacto) formData.append(config.fields.contacto, payload.contacto || '');
         if (config.fields.email) formData.append(config.fields.email, payload.email || '');
-        if (config.fields.detalle) formData.append(config.fields.detalle, payload.detalle || 'Registro Conector');
         if (config.fields.zona) formData.append(config.fields.zona, payload.zona || '');
         if (config.fields.compromiso) formData.append(config.fields.compromiso, payload.compromiso || '');
       }
@@ -1403,7 +1643,7 @@ function checkMatchInmediato(item, role) {
       openSuccessModal(
         '¡Muchísimas Gracias!', 
         '¡Donación Registrada!', 
-        'Gracias ' + item.nombre + ', tu aporte ha quedado asentado en el sistema solidario. Al haberse encontrado una coincidencia inmediata, tu donación ya ha sido vinculada y no aparecerá en el catálogo público.',
+        'Gracias ' + item.nombre + ', tu aporte ha quedado asentado en el sistema solidario.', 
         true, 
         '¡Encontramos un receptor directo de inmediato! ' + matchEncontrado.nombre + ' necesita un elemento igual en ' + matchEncontrado.zona + '.',
         directButtonsHTML
@@ -1509,30 +1749,51 @@ function updateDashboard() {
   document.getElementById('kpi-matches').innerText = baseMatches.length;
 }
 
-// Representar todas las listas dinámicas de la aplicación
+// Representar todas las listas dinámicas de la aplicación (Resguardando Privacidad según Directivas EMAL)
 function renderLists() {
-  // 1. Home - Necesidades (Anonimizadas)
+  // 1. Home - Necesidades (Métricas Anónimas Agrupadas por Privacidad de las Familias)
   const homeNecList = document.getElementById('home-necesidades-list');
   homeNecList.innerHTML = `
-    <p class="match-col-title">🙏 Solicitudes de Ayuda</p>
+    <p class="match-col-title">📊 Necesidades por Rubro</p>
     <p style="font-size:0.75rem; color:var(--gris); margin-bottom:1rem; padding: 0 0.5rem; line-height:1.4">
-      Listado de lo que necesitan las familias hoy. Si tenés algo de esto, cargá tu donación:
+      🔒 <strong>Garantía de Confidencialidad:</strong> Protegemos la identidad de las familias de Rawson. Abajo podés ver el resumen anónimo de lo más solicitado hoy:
     </p>
   `;
   
-  let hasActiveNeeds = false;
+  // Agrupar cantidad de necesidades activas (pendiente) por categoría
+  const categoriasCount = {};
   baseNecesidades.forEach(n => {
     if (n.estado === 'pendiente') {
+      categoriasCount[n.categoria] = (categoriasCount[n.categoria] || 0) + 1;
+    }
+  });
+
+  const categoriesOrdered = ['ropa', 'mural', 'calzado', 'alimentos', 'muebles', 'otros'];
+  let hasActiveNeeds = false;
+
+  categoriesOrdered.forEach(cat => {
+    const count = categoriasCount[cat] || 0;
+    if (count > 0) {
       hasActiveNeeds = true;
       const card = document.createElement('div');
-      card.className = 'match-item';
+      card.className = `match-item`;
+      card.style.cursor = 'default';
+      
+      let catLabel = cat;
+      if (cat === 'ropa') catLabel = 'Ropa y Abrigo';
+      if (cat === 'mural') catLabel = 'Útiles y Libros';
+      if (cat === 'calzado') catLabel = 'Calzado Escolar/Uso';
+      if (cat === 'alimentos') catLabel = 'Alimentos / Conservas';
+      if (cat === 'muebles') catLabel = 'Mobiliario para hogar';
+      if (cat === 'otros') catLabel = 'Otros Objetos';
+
       card.innerHTML = `
-        <div class="mi-icon naranja">${getCategoryEmoji(n.categoria)}</div>
+        <div class="mi-icon naranja">${getCategoryEmoji(cat)}</div>
         <div style="flex-grow:1">
-          <p class="mi-obj" style="font-weight:700">${n.detalle}</p>
-          <p class="mi-meta">📍 Zona: ${n.zona} · Pendiente</p>
+          <p class="mi-obj" style="text-transform: capitalize; font-weight:700">${catLabel}</p>
+          <p class="mi-meta">📍 Hay ${count} pedido(s) esperando compatibilidad</p>
         </div>
-        <span class="mi-badge urgente" style="background:rgba(240,112,48,.08); color:var(--naranja); font-size:0.65rem">Necesario</span>
+        <span class="mi-badge urgente" style="background:rgba(240,112,48,.1); color:var(--naranja); font-size:0.65rem">Requerido</span>
       `;
       homeNecList.appendChild(card);
     }
@@ -1541,17 +1802,17 @@ function renderLists() {
   if (!hasActiveNeeds) {
     homeNecList.innerHTML += `
       <div style="text-align:center; padding:1.5rem; color:var(--gris); font-size:0.75rem">
-        🎉 No hay pedidos pendientes sin coordinar en este momento.
+        🎉 ¡Estupendo! No hay necesidades acumuladas urgentes sin coordinar en este momento.
       </div>
     `;
   }
 
-  // 2. Home - Donaciones (Catálogo Solidario)
+  // 2. Home - Donaciones (Catálogo Solidario Anónimo Abierto de Rawson)
   const homeDonList = document.getElementById('home-donaciones-list');
   homeDonList.innerHTML = `
     <p class="match-col-title">🎁 Donaciones Disponibles</p>
     <p style="font-size:0.75rem; color:var(--gris); margin-bottom:1rem; padding: 0 0.5rem; line-height:1.4">
-      Objetos listos para entrega. Hacé clic para solicitarlo de forma confidencial:
+      ¿Necesitás algo de la lista? Hacé clic sobre el objeto para solicitarlo de forma confidencial y directa:
     </p>
   `;
 
@@ -1563,19 +1824,22 @@ function renderLists() {
       card.className = `match-item`;
       card.style.cursor = 'pointer';
       
+      // Al hacer clic, redirige al form de necesidades auto-completando los campos
       card.onclick = () => {
         showPage('necesita');
         selectChip('nec', d.categoria);
         document.getElementById('nec-detalle-obj').value = d.detalle;
-        document.getElementById('nec-desc').value = `Solicito la donación registrada de: "${d.detalle}".`;
-        alert(`✨ ¡Excelente! Pre-seleccionamos "${d.detalle}" en el formulario. Completá tus datos.`);
+        document.getElementById('nec-desc').value = `Solicito la donación libre registrada de: "${d.detalle}" para retirar o coordinar entrega.`;
+        
+        // Efecto scroll y alerta útil
+        alert(`✨ ¡Excelente elección! Pre-seleccionamos "${d.detalle}" en el formulario de pedido. Completá tus datos para finalizar.`);
       };
 
       card.innerHTML = `
         <div class="mi-icon azul">${getCategoryEmoji(d.categoria)}</div>
         <div style="flex-grow:1">
           <p class="mi-obj" style="font-weight:700">${d.detalle}</p>
-          <p class="mi-meta">📍 Ubicación: ${d.zona} · Disponible</p>
+          <p class="mi-meta">📍 Ubicación: ${d.zona} · Disponible hoy</p>
         </div>
         <span class="mi-badge disponible" style="background:rgba(37,96,168,.08); color:var(--azul-med); font-size:0.65rem">Solicitar</span>
       `;
@@ -1586,7 +1850,7 @@ function renderLists() {
   if (!hasAvailableDonations) {
     homeDonList.innerHTML += `
       <div style="text-align:center; padding:1.5rem; color:var(--gris); font-size:0.75rem">
-        Aún no hay aportes libres listados hoy.
+        Aún no hay aportes libres listados listos para entrega inmediata hoy.
       </div>
     `;
   }
@@ -1789,9 +2053,8 @@ function handleLoginSubmit(event) {
   const password = document.getElementById('login-password').value;
   const errorMsg = document.getElementById('login-error-msg');
 
-  // Restricción estricta de dominio solicitada por el usuario
-  if (!email.endsWith('@escuela2702emal.edu.ar')) {
-    errorMsg.innerText = "❌ Acceso denegado. Solo se permiten cuentas del dominio @escuela2702emal.edu.ar.";
+  if (!email.endsWith('@escuela2702emal.edu.ar') && !email.endsWith('@escuela2702ema.edu.ar')) {
+    errorMsg.innerText = "❌ Acceso denegado. Debés ingresar una cuenta con dominio educativo @escuela2702emal.edu.ar (o @escuela2702ema.edu.ar).";
     errorMsg.style.display = 'block';
     return;
   }
@@ -1847,6 +2110,9 @@ function applySessionToUI() {
   const sessionNav = document.getElementById('session-nav-container');
   const sessionBadge = document.getElementById('session-user-badge');
   const configPanel = document.getElementById('config-google-forms');
+  const configSheetsPanel = document.getElementById('config-google-sheets');
+  const sheetsInputsContainer = document.getElementById('config-sheets-inputs-container');
+  const btnClearSheets = document.getElementById('btn-clear-sheets');
   const adminKPIEmail = document.getElementById('kpi-user-email');
   const adminKPIRole = document.getElementById('kpi-user-role');
 
@@ -1969,7 +2235,6 @@ function applySessionToUI() {
           document.getElementById('config-con-nombre').value = GOOGLE_FORMS_CONFIG.conecta.fields.nombre;
           document.getElementById('config-con-contacto').value = GOOGLE_FORMS_CONFIG.conecta.fields.contacto;
           document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
-          document.getElementById('config-con-detalle').value = GOOGLE_FORMS_CONFIG.conecta.fields.detalle;
           document.getElementById('config-con-zona').value = GOOGLE_FORMS_CONFIG.conecta.fields.zona;
           document.getElementById('config-con-compromiso').value = GOOGLE_FORMS_CONFIG.conecta.fields.compromiso;
         } else {
@@ -1983,12 +2248,25 @@ function applySessionToUI() {
           `;
         }
       }
+
+      // Control de visibilidad del panel de Google Sheets según rol
+      if (configSheetsPanel) {
+        configSheetsPanel.style.display = 'block';
+        if (isSuper) {
+          if (sheetsInputsContainer) sheetsInputsContainer.style.display = 'grid';
+          if (btnClearSheets) btnClearSheets.style.display = 'inline-block';
+        } else {
+          if (sheetsInputsContainer) sheetsInputsContainer.style.display = 'none';
+          if (btnClearSheets) btnClearSheets.style.display = 'none';
+        }
+      }
     } catch (e) {
       console.error(e);
     }
   } else {
     if (sessionNav) sessionNav.style.display = 'none';
     if (configPanel) configPanel.style.display = 'none';
+    if (configSheetsPanel) configSheetsPanel.style.display = 'none';
     if (adminKPIEmail) adminKPIEmail.innerText = 'Sin Sesión';
     if (adminKPIRole) adminKPIRole.innerText = 'Invitado';
   }
@@ -2054,9 +2332,25 @@ function initGoogleConfig() {
     document.getElementById('config-con-nombre').value = GOOGLE_FORMS_CONFIG.conecta.fields.nombre;
     document.getElementById('config-con-contacto').value = GOOGLE_FORMS_CONFIG.conecta.fields.contacto;
     document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
-    document.getElementById('config-con-detalle').value = GOOGLE_FORMS_CONFIG.conecta.fields.detalle;
     document.getElementById('config-con-zona').value = GOOGLE_FORMS_CONFIG.conecta.fields.zona;
     document.getElementById('config-con-compromiso').value = GOOGLE_FORMS_CONFIG.conecta.fields.compromiso;
+  }
+
+  // Cargar configuración de Google Sheets
+  const savedSheetsConfig = localStorage.getItem('emal_sheets_config');
+  if (savedSheetsConfig) {
+    try {
+      const parsed = JSON.parse(savedSheetsConfig);
+      const elNecUrlSheet = document.getElementById('config-sheet-nec-url');
+      if (elNecUrlSheet) {
+        document.getElementById('config-sheet-nec-url').value = parsed.necesitaSheetUrl || '';
+        document.getElementById('config-sheet-don-url').value = parsed.donaSheetUrl || '';
+        document.getElementById('config-sheet-con-url').value = parsed.conectaSheetUrl || '';
+        document.getElementById('config-sheet-mat-url').value = parsed.matchesSheetUrl || '';
+      }
+    } catch (e) {
+      console.error("Error al cargar config de Google Sheets", e);
+    }
   }
 }
 
@@ -2095,7 +2389,6 @@ function saveGoogleConfigObj() {
         nombre: ensureEntryFormat(document.getElementById('config-con-nombre').value),
         contacto: ensureEntryFormat(document.getElementById('config-con-contacto').value),
         email: ensureEntryFormat(document.getElementById('config-con-email').value),
-        detalle: ensureEntryFormat(document.getElementById('config-con-detalle').value),
         zona: ensureEntryFormat(document.getElementById('config-con-zona').value),
         compromiso: ensureEntryFormat(document.getElementById('config-con-compromiso').value)
       }

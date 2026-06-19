@@ -823,6 +823,38 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
       </div>
     </div>
 
+    <!-- SECCIÓN CONFIGURACIÓN GOOGLE SHEETS -->
+    <div id="config-google-sheets" style="background:#fff; border-radius:var(--radio); padding:1.5rem; margin-bottom:2rem; border:1px solid var(--gris-claro)">
+      <p class="form-section-title" style="margin-bottom:.5rem; border-bottom:none">📊 Sincronización en Tiempo Real (Google Sheets CSV)</p>
+      <p style="color:var(--gris); font-size:.8rem; margin-bottom:1rem">
+        Publicá tus pestañas de Google Sheets como CSV ("Archivo" &gt; "Compartir" &gt; "Publicar en la Web" &gt; formato CSV por hoja) para sincronizar en tiempo real los pedidos y donaciones activas de toda la comunidad en cualquier celular.
+      </p>
+
+      <div id="config-sheets-inputs-container" style="display:grid; grid-template-columns:1fr; gap:1.2rem">
+        <div class="field">
+          <label for="config-sheet-nec-url" style="font-size:.78rem; font-weight:bold; color:var(--azul-med)">1. Enlace CSV de Necesidades (Pedidos)</label>
+          <input type="text" id="config-sheet-nec-url" placeholder="Ej: https://docs.google.com/spreadsheets/d/.../pub?gid=0&output=csv" style="background:#fff">
+        </div>
+        <div class="field">
+          <label for="config-sheet-don-url" style="font-size:.78rem; font-weight:bold; color:var(--azul-med)">2. Enlace CSV de Donaciones</label>
+          <input type="text" id="config-sheet-don-url" placeholder="Ej: https://docs.google.com/spreadsheets/d/.../pub?gid=583321&output=csv" style="background:#fff">
+        </div>
+        <div class="field">
+          <label for="config-sheet-con-url" style="font-size:.78rem; font-weight:bold; color:var(--azul-med)">3. Enlace CSV de Conectores (Voluntarios)</label>
+          <input type="text" id="config-sheet-con-url" placeholder="Ej: https://docs.google.com/spreadsheets/d/.../pub?gid=192801&output=csv" style="background:#fff">
+        </div>
+        <div class="field">
+          <label for="config-sheet-mat-url" style="font-size:.78rem; font-weight:bold; color:var(--azul-med)">4. Enlace CSV de Matches Coordinados</label>
+          <input type="text" id="config-sheet-mat-url" placeholder="Ej: https://docs.google.com/spreadsheets/d/.../pub?gid=912230&output=csv" style="background:#fff">
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap">
+        <button class="btn btn-sm btn-naranja" id="btn-sync-sheets" onclick="sincronizarGoogleSheets()">🔄 Sincronizar Hojas Ahora</button>
+        <button class="btn btn-sm btn-outline" id="btn-clear-sheets" style="border-color:var(--azul-med); color:var(--azul-med)" onclick="eliminarSincronizacionSheets()">Revertir a Datos Locales Simulados</button>
+      </div>
+    </div>
+
     <!-- Grillas del Administrador -->
     <div class="admin-grid">
       <div>
@@ -994,28 +1026,274 @@ let baseDonaciones = [];
 let baseConectores = [];
 let baseMatches = [];
 
-// Carga inicial de datos de ejemplo para que la App no se vea vacía
+// Cargar datos previamente sincronizados desde Google Sheets si existen
+function loadStoredSheetsData() {
+  const storedNeeds = localStorage.getItem('emal_sheets_needs');
+  const storedDons = localStorage.getItem('emal_sheets_donations');
+  const storedConnectors = localStorage.getItem('emal_sheets_connectors');
+  const storedMatches = localStorage.getItem('emal_sheets_matches');
+
+  if (storedNeeds) {
+    try { baseNecesidades = JSON.parse(storedNeeds); } catch(e) {}
+  }
+  if (storedDons) {
+    try { baseDonaciones = JSON.parse(storedDons); } catch(e) {}
+  }
+  if (storedConnectors) {
+    try { baseConectores = JSON.parse(storedConnectors); } catch(e) {}
+  }
+  if (storedMatches) {
+    try { baseMatches = JSON.parse(storedMatches); } catch(e) {}
+  }
+}
+
+// Carga inicial de datos de ejemplo para que la App no se vea vacía o de datos sincronizados
 function loadInitialData() {
-  baseNecesidades = [
-    { id: 1, nombre: "Vecino Bº 3 de Abril", contacto: "2804221199", conector: "Nicolás R.", categoria: "ropa", detalle: "Abrigo niño talle 8", zona: "Barrio 3 de Abril", descripcion: "Familia numerosa con escasos recursos para afrontar el invierno del sur.", estado: "pendiente" },
-    { id: 2, nombre: "Familia Bº Gregorio Mayo", contacto: "2804557711", conector: "Marcos R.", categoria: "mural", detalle: "Manuales escolares 6º grado", zona: "Barrio Gregorio Mayo", descripcion: "Tres niños en primaria que necesitan libros.", estado: "pendiente" },
-    { id: 3, nombre: "Estudiante EMAL", contacto: "2804990022", conector: "Prof. Laura G.", categoria: "calzado", detalle: "Zapatillas talle 38", zona: "Rawson Centro", descripcion: "Para poder asistir a educación física.", estado: "pendiente" },
-    { id: 4, nombre: "Madre Sola Bº Vernet", contacto: "2804884433", conector: "Nicolás R.", categoria: "muebles", detalle: "Cuna o practicuna de bebé", zona: "Barrio Luis Vernet", descripcion: "Bebe recién nacido.", estado: "pendiente" }
-  ];
+  loadStoredSheetsData();
 
-  baseDonaciones = [
-    { id: 1, nombre: "Marta Gómez", contacto: "2804558833", email: "marta@gmail.com", categoria: "ropa", detalle: "Campera de abrigo talle 8", zona: "Barrio 3 de Abril", descripcion: "Casi nueva, color azul.", estado: "disponible" },
-    { id: 2, nombre: "Carlos Pérez", contacto: "2804443311", email: "carlos@hotmail.com", categoria: "alimentos", detalle: "Leche larga vida x 12 unidades", zona: "Barrio Gregorio Mayo", descripcion: "Vence a fin de año.", estado: "disponible" },
-    { id: 3, nombre: "Elena Ramos", contacto: "2804929211", email: "elena@yahoo.com.ar", categoria: "muebles", detalle: "Cuna de madera sólida", zona: "Barrio Luis Vernet", descripcion: "Se puede desarmar para transporte.", estado: "disponible" },
-    { id: 4, nombre: "Papelería Rawson", contacto: "2804818133", email: "ventas@papeleria.com", categoria: "mural", detalle: "Lote de mochilas y carpetas", zona: "Rawson Centro", descripcion: "Donación corporativa para el inicio de clases.", estado: "disponible" }
-  ];
+  if (baseNecesidades.length === 0) {
+    baseNecesidades = [
+      { id: 1, nombre: "Vecino Bº 3 de Abril", contacto: "2804221199", conector: "Nicolás R.", categoria: "ropa", detalle: "Abrigo niño talle 8", zona: "Barrio 3 de Abril", descripcion: "Familia numerosa con escasos recursos para afrontar el invierno del sur.", estado: "pendiente" },
+      { id: 2, nombre: "Familia Bº Gregorio Mayo", contacto: "2804557711", conector: "Marcos R.", categoria: "mural", detalle: "Manuales escolares 6º grado", zona: "Barrio Gregorio Mayo", descripcion: "Tres niños en primaria que necesitan libros.", estado: "pendiente" },
+      { id: 3, nombre: "Estudiante EMAL", contacto: "2804990022", conector: "Prof. Laura G.", categoria: "calzado", detalle: "Zapatillas talle 38", zona: "Rawson Centro", descripcion: "Para poder asistir a educación física.", estado: "pendiente" },
+      { id: 4, nombre: "Madre Sola Bº Vernet", contacto: "2804884433", conector: "Nicolás R.", categoria: "muebles", detalle: "Cuna o practicuna de bebé", zona: "Barrio Luis Vernet", descripcion: "Bebe recién nacido.", estado: "pendiente" }
+    ];
+  }
 
-  baseMatches = [
-    { id: 1, necesidad: baseNecesidades[0], donacion: baseDonaciones[0], conector: "Nicolás R.", fecha: "Hoy", estado: "activo" }
-  ];
+  if (baseDonaciones.length === 0) {
+    baseDonaciones = [
+      { id: 1, nombre: "Marta Gómez", contacto: "2804558833", email: "marta@gmail.com", categoria: "ropa", detalle: "Campera de abrigo talle 8", zona: "Barrio 3 de Abril", descripcion: "Casi nueva, color azul.", estado: "disponible" },
+      { id: 2, nombre: "Carlos Pérez", contacto: "2804443311", email: "carlos@hotmail.com", categoria: "alimentos", detalle: "Leche larga vida x 12 unidades", zona: "Barrio Gregorio Mayo", descripcion: "Vence a fin de año.", estado: "disponible" },
+      { id: 3, nombre: "Elena Ramos", contacto: "2804929211", email: "elena@yahoo.com.ar", categoria: "muebles", detalle: "Cuna de madera sólida", zona: "Barrio Luis Vernet", descripcion: "Se puede desarmar para transporte.", estado: "disponible" },
+      { id: 4, nombre: "Papelería Rawson", contacto: "2804818133", email: "ventas@papeleria.com", categoria: "mural", detalle: "Lote de mochilas y carpetas", zona: "Rawson Centro", descripcion: "Donación corporativa para el inicio de clases.", estado: "disponible" }
+    ];
+  }
+
+  if (baseMatches.length === 0) {
+    baseMatches = [
+      { id: 1, necesidad: baseNecesidades[0], donacion: baseDonaciones[0], conector: "Nicolás R.", fecha: "Hoy", estado: "activo" }
+    ];
+  }
 
   updateDashboard();
   renderLists();
+}
+
+// Analizador de CSV con soporte para comillas gringas y punto-y-coma local
+function parseCSV(text) {
+  if (!text) return [];
+  const lines = text.split(/\r?\n/);
+  if (lines.length === 0) return [];
+  
+  const firstLine = lines[0];
+  const commaCount = (firstLine.match(/,/g) || []).length;
+  const semiCount = (firstLine.match(/;/g) || []).length;
+  const separator = semiCount > commaCount ? ';' : ',';
+
+  const result = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    
+    const row = [];
+    let inQuotes = false;
+    let currentVal = '';
+    
+    for (let j = 0; j < line.length; j++) {
+      const char = line[j];
+      if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === separator && !inQuotes) {
+        row.push(currentVal.trim().replace(/^"|"$/g, ''));
+        currentVal = '';
+      } else {
+        currentVal += char;
+      }
+    }
+    row.push(currentVal.trim().replace(/^"|"$/g, ''));
+    result.push(row);
+  }
+  return result;
+}
+
+// Convertir las filas leídas de Google Sheets al formato JSON de la app
+function mapCSVToJSON(csvRows) {
+  if (csvRows.length < 2) return [];
+  const headers = csvRows[0].map(h => h.toLowerCase().trim());
+  const dataRows = csvRows.slice(1);
+  
+  const getIndex = (aliases) => {
+    return headers.findIndex(h => aliases.some(alias => h.includes(alias)));
+  };
+
+  const nombreIdx = getIndex(['nombre', 'beneficiario', 'donante', 'completo']);
+  const contactoIdx = getIndex(['contacto', 'celular', 'whatsapp', 'teléfono', 'telefono', 'tel']);
+  const emailIdx = getIndex(['email', 'correo', 'mail']);
+  const conectorIdx = getIndex(['conector', 'recolector', 'docente', 'usuario']);
+  const categoriaIdx = getIndex(['categoria', 'categoría', 'rubro', 'tipo']);
+  const detalleIdx = getIndex(['detalle', 'objeto', 'específico', 'especifico', 'que objeto', 'qué objeto']);
+  const zonaIdx = getIndex(['zona', 'barrio', 'dirección', 'direccion']);
+  const descripcionIdx = getIndex(['descripcion', 'descripción', 'comentario', 'detalles', 'adicional']);
+  const estadoIdx = getIndex(['estado', 'situacion', 'situación']);
+  const compromisoIdx = getIndex(['compromiso', 'disponibilidad', 'horas']);
+
+  return dataRows.map((row, idx) => {
+    const valByIdx = (index, fallbackCol) => {
+      if (index !== -1 && index < row.length) return row[index];
+      if (fallbackCol < row.length) return row[fallbackCol];
+      return '';
+    };
+
+    const rawEstado = valByIdx(estadoIdx, 8).toLowerCase();
+    
+    return {
+      id: idx + 1,
+      nombre: valByIdx(nombreIdx, 0) || ("Usuario " + (idx + 1)),
+      contacto: valByIdx(contactoIdx, 1),
+      email: valByIdx(emailIdx, 2),
+      conector: valByIdx(conectorIdx, 3) || "General EMAL",
+      categoria: (valByIdx(categoriaIdx, 4) || "otros").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+      detalle: valByIdx(detalleIdx, 5),
+      zona: valByIdx(zonaIdx, 6) || "Rawson Centro",
+      descripcion: valByIdx(descripcionIdx, 7),
+      estado: rawEstado || "pendiente",
+      compromiso: valByIdx(compromisoIdx, 4)
+    };
+  });
+}
+
+// Acción de sincronizar hojas en caliente desde la web en cualquier dispositivo
+async function sincronizarGoogleSheets() {
+  const necUrl = document.getElementById('config-sheet-nec-url').value.trim();
+  const donUrl = document.getElementById('config-sheet-don-url').value.trim();
+  const conUrl = document.getElementById('config-sheet-con-url').value.trim();
+  const matUrl = document.getElementById('config-sheet-mat-url').value.trim();
+
+  // Guardar configuración
+  const sheetsConfig = {
+    necesitaSheetUrl: necUrl,
+    donaSheetUrl: donUrl,
+    conectaSheetUrl: conUrl,
+    matchesSheetUrl: matUrl
+  };
+  localStorage.setItem('emal_sheets_config', JSON.stringify(sheetsConfig));
+
+  if (!necUrl && !donUrl && !conUrl && !matUrl) {
+    alert("⚠️ Por favor, ingresá al menos una URL de Google Sheets publicada como CSV para sincronizar.");
+    return;
+  }
+
+  let summary = "";
+  const btn = document.getElementById('btn-sync-sheets');
+  const origText = btn.innerText;
+  btn.innerText = "⏳ Sincronizando datos...";
+  btn.disabled = true;
+
+  try {
+    if (necUrl) {
+      try {
+        const res = await fetch(necUrl);
+        const text = await res.text();
+        const rows = parseCSV(text);
+        if (rows.length > 0) {
+          const mapped = mapCSVToJSON(rows);
+          baseNecesidades = mapped;
+          localStorage.setItem('emal_sheets_needs', JSON.stringify(baseNecesidades));
+          summary += `✅ Se sincronizaron ${baseNecesidades.length} Pedidos / Necesidades.\n`;
+        }
+      } catch (e) {
+        summary += `❌ Error al sincronizar Pedidos: ${e.message}\n`;
+      }
+    }
+
+    if (donUrl) {
+      try {
+        const res = await fetch(donUrl);
+        const text = await res.text();
+        const rows = parseCSV(text);
+        if (rows.length > 0) {
+          const mapped = mapCSVToJSON(rows);
+          baseDonaciones = mapped;
+          localStorage.setItem('emal_sheets_donations', JSON.stringify(baseDonaciones));
+          summary += `✅ Se sincronizaron ${baseDonaciones.length} Donaciones.\n`;
+        }
+      } catch (e) {
+        summary += `❌ Error al sincronizar Donaciones: ${e.message}\n`;
+      }
+    }
+
+    if (conUrl) {
+      try {
+        const res = await fetch(conUrl);
+        const text = await res.text();
+        const rows = parseCSV(text);
+        if (rows.length > 0) {
+          const mapped = mapCSVToJSON(rows);
+          baseConectores = mapped;
+          localStorage.setItem('emal_sheets_connectors', JSON.stringify(baseConectores));
+          summary += `✅ Se sincronizaron ${baseConectores.length} Conectores.\n`;
+        }
+      } catch (e) {
+        summary += `❌ Error al sincronizar Conectores: ${e.message}\n`;
+      }
+    }
+
+    if (matUrl) {
+      try {
+        const res = await fetch(matUrl);
+        const text = await res.text();
+        const rows = parseCSV(text);
+        if (rows.length > 0) {
+          const mapped = mapCSVToJSON(rows);
+          baseMatches = mapped;
+          localStorage.setItem('emal_sheets_matches', JSON.stringify(baseMatches));
+          summary += `✅ Se sincronizaron ${baseMatches.length} Matches Históricos.\n`;
+        }
+      } catch (e) {
+        summary += `❌ Error al sincronizar Matches: ${e.message}\n`;
+      }
+    }
+
+    updateDashboard();
+    renderLists();
+
+    alert(`📊 Resultados de Sincronización:\n\n${summary}`);
+  } catch (error) {
+    alert("❌ Error letal durante la sincronización: " + error.message);
+  } finally {
+    btn.innerText = origText;
+    btn.disabled = false;
+  }
+}
+
+// Borrar config de sheets y reestablecer mock data
+function eliminarSincronizacionSheets() {
+  if (confirm("¿Estás seguro de que querés borrar los datos sincronizados y volver a los datos simulados de ejemplo?")) {
+    localStorage.removeItem('emal_sheets_needs');
+    localStorage.removeItem('emal_sheets_donations');
+    localStorage.removeItem('emal_sheets_connectors');
+    localStorage.removeItem('emal_sheets_matches');
+    localStorage.removeItem('emal_sheets_config');
+    
+    // Limpiar inputs
+    const elNec = document.getElementById('config-sheet-nec-url');
+    if (elNec) elNec.value = '';
+    const elDon = document.getElementById('config-sheet-don-url');
+    if (elDon) elDon.value = '';
+    const elCon = document.getElementById('config-sheet-con-url');
+    if (elCon) elCon.value = '';
+    const elMat = document.getElementById('config-sheet-mat-url');
+    if (elMat) elMat.value = '';
+
+    baseNecesidades = [];
+    baseDonaciones = [];
+    baseConectores = [];
+    baseMatches = [];
+
+    // Forzar recarga cargará los locales
+    loadInitialData();
+    alert("♻️ Datos sincronizados borrados. Se restablecieron los datos locales de prueba.");
+  }
 }
 
 // Cambiar de pantalla / navegación SPA
@@ -1832,6 +2110,9 @@ function applySessionToUI() {
   const sessionNav = document.getElementById('session-nav-container');
   const sessionBadge = document.getElementById('session-user-badge');
   const configPanel = document.getElementById('config-google-forms');
+  const configSheetsPanel = document.getElementById('config-google-sheets');
+  const sheetsInputsContainer = document.getElementById('config-sheets-inputs-container');
+  const btnClearSheets = document.getElementById('btn-clear-sheets');
   const adminKPIEmail = document.getElementById('kpi-user-email');
   const adminKPIRole = document.getElementById('kpi-user-role');
 
@@ -1967,12 +2248,25 @@ function applySessionToUI() {
           `;
         }
       }
+
+      // Control de visibilidad del panel de Google Sheets según rol
+      if (configSheetsPanel) {
+        configSheetsPanel.style.display = 'block';
+        if (isSuper) {
+          if (sheetsInputsContainer) sheetsInputsContainer.style.display = 'grid';
+          if (btnClearSheets) btnClearSheets.style.display = 'inline-block';
+        } else {
+          if (sheetsInputsContainer) sheetsInputsContainer.style.display = 'none';
+          if (btnClearSheets) btnClearSheets.style.display = 'none';
+        }
+      }
     } catch (e) {
       console.error(e);
     }
   } else {
     if (sessionNav) sessionNav.style.display = 'none';
     if (configPanel) configPanel.style.display = 'none';
+    if (configSheetsPanel) configSheetsPanel.style.display = 'none';
     if (adminKPIEmail) adminKPIEmail.innerText = 'Sin Sesión';
     if (adminKPIRole) adminKPIRole.innerText = 'Invitado';
   }
@@ -2040,6 +2334,23 @@ function initGoogleConfig() {
     document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
     document.getElementById('config-con-zona').value = GOOGLE_FORMS_CONFIG.conecta.fields.zona;
     document.getElementById('config-con-compromiso').value = GOOGLE_FORMS_CONFIG.conecta.fields.compromiso;
+  }
+
+  // Cargar configuración de Google Sheets
+  const savedSheetsConfig = localStorage.getItem('emal_sheets_config');
+  if (savedSheetsConfig) {
+    try {
+      const parsed = JSON.parse(savedSheetsConfig);
+      const elNecUrlSheet = document.getElementById('config-sheet-nec-url');
+      if (elNecUrlSheet) {
+        document.getElementById('config-sheet-nec-url').value = parsed.necesitaSheetUrl || '';
+        document.getElementById('config-sheet-don-url').value = parsed.donaSheetUrl || '';
+        document.getElementById('config-sheet-con-url').value = parsed.conectaSheetUrl || '';
+        document.getElementById('config-sheet-mat-url').value = parsed.matchesSheetUrl || '';
+      }
+    } catch (e) {
+      console.error("Error al cargar config de Google Sheets", e);
+    }
   }
 }
 
