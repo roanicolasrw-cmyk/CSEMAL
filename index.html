@@ -1055,12 +1055,40 @@ function showPage(pageId) {
   window.scrollTo(0, 0);
 }
 
+// Obtener el ID de la página a partir de su prefijo
+function getPageIdByPrefix(prefix) {
+  if (prefix === 'nec') return 'page-necesita';
+  if (prefix === 'don') return 'page-dona';
+  if (prefix === 'con') return 'page-conecta';
+  return '';
+}
+
+// Asegurar formato 'entry.xxxxxx' para los Google Forms Entry IDs
+function ensureEntryFormat(val) {
+  if (val === null || val === undefined) return '';
+  val = String(val).trim();
+  if (!val) return '';
+  // Si ya tiene el formato correcto (ej: entry.12345), lo dejamos
+  if (/^entry\./i.test(val)) {
+    return val.toLowerCase();
+  }
+  // Si es un número limpio (ej: 12345)
+  const numMatch = val.match(/\d+/);
+  if (numMatch) {
+    return 'entry.' + numMatch[0];
+  }
+  // Caso de respaldo en caso de cualquier otra variante extraña
+  return 'entry.' + val;
+}
+
 // Seleccionar Chips de Objetos en los Formularios
 function selectChip(formPrefix, category) {
-  // Remover clase de los otros
-  document.querySelectorAll('.' + formPrefix + ' .obj-chip').forEach(function(chip) {
-    chip.classList.remove('selected');
-  });
+  const pageId = getPageIdByPrefix(formPrefix);
+  if (pageId) {
+    document.querySelectorAll('#' + pageId + ' .obj-chip').forEach(function(chip) {
+      chip.classList.remove('selected');
+    });
+  }
   // Agregar al seleccionado
   const selectedChip = document.getElementById('chip-' + formPrefix + '-' + category);
   if (selectedChip) {
@@ -1072,9 +1100,12 @@ function selectChip(formPrefix, category) {
 
 // Seleccionar Chips de Zonas de Rawson
 function selectZona(formPrefix, zona) {
-  document.querySelectorAll('#page-' + formPrefix + ' .zona-chip').forEach(function(chip) {
-    chip.classList.remove('selected');
-  });
+  const pageId = getPageIdByPrefix(formPrefix);
+  if (pageId) {
+    document.querySelectorAll('#' + pageId + ' .zona-chip').forEach(function(chip) {
+      chip.classList.remove('selected');
+    });
+  }
   const selectedZona = document.getElementById('zona-' + formPrefix + '-' + zona);
   if (selectedZona) {
     selectedZona.classList.add('selected');
@@ -1149,54 +1180,60 @@ function handleFormSubmit(event, formType) {
 
 // Somete el payload mapeado en AJAX POST "no-cors" directo al Endpoint de Google Form institucional
 function enviarAGoogleForms(formType, payload) {
-  const config = GOOGLE_FORMS_CONFIG[formType];
-  if (!config || config.formUrl.includes('your_form')) {
-    console.log("Conexión con Google Forms simulada localmente. Cambiá la constante GOOGLE_FORMS_CONFIG con tus IDs reales.");
-    return;
-  }
+  try {
+    const config = GOOGLE_FORMS_CONFIG[formType];
+    if (!config || !config.formUrl || config.formUrl.includes('your_form')) {
+      console.log("Conexión con Google Forms simulada localmente. Cambiá la constante GOOGLE_FORMS_CONFIG con tus IDs reales.");
+      return;
+    }
 
-  // Preparamos los datos del formulario como URLSearchParams
-  const formData = new URLSearchParams();
-  
-  if (formType === 'necesita') {
-    formData.append(config.fields.nombre, payload.nombre);
-    formData.append(config.fields.contacto, payload.contacto);
-    formData.append(config.fields.conector, payload.conector);
-    formData.append(config.fields.categoria, payload.categoria);
-    formData.append(config.fields.detalle, payload.detalle);
-    formData.append(config.fields.zona, payload.zona);
-    formData.append(config.fields.descripcion, payload.descripcion);
-  } else if (formType === 'dona') {
-    formData.append(config.fields.nombre, payload.nombre);
-    formData.append(config.fields.contacto, payload.contacto);
-    formData.append(config.fields.email, payload.email);
-    formData.append(config.fields.categoria, payload.categoria);
-    formData.append(config.fields.detalle, payload.detalle);
-    formData.append(config.fields.zona, payload.zona);
-    formData.append(config.fields.descripcion, payload.descripcion);
-  } else if (formType === 'conecta') {
-    formData.append(config.fields.nombre, payload.nombre);
-    formData.append(config.fields.contacto, payload.contacto);
-    formData.append(config.fields.email, payload.email);
-    formData.append(config.fields.zona, payload.zona);
-    formData.append(config.fields.compromiso, payload.compromiso);
-  }
+    // Preparamos los datos del formulario como URLSearchParams
+    const formData = new URLSearchParams();
+    
+    if (config.fields) {
+      if (formType === 'necesita') {
+        if (config.fields.nombre) formData.append(config.fields.nombre, payload.nombre || '');
+        if (config.fields.contacto) formData.append(config.fields.contacto, payload.contacto || '');
+        if (config.fields.conector) formData.append(config.fields.conector, payload.conector || '');
+        if (config.fields.categoria) formData.append(config.fields.categoria, payload.categoria || '');
+        if (config.fields.detalle) formData.append(config.fields.detalle, payload.detalle || '');
+        if (config.fields.zona) formData.append(config.fields.zona, payload.zona || '');
+        if (config.fields.descripcion) formData.append(config.fields.descripcion, payload.descripcion || '');
+      } else if (formType === 'dona') {
+        if (config.fields.nombre) formData.append(config.fields.nombre, payload.nombre || '');
+        if (config.fields.contacto) formData.append(config.fields.contacto, payload.contacto || '');
+        if (config.fields.email) formData.append(config.fields.email, payload.email || '');
+        if (config.fields.categoria) formData.append(config.fields.categoria, payload.categoria || '');
+        if (config.fields.detalle) formData.append(config.fields.detalle, payload.detalle || '');
+        if (config.fields.zona) formData.append(config.fields.zona, payload.zona || '');
+        if (config.fields.descripcion) formData.append(config.fields.descripcion, payload.descripcion || '');
+      } else if (formType === 'conecta') {
+        if (config.fields.nombre) formData.append(config.fields.nombre, payload.nombre || '');
+        if (config.fields.contacto) formData.append(config.fields.contacto, payload.contacto || '');
+        if (config.fields.email) formData.append(config.fields.email, payload.email || '');
+        if (config.fields.zona) formData.append(config.fields.zona, payload.zona || '');
+        if (config.fields.compromiso) formData.append(config.fields.compromiso, payload.compromiso || '');
+      }
+    }
 
-  // Hacemos el envío de fondo sin obstaculizar la experiencia de usuario
-  fetch(config.formUrl, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: formData.toString()
-  })
-  .then(response => {
-    console.log("Intento de envío de datos a Google Forms exitoso.");
-  })
-  .catch(error => {
-    console.error("Error al enviar a Google Forms:", error);
-  });
+    // Hacemos el envío de fondo sin obstaculizar la experiencia de usuario
+    fetch(config.formUrl, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: formData.toString()
+    })
+    .then(response => {
+      console.log("Intento de envío de datos a Google Forms exitoso.");
+    })
+    .catch(error => {
+      console.error("Error al enviar a Google Forms:", error);
+    });
+  } catch (error) {
+    console.error("Error fatal interceptado en enviarAGoogleForms:", error);
+  }
 }
 
 // Analizar compatibilidad inmediata para dar aviso
@@ -1904,18 +1941,30 @@ function initGoogleConfig() {
   if (savedConfig) {
     try {
       const parsed = JSON.parse(savedConfig);
-      // Mutar GOOGLE_FORMS_CONFIG
+      // Mutar GOOGLE_FORMS_CONFIG con normalización
       if (parsed.necesita) {
         GOOGLE_FORMS_CONFIG.necesita.formUrl = parsed.necesita.formUrl;
-        GOOGLE_FORMS_CONFIG.necesita.fields = parsed.necesita.fields;
+        if (parsed.necesita.fields) {
+          for (let key in parsed.necesita.fields) {
+            GOOGLE_FORMS_CONFIG.necesita.fields[key] = ensureEntryFormat(parsed.necesita.fields[key]);
+          }
+        }
       }
       if (parsed.dona) {
         GOOGLE_FORMS_CONFIG.dona.formUrl = parsed.dona.formUrl;
-        GOOGLE_FORMS_CONFIG.dona.fields = parsed.dona.fields;
+        if (parsed.dona.fields) {
+          for (let key in parsed.dona.fields) {
+            GOOGLE_FORMS_CONFIG.dona.fields[key] = ensureEntryFormat(parsed.dona.fields[key]);
+          }
+        }
       }
       if (parsed.conecta) {
         GOOGLE_FORMS_CONFIG.conecta.formUrl = parsed.conecta.formUrl;
-        GOOGLE_FORMS_CONFIG.conecta.fields = parsed.conecta.fields;
+        if (parsed.conecta.fields) {
+          for (let key in parsed.conecta.fields) {
+            GOOGLE_FORMS_CONFIG.conecta.fields[key] = ensureEntryFormat(parsed.conecta.fields[key]);
+          }
+        }
       }
     } catch (e) {
       console.error("Error al parsear config de Google Forms", e);
@@ -1960,35 +2009,35 @@ function saveGoogleConfigObj() {
     necesita: {
       formUrl: document.getElementById('config-nec-url').value,
       fields: {
-        nombre: document.getElementById('config-nec-nombre').value,
-        contacto: document.getElementById('config-nec-contacto').value,
-        conector: document.getElementById('config-nec-conector').value,
-        categoria: document.getElementById('config-nec-categoria').value,
-        detalle: document.getElementById('config-nec-detalle').value,
-        zona: document.getElementById('config-nec-zona').value,
-        descripcion: document.getElementById('config-nec-descripcion').value
+        nombre: ensureEntryFormat(document.getElementById('config-nec-nombre').value),
+        contacto: ensureEntryFormat(document.getElementById('config-nec-contacto').value),
+        conector: ensureEntryFormat(document.getElementById('config-nec-conector').value),
+        categoria: ensureEntryFormat(document.getElementById('config-nec-categoria').value),
+        detalle: ensureEntryFormat(document.getElementById('config-nec-detalle').value),
+        zona: ensureEntryFormat(document.getElementById('config-nec-zona').value),
+        descripcion: ensureEntryFormat(document.getElementById('config-nec-descripcion').value)
       }
     },
     dona: {
       formUrl: document.getElementById('config-don-url').value,
       fields: {
-        nombre: document.getElementById('config-don-nombre').value,
-        contacto: document.getElementById('config-don-contacto').value,
-        email: document.getElementById('config-don-email').value,
-        categoria: document.getElementById('config-don-categoria').value,
-        detalle: document.getElementById('config-don-detalle').value,
-        zona: document.getElementById('config-don-zona').value,
-        descripcion: document.getElementById('config-don-descripcion').value
+        nombre: ensureEntryFormat(document.getElementById('config-don-nombre').value),
+        contacto: ensureEntryFormat(document.getElementById('config-don-contacto').value),
+        email: ensureEntryFormat(document.getElementById('config-don-email').value),
+        categoria: ensureEntryFormat(document.getElementById('config-don-categoria').value),
+        detalle: ensureEntryFormat(document.getElementById('config-don-detalle').value),
+        zona: ensureEntryFormat(document.getElementById('config-don-zona').value),
+        descripcion: ensureEntryFormat(document.getElementById('config-don-descripcion').value)
       }
     },
     conecta: {
       formUrl: document.getElementById('config-con-url').value,
       fields: {
-        nombre: document.getElementById('config-con-nombre').value,
-        contacto: document.getElementById('config-con-contacto').value,
-        email: document.getElementById('config-con-email').value,
-        zona: document.getElementById('config-con-zona').value,
-        compromiso: document.getElementById('config-con-compromiso').value
+        nombre: ensureEntryFormat(document.getElementById('config-con-nombre').value),
+        contacto: ensureEntryFormat(document.getElementById('config-con-contacto').value),
+        email: ensureEntryFormat(document.getElementById('config-con-email').value),
+        zona: ensureEntryFormat(document.getElementById('config-con-zona').value),
+        compromiso: ensureEntryFormat(document.getElementById('config-con-compromiso').value)
       }
     }
   };
@@ -2003,7 +2052,30 @@ function saveGoogleConfigObj() {
   GOOGLE_FORMS_CONFIG.conecta.formUrl = newConfig.conecta.formUrl;
   GOOGLE_FORMS_CONFIG.conecta.fields = newConfig.conecta.fields;
 
-  alert("⚙️ ¡Configuración guardada exitosamente!");
+  // Actualizar inputs en tiempo real para reflejar la normalización "entry.xxxxxx"
+  document.getElementById('config-nec-nombre').value = newConfig.necesita.fields.nombre;
+  document.getElementById('config-nec-contacto').value = newConfig.necesita.fields.contacto;
+  document.getElementById('config-nec-conector').value = newConfig.necesita.fields.conector;
+  document.getElementById('config-nec-categoria').value = newConfig.necesita.fields.categoria;
+  document.getElementById('config-nec-detalle').value = newConfig.necesita.fields.detalle;
+  document.getElementById('config-nec-zona').value = newConfig.necesita.fields.zona;
+  document.getElementById('config-nec-descripcion').value = newConfig.necesita.fields.descripcion;
+
+  document.getElementById('config-don-nombre').value = newConfig.dona.fields.nombre;
+  document.getElementById('config-don-contacto').value = newConfig.dona.fields.contacto;
+  document.getElementById('config-don-email').value = newConfig.dona.fields.email;
+  document.getElementById('config-don-categoria').value = newConfig.dona.fields.categoria;
+  document.getElementById('config-don-detalle').value = newConfig.dona.fields.detalle;
+  document.getElementById('config-don-zona').value = newConfig.dona.fields.zona;
+  document.getElementById('config-don-descripcion').value = newConfig.dona.fields.descripcion;
+
+  document.getElementById('config-con-nombre').value = newConfig.conecta.fields.nombre;
+  document.getElementById('config-con-contacto').value = newConfig.conecta.fields.contacto;
+  document.getElementById('config-con-email').value = newConfig.conecta.fields.email;
+  document.getElementById('config-con-zona').value = newConfig.conecta.fields.zona;
+  document.getElementById('config-con-compromiso').value = newConfig.conecta.fields.compromiso;
+
+  alert("⚙️ ¡Configuración guardada exitosamente con IDs normalizados!");
 }
 
 function resetGoogleConfigObj() {
