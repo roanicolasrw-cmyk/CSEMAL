@@ -8,8 +8,8 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --azul:#1A3A5C;--azul-med:#2560A8;--azul-claro:#4A90D9;
-  --naranja:#F07030;--naranja-claro:#F5A060;
+  --azul:#0D2847;--azul-med:#0080bc;--azul-claro:#00a8cc;
+  --naranja:#f25c22;--naranja-claro:#ff7a45;
   --verde:#1D7A4E;--verde-claro:#28A86C;
   --crema:#F7F3EE;--blanco:#FFF;--gris:#7A8595;--gris-claro:#EEF1F5;
   --oscuro:#0D1F33;--sombra:0 8px 32px rgba(13,31,51,.12);--radio:1.25rem;
@@ -266,13 +266,36 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
   <strong style="color:#fff">EMAL Nº 2702 — Rawson, Chubut</strong>
   <span>|</span>
   <span>Proyecto Educativo Comunitario</span>
-  <div class="inst-badge">Año 2025</div>
+  <div class="inst-badge">Año 2026</div>
 </div>
 
 <!-- NAV -->
 <nav>
   <a class="logo-nav" href="#" onclick="showPage('home')">
-    <div style="width:46px;height:46px;border-radius:50%;background:var(--azul);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#FFF;font-weight:bold;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15))">ES</div>
+    <div style="width:46px;height:46px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.1))">
+      <svg viewBox="0 0 160 90" width="46" height="46">
+        <defs>
+          <linearGradient id="blue-grad-nav" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00a8cc" />
+            <stop offset="100%" stop-color="#006699" />
+          </linearGradient>
+          <linearGradient id="orange-grad-nav" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff7a45" />
+            <stop offset="100%" stop-color="#f25c22" />
+          </linearGradient>
+        </defs>
+        <!-- Left eye/head -->
+        <circle cx="45" cy="45" r="9" fill="url(#blue-grad-nav)" />
+        <!-- Right eye/head -->
+        <circle cx="115" cy="45" r="9" fill="url(#orange-grad-nav)" />
+        <!-- Blue loop path (left side) -->
+        <path d="M 80,45 C 68,57 58,68 45,68 C 28,68 18,55 18,45 C 18,35 28,21 45,21 C 58,21 68,33 80,45 Z" fill="none" stroke="url(#blue-grad-nav)" stroke-width="12" stroke-linecap="round" />
+        <!-- Orange loop path (right side) -->
+        <path d="M 80,45 C 92,33 102,21 115,21 C 132,21 142,35 142,45 C 142,55 132,68 115,68 C 102,68 92,57 80,45 Z" fill="none" stroke="url(#orange-grad-nav)" stroke-width="12" stroke-linecap="round" />
+        <!-- Heart shape overlay in center -->
+        <path d="M 80,55 C 80,55 64,41 64,31 C 64,24 69,19 75,19 C 78.5,19 80,21 80,21 C 80,21 81.5,19 85,19 C 91,19 96,24 96,31 C 96,41 80,55 80,55 Z" fill="#bd1576" opacity="0.9" />
+      </svg>
+    </div>
     <div class="logo-text">
       <div class="logo-title">Comunidad Solidaria</div>
       <div class="logo-sub">EMAL Nº 2702 · Rawson</div>
@@ -310,7 +333,30 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
     <div class="hero-visual">
       <div class="hv-ring r1"></div>
       <div class="hv-ring r2"></div>
-      <div class="hv-logo-big" style="width:180px;height:180px;border-radius:50%;background:var(--azul);display:flex;align-items:center;justify-content:center;font-size:5rem;color:#FFF;font-weight:bold;z-index:3;filter:drop-shadow(0 8px 24px rgba(26,58,92,0.2));animation:floatLogo 5s ease-in-out infinite">ES</div>
+      <div class="hv-logo-big" style="width:180px;height:180px;display:flex;align-items:center;justify-content:center;z-index:3;filter:drop-shadow(0 8px 24px rgba(26,58,92,0.12));animation:floatLogo 5s ease-in-out infinite">
+        <svg viewBox="0 0 160 90" width="168" height="168">
+          <defs>
+            <linearGradient id="blue-grad-hero" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00a8cc" />
+              <stop offset="100%" stop-color="#006699" />
+            </linearGradient>
+            <linearGradient id="orange-grad-hero" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff7a45" />
+              <stop offset="100%" stop-color="#f25c22" />
+            </linearGradient>
+          </defs>
+          <!-- Left eye/head -->
+          <circle cx="45" cy="45" r="9" fill="url(#blue-grad-hero)" />
+          <!-- Right eye/head -->
+          <circle cx="115" cy="45" r="9" fill="url(#orange-grad-hero)" />
+          <!-- Blue loop path (left side) -->
+          <path d="M 80,45 C 68,57 58,68 45,68 C 28,68 18,55 18,45 C 18,35 28,21 45,21 C 58,21 68,33 80,45 Z" fill="none" stroke="url(#blue-grad-hero)" stroke-width="12" stroke-linecap="round" />
+          <!-- Orange loop path (right side) -->
+          <path d="M 80,45 C 92,33 102,21 115,21 C 132,21 142,35 142,45 C 142,55 132,68 115,68 C 102,68 92,57 80,45 Z" fill="none" stroke="url(#orange-grad-hero)" stroke-width="12" stroke-linecap="round" />
+          <!-- Heart shape overlay in center -->
+          <path d="M 80,55 C 80,55 64,41 64,31 C 64,24 69,19 75,19 C 78.5,19 80,21 80,21 C 80,21 81.5,19 85,19 C 91,19 96,24 96,31 C 96,41 80,55 80,55 Z" fill="#bd1576" opacity="0.9" />
+        </svg>
+      </div>
       <div class="hv-node n1">🙏<span class="hv-nlabel">Necesita</span></div>
       <div class="hv-node n2">📦<span class="hv-nlabel">Dona</span></div>
       <div class="hv-node n3">⚡<span class="hv-nlabel">Conector</span></div>
@@ -802,10 +848,33 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
 <footer>
   <div style="max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:between;flex-wrap:wrap;gap:1.5rem">
     <div class="footer-logo">
-      <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#FFF;font-weight:bold">ES</div>
+      <div style="width:36px;height:36px;display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 160 90" width="36" height="36" style="opacity:0.9">
+          <defs>
+            <linearGradient id="blue-grad-foot" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00a8cc" />
+              <stop offset="100%" stop-color="#006699" />
+            </linearGradient>
+            <linearGradient id="orange-grad-foot" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff7a45" />
+              <stop offset="100%" stop-color="#f25c22" />
+            </linearGradient>
+          </defs>
+          <!-- Left eye/head -->
+          <circle cx="45" cy="45" r="9" fill="url(#blue-grad-foot)" />
+          <!-- Right eye/head -->
+          <circle cx="115" cy="45" r="9" fill="url(#orange-grad-foot)" />
+          <!-- Blue loop path (left side) -->
+          <path d="M 80,45 C 68,57 58,68 45,68 C 28,68 18,55 18,45 C 18,35 28,21 45,21 C 58,21 68,33 80,45 Z" fill="none" stroke="url(#blue-grad-foot)" stroke-width="12" stroke-linecap="round" />
+          <!-- Orange loop path (right side) -->
+          <path d="M 80,45 C 92,33 102,21 115,21 C 132,21 142,35 142,45 C 142,55 132,68 115,68 C 102,68 92,57 80,45 Z" fill="none" stroke="url(#orange-grad-foot)" stroke-width="12" stroke-linecap="round" />
+          <!-- Heart shape overlay in center -->
+          <path d="M 80,55 C 80,55 64,41 64,31 C 64,24 69,19 75,19 C 78.5,19 80,21 80,21 C 80,21 81.5,19 85,19 C 91,19 96,24 96,31 C 96,41 80,55 80,55 Z" fill="#bd1576" opacity="0.9" />
+        </svg>
+      </div>
       <div>
         <p class="footer-title">EMAL Nº 2702 — Rawson</p>
-        <p class="footer-sub">Chubut, Argentina — Ciclo Lectivo 2025</p>
+        <p class="footer-sub">Chubut, Argentina — Ciclo Lectivo 2026</p>
       </div>
     </div>
     <div style="font-size:.76rem;text-align:right">
