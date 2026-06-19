@@ -436,6 +436,14 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
         <!-- Dinámico / Estáticos iniciales -->
       </div>
     </div>
+
+    <!-- TABLERO DE MATCHES DEL DÍA (NUEVO) -->
+    <div id="home-matches-section" style="margin-top: 2.5rem; display: none;">
+      <p class="match-col-title" style="background:rgba(40,168,108,.1); color:var(--verde); margin-bottom: 1.2rem">✅ Cruces Solidarios del Día</p>
+      <div id="home-matches-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+        <!-- Dinámico -->
+      </div>
+    </div>
   </div>
 
   <div class="conectores-section">
@@ -1677,7 +1685,7 @@ function animarMatch() {
 function triggerManualMatch() {
   // Tomamos el primer pedido pendiente y donacion disponible que compartan categoría
   let nec = baseNecesidades.find(n => n.estado === 'pendiente');
-  let don = baseDonaciones.find(d => d.categoria === (nec ? nec.categoria : ''));
+  let don = baseDonaciones.find(d => d.categoria === (nec ? nec.categoria : '') && d.estado === 'disponible');
 
   if (nec && don) {
     nec.estado = 'matched';
@@ -1691,6 +1699,7 @@ function triggerManualMatch() {
       estado: "activo"
     };
     baseMatches.push(nuevoMatch);
+    persistLocalData(); // Persistir el nuevo match
     updateDashboard();
     renderLists();
     
@@ -1728,15 +1737,17 @@ function finalizarMatch(matchId) {
   const match = baseMatches.find(m => m.id === matchId);
   if (match) {
     match.estado = 'finalizado';
-    match.necesidad.estado = 'entregado';
-    match.donacion.estado = 'entregado';
+    if (match.necesidad) match.necesidad.estado = 'entregado';
+    if (match.donacion) match.donacion.estado = 'entregado';
+
+    persistLocalData(); // Asegurar persistencia del estado finalizado
     updateDashboard();
     renderLists();
     
     openSuccessModal(
       '🎉 ¡Misión Cumplida!', 
       '¡Entrega Finalizada con éxito!', 
-      'Se registró correctamente la entrega de ' + match.donacion.detalle + ' para ' + match.necesidad.nombre + '. ¡Gracias por tu rol como conector solidario!', 
+      'Se registró correctamente la entrega de ' + (match.donacion ? match.donacion.detalle : 'objeto') + ' para ' + (match.necesidad ? match.necesidad.nombre : 'beneficiario') + '. ¡Gracias por tu rol como conector solidario!',
       false
     );
   }
@@ -1977,6 +1988,34 @@ function renderLists() {
       `;
       adminMatchesList.appendChild(card);
     });
+  }
+
+  // 6. Home - Matches (Tablero de cruces del día)
+  const homeMatchesList = document.getElementById('home-matches-list');
+  const homeMatchesSection = document.getElementById('home-matches-section');
+
+  if (homeMatchesList) {
+    homeMatchesList.innerHTML = '';
+    if (baseMatches.length > 0) {
+      homeMatchesSection.style.display = 'block';
+      baseMatches.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'match-item';
+        card.style.borderColor = 'var(--verde-claro)';
+        card.style.background = 'rgba(40,168,108,0.02)';
+        card.innerHTML = `
+          <div class="mi-icon verde">🤝</div>
+          <div style="flex-grow:1">
+            <p class="mi-obj" style="color:var(--verde)">¡Enlace Exitoso!</p>
+            <p class="mi-meta">${m.necesidad.detalle} unida con Donante</p>
+          </div>
+          <span class="mi-badge match">Consolidado</span>
+        `;
+        homeMatchesList.appendChild(card);
+      });
+    } else {
+      homeMatchesSection.style.display = 'none';
+    }
   }
 }
 
