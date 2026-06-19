@@ -499,7 +499,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
 
         <p class="form-section-title">📐 El Objeto Requerido</p>
         <div class="field">
-          <label>Categoría del Objeto <span class="req">*</span></label>
+          <label for="nec-cat-selected">Categoría del Objeto <span class="req">*</span></label>
           <input type="hidden" id="nec-cat-selected" value="ropa">
           <div class="obj-grid">
             <div class="obj-chip selected tipo-nec" onclick="selectChip('nec', 'ropa')" id="chip-nec-ropa">
@@ -535,7 +535,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
         </div>
 
         <div class="field">
-          <label>Zona de Rawson para entrega <span class="req">*</span></label>
+          <label for="nec-zona-selected">Zona de Rawson para entrega <span class="req">*</span></label>
           <input type="hidden" id="nec-zona-selected" value="Rawson Centro">
           <div class="zona-grid">
             <div class="zona-chip selected" onclick="selectZona('nec', 'Rawson Centro')" id="zona-nec-Rawson Centro">Rawson Centro / Administrativo</div>
@@ -595,7 +595,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
 
         <p class="form-section-title">📐 El Objeto Disponible</p>
         <div class="field">
-          <label>Categoría del Objeto <span class="req">*</span></label>
+          <label for="don-cat-selected">Categoría del Objeto <span class="req">*</span></label>
           <input type="hidden" id="don-cat-selected" value="ropa">
           <div class="obj-grid">
             <div class="obj-chip selected tipo-don" onclick="selectChip('don', 'ropa')" id="chip-don-ropa">
@@ -631,7 +631,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
         </div>
 
         <div class="field">
-          <label>Zona para retirar / entregar <span class="req">*</span></label>
+          <label for="don-zona-selected">Zona para retirar / entregar <span class="req">*</span></label>
           <input type="hidden" id="don-zona-selected" value="Rawson Centro">
           <div class="zona-grid">
             <div class="zona-chip selected" onclick="selectZona('don', 'Rawson Centro')" id="zona-don-Rawson Centro">Rawson Centro / Administrativo</div>
@@ -687,7 +687,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
 
         <p class="form-section-title">📍 Zona de Mayor Frecuencia</p>
         <div class="field">
-          <label>¿Por qué barrios vas a transitar o relevar? <span class="req">*</span></label>
+          <label for="con-zona-selected">¿Por qué barrios vas a transitar o relevar? <span class="req">*</span></label>
           <input type="hidden" id="con-zona-selected" value="Barrio 3 de Abril">
           <div class="zona-grid">
             <div class="zona-chip selected" onclick="selectZona('con', 'Barrio 3 de Abril')" id="zona-con-Barrio 3 de Abril">Barrio 3 de Abril</div>
@@ -763,17 +763,17 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
           <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Necesito Algo (Para Pedidos)</summary>
           <div style="margin-top:1rem">
             <div class="field">
-              <label style="font-size:.78rem">URL del FormResponse <span style="color:var(--gris)">(ej: https://docs.google.com/forms/d/e/.../formResponse)</span></label>
+              <label for="config-nec-url" style="font-size:.78rem">URL del FormResponse <span style="color:var(--gris)">(ej: https://docs.google.com/forms/d/e/.../formResponse)</span></label>
               <input type="text" id="config-nec-url" style="background:#fff">
             </div>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
-              <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-nec-nombre" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-nec-contacto" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Conector</label><input type="text" id="config-nec-conector" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-nec-categoria" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-nec-detalle" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-nec-zona" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-nec-descripcion" style="background:#fff"></div>
+              <div class="field"><label for="config-nec-nombre" style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-nec-nombre" style="background:#fff"></div>
+              <div class="field"><label for="config-nec-contacto" style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-nec-contacto" style="background:#fff"></div>
+              <div class="field"><label for="config-nec-conector" style="font-size:.72rem">entry ID Conector</label><input type="text" id="config-nec-conector" style="background:#fff"></div>
+              <div class="field"><label for="config-nec-categoria" style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-nec-categoria" style="background:#fff"></div>
+              <div class="field"><label for="config-nec-detalle" style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-nec-detalle" style="background:#fff"></div>
+              <div class="field"><label for="config-nec-zona" style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-nec-zona" style="background:#fff"></div>
+              <div class="field"><label for="config-nec-descripcion" style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-nec-descripcion" style="background:#fff"></div>
             </div>
           </div>
         </details>
@@ -783,17 +783,17 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
           <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Quiero Donar (Para Donaciones)</summary>
           <div style="margin-top:1rem">
             <div class="field">
-              <label style="font-size:.78rem">URL del FormResponse</label>
+              <label for="config-don-url" style="font-size:.78rem">URL del FormResponse</label>
               <input type="text" id="config-don-url" style="background:#fff">
             </div>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
-              <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-don-nombre" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-don-contacto" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Email</label><input type="text" id="config-don-email" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-don-categoria" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-don-detalle" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-don-zona" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-don-descripcion" style="background:#fff"></div>
+              <div class="field"><label for="config-don-nombre" style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-don-nombre" style="background:#fff"></div>
+              <div class="field"><label for="config-don-contacto" style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-don-contacto" style="background:#fff"></div>
+              <div class="field"><label for="config-don-email" style="font-size:.72rem">entry ID Email</label><input type="text" id="config-don-email" style="background:#fff"></div>
+              <div class="field"><label for="config-don-categoria" style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-don-categoria" style="background:#fff"></div>
+              <div class="field"><label for="config-don-detalle" style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-don-detalle" style="background:#fff"></div>
+              <div class="field"><label for="config-don-zona" style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-don-zona" style="background:#fff"></div>
+              <div class="field"><label for="config-don-descripcion" style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-don-descripcion" style="background:#fff"></div>
             </div>
           </div>
         </details>
@@ -803,15 +803,15 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
           <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Ser Conector (Para Voluntarios)</summary>
           <div style="margin-top:1rem">
             <div class="field">
-              <label style="font-size:.78rem">URL del FormResponse</label>
+              <label for="config-con-url" style="font-size:.78rem">URL del FormResponse</label>
               <input type="text" id="config-con-url" style="background:#fff">
             </div>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
-              <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-con-nombre" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-con-contacto" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Email</label><input type="text" id="config-con-email" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-con-zona" style="background:#fff"></div>
-              <div class="field"><label style="font-size:.72rem">entry ID Compromiso</label><input type="text" id="config-con-compromiso" style="background:#fff"></div>
+              <div class="field"><label for="config-con-nombre" style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-con-nombre" style="background:#fff"></div>
+              <div class="field"><label for="config-con-contacto" style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-con-contacto" style="background:#fff"></div>
+              <div class="field"><label for="config-con-email" style="font-size:.72rem">entry ID Email</label><input type="text" id="config-con-email" style="background:#fff"></div>
+              <div class="field"><label for="config-con-zona" style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-con-zona" style="background:#fff"></div>
+              <div class="field"><label for="config-con-compromiso" style="font-size:.72rem">entry ID Compromiso</label><input type="text" id="config-con-compromiso" style="background:#fff"></div>
             </div>
           </div>
         </details>
@@ -1793,17 +1793,17 @@ function applySessionToUI() {
                 <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Necesito Algo (Para Pedidos)</summary>
                 <div style="margin-top:1rem">
                   <div class="field">
-                    <label style="font-size:.78rem">URL del FormResponse <span style="color:var(--gris)">(ej: https://docs.google.com/forms/d/e/.../formResponse)</span></label>
+                    <label for="config-nec-url" style="font-size:.78rem">URL del FormResponse <span style="color:var(--gris)">(ej: https://docs.google.com/forms/d/e/.../formResponse)</span></label>
                     <input type="text" id="config-nec-url" style="background:#fff">
                   </div>
                   <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
-                    <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-nec-nombre" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-nec-contacto" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Conector</label><input type="text" id="config-nec-conector" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-nec-categoria" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-nec-detalle" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-nec-zona" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-nec-descripcion" style="background:#fff"></div>
+                    <div class="field"><label for="config-nec-nombre" style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-nec-nombre" style="background:#fff"></div>
+                    <div class="field"><label for="config-nec-contacto" style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-nec-contacto" style="background:#fff"></div>
+                    <div class="field"><label for="config-nec-conector" style="font-size:.72rem">entry ID Conector</label><input type="text" id="config-nec-conector" style="background:#fff"></div>
+                    <div class="field"><label for="config-nec-categoria" style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-nec-categoria" style="background:#fff"></div>
+                    <div class="field"><label for="config-nec-detalle" style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-nec-detalle" style="background:#fff"></div>
+                    <div class="field"><label for="config-nec-zona" style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-nec-zona" style="background:#fff"></div>
+                    <div class="field"><label for="config-nec-descripcion" style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-nec-descripcion" style="background:#fff"></div>
                   </div>
                 </div>
               </details>
@@ -1813,17 +1813,17 @@ function applySessionToUI() {
                 <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Quiero Donar (Para Donaciones)</summary>
                 <div style="margin-top:1rem">
                   <div class="field">
-                    <label style="font-size:.78rem">URL del FormResponse</label>
+                    <label for="config-don-url" style="font-size:.78rem">URL del FormResponse</label>
                     <input type="text" id="config-don-url" style="background:#fff">
                   </div>
                   <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
-                    <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-don-nombre" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-don-contacto" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Email</label><input type="text" id="config-don-email" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-don-categoria" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-don-detalle" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-don-zona" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-don-descripcion" style="background:#fff"></div>
+                    <div class="field"><label for="config-don-nombre" style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-don-nombre" style="background:#fff"></div>
+                    <div class="field"><label for="config-don-contacto" style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-don-contacto" style="background:#fff"></div>
+                    <div class="field"><label for="config-don-email" style="font-size:.72rem">entry ID Email</label><input type="text" id="config-don-email" style="background:#fff"></div>
+                    <div class="field"><label for="config-don-categoria" style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-don-categoria" style="background:#fff"></div>
+                    <div class="field"><label for="config-don-detalle" style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-don-detalle" style="background:#fff"></div>
+                    <div class="field"><label for="config-don-zona" style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-don-zona" style="background:#fff"></div>
+                    <div class="field"><label for="config-don-descripcion" style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-don-descripcion" style="background:#fff"></div>
                   </div>
                 </div>
               </details>
@@ -1833,15 +1833,15 @@ function applySessionToUI() {
                 <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Ser Conector (Para Voluntarios)</summary>
                 <div style="margin-top:1rem">
                   <div class="field">
-                    <label style="font-size:.78rem">URL del FormResponse</label>
+                    <label for="config-con-url" style="font-size:.78rem">URL del FormResponse</label>
                     <input type="text" id="config-con-url" style="background:#fff">
                   </div>
                   <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
-                    <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-con-nombre" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-con-contacto" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Email</label><input type="text" id="config-con-email" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-con-zona" style="background:#fff"></div>
-                    <div class="field"><label style="font-size:.72rem">entry ID Compromiso</label><input type="text" id="config-con-compromiso" style="background:#fff"></div>
+                    <div class="field"><label for="config-con-nombre" style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-con-nombre" style="background:#fff"></div>
+                    <div class="field"><label for="config-con-contacto" style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-con-contacto" style="background:#fff"></div>
+                    <div class="field"><label for="config-con-email" style="font-size:.72rem">entry ID Email</label><input type="text" id="config-con-email" style="background:#fff"></div>
+                    <div class="field"><label for="config-con-zona" style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-con-zona" style="background:#fff"></div>
+                    <div class="field"><label for="config-con-compromiso" style="font-size:.72rem">entry ID Compromiso</label><input type="text" id="config-con-compromiso" style="background:#fff"></div>
                   </div>
                 </div>
               </details>
