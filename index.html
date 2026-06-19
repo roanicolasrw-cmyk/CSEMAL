@@ -810,6 +810,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
               <div class="field"><label for="config-con-nombre" style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-con-nombre" style="background:#fff"></div>
               <div class="field"><label for="config-con-contacto" style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-con-contacto" style="background:#fff"></div>
               <div class="field"><label for="config-con-email" style="font-size:.72rem">entry ID Email</label><input type="text" id="config-con-email" style="background:#fff"></div>
+              <div class="field"><label for="config-con-detalle" style="font-size:.72rem">entry ID Objeto</label><input type="text" id="config-con-detalle" style="background:#fff"></div>
               <div class="field"><label for="config-con-zona" style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-con-zona" style="background:#fff"></div>
               <div class="field"><label for="config-con-compromiso" style="font-size:.72rem">entry ID Compromiso</label><input type="text" id="config-con-compromiso" style="background:#fff"></div>
             </div>
@@ -946,44 +947,45 @@ const GOOGLE_FORMS_CONFIG = {
   // CONFIGURACIÓN DE FORMULARIO - "NECESITA ALGO"
   necesita: {
     // Reemplazar con el ID de tu formulario de Google para necesidades
-    formUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfp_your_form_necesita_id_here/formResponse", 
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSd-dJfJE55gU7lmsZ7Val-mjMH6gOdVHnonoBRhBWJHM8f6FQ/formResponse",
     // Mapeá los entry IDs correspondientes del formulario de Google (ver en el html inspeccionando el Form)
     fields: {
-      nombre: "entry.1000001",    // ID de la pregunta "Nombre de Beneficiario"
-      contacto: "entry.1000002",  // ID de la pregunta "Celular / WhatsApp"
-      conector: "entry.1000003",  // ID de la pregunta "Nombre del Conector"
-      categoria: "entry.1000004", // ID de la pregunta "Categoría de Objeto"
-      detalle: "entry.1000005",   // ID de la pregunta "Objeto Específico"
-      zona: "entry.1000006",      // ID de la pregunta "Zona para entrega"
-      descripcion: "entry.1000007"// ID de la pregunta "Detalle adicional"
+      nombre: "entry.291855479",    // ID de la pregunta "Nombre de Beneficiario"
+      contacto: "entry.1861795326",  // ID de la pregunta "Celular / WhatsApp"
+      conector: "entry.3780034",  // ID de la pregunta "Nombre del Conector"
+      categoria: "entry.306821300", // ID de la pregunta "Categoría de Objeto"
+      detalle: "entry.1029237954",   // ID de la pregunta "Objeto Específico"
+      zona: "entry.1204601316",      // ID de la pregunta "Zona para entrega"
+      descripcion: "entry.520352941"// ID de la pregunta "Detalle adicional"
     }
   },
 
   // CONFIGURACIÓN DE FORMULARIO - "DONACIONES"
   dona: {
     // Reemplazar con el ID de tu formulario de Google para donaciones
-    formUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfp_your_form_donaciones_id_here/formResponse",
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeCHz7ixNqYRYHUrUPcKMQ7JzVTKDNpCtOcX4rXq7PianwpiQ/formResponse",
     fields: {
-      nombre: "entry.2000001",
-      contacto: "entry.2000002",
-      email: "entry.2000003",
-      categoria: "entry.2000004",
-      detalle: "entry.2000005",
-      zona: "entry.2000006",
-      descripcion: "entry.2000007"
+      nombre: "entry.291855479",
+      contacto: "entry.1861795326",
+      email: "entry.3780034",
+      categoria: "entry.306821300",
+      detalle: "entry.1029237954",
+      zona: "entry.1204601316",
+      descripcion: "entry.520352941"
     }
   },
 
   // CONFIGURACIÓN DE FORMULARIO - "CONECTORES"
   conecta: {
     // Reemplazar con el ID de tu formulario de Google para inscripción de Conectores
-    formUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfp_your_form_conectores_id_here/formResponse",
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSflN43TZwoJzjoDyOwCw2VXKftsYsZHhYu12T0eW1bylCyr2w/formResponse",
     fields: {
-      nombre: "entry.3000001",
-      contacto: "entry.3000002",
-      email: "entry.3000003",
-      zona: "entry.3000004",
-      compromiso: "entry.3000005"
+      nombre: "entry.291855479",
+      contacto: "entry.1861795326",
+      email: "entry.3780034",
+      detalle: "entry.1029237954",
+      zona: "entry.1204601316",
+      compromiso: "entry.520352941"
     }
   }
 };
@@ -1253,6 +1255,7 @@ function enviarAGoogleForms(formType, payload) {
         if (config.fields.nombre) formData.append(config.fields.nombre, payload.nombre || '');
         if (config.fields.contacto) formData.append(config.fields.contacto, payload.contacto || '');
         if (config.fields.email) formData.append(config.fields.email, payload.email || '');
+        if (config.fields.detalle) formData.append(config.fields.detalle, payload.detalle || 'Registro Conector');
         if (config.fields.zona) formData.append(config.fields.zona, payload.zona || '');
         if (config.fields.compromiso) formData.append(config.fields.compromiso, payload.compromiso || '');
       }
@@ -1954,6 +1957,7 @@ function applySessionToUI() {
           document.getElementById('config-con-nombre').value = GOOGLE_FORMS_CONFIG.conecta.fields.nombre;
           document.getElementById('config-con-contacto').value = GOOGLE_FORMS_CONFIG.conecta.fields.contacto;
           document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
+          document.getElementById('config-con-detalle').value = GOOGLE_FORMS_CONFIG.conecta.fields.detalle;
           document.getElementById('config-con-zona').value = GOOGLE_FORMS_CONFIG.conecta.fields.zona;
           document.getElementById('config-con-compromiso').value = GOOGLE_FORMS_CONFIG.conecta.fields.compromiso;
         } else {
@@ -2038,6 +2042,7 @@ function initGoogleConfig() {
     document.getElementById('config-con-nombre').value = GOOGLE_FORMS_CONFIG.conecta.fields.nombre;
     document.getElementById('config-con-contacto').value = GOOGLE_FORMS_CONFIG.conecta.fields.contacto;
     document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
+    document.getElementById('config-con-detalle').value = GOOGLE_FORMS_CONFIG.conecta.fields.detalle;
     document.getElementById('config-con-zona').value = GOOGLE_FORMS_CONFIG.conecta.fields.zona;
     document.getElementById('config-con-compromiso').value = GOOGLE_FORMS_CONFIG.conecta.fields.compromiso;
   }
@@ -2078,6 +2083,7 @@ function saveGoogleConfigObj() {
         nombre: ensureEntryFormat(document.getElementById('config-con-nombre').value),
         contacto: ensureEntryFormat(document.getElementById('config-con-contacto').value),
         email: ensureEntryFormat(document.getElementById('config-con-email').value),
+        detalle: ensureEntryFormat(document.getElementById('config-con-detalle').value),
         zona: ensureEntryFormat(document.getElementById('config-con-zona').value),
         compromiso: ensureEntryFormat(document.getElementById('config-con-compromiso').value)
       }
