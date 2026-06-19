@@ -278,12 +278,16 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
       <div class="logo-sub">EMAL Nº 2702 · Rawson</div>
     </div>
   </a>
-  <div class="nav-btns">
+  <div class="nav-btns" style="display:flex; align-items:center; gap:0.5rem">
     <button id="btn-nav-home" class="nav-btn active" onclick="showPage('home')">Inicio</button>
     <button id="btn-nav-necesita" class="nav-btn" onclick="showPage('necesita')">Necesito algo</button>
     <button id="btn-nav-dona" class="nav-btn" onclick="showPage('dona')">Quiero donar</button>
     <button id="btn-nav-conecta" class="nav-btn" onclick="showPage('conecta')">Ser Conector</button>
     <button id="btn-nav-admin" class="nav-btn cta" onclick="showPage('admin')">Panel Match</button>
+    <div id="session-nav-container" style="display:none; align-items:center; gap:.4rem; padding-left:.5rem; border-left:1.5px solid var(--gris-claro)">
+      <span id="session-user-badge" style="font-size:.68rem; color:var(--azul-med); background:rgba(37,96,168,.08); padding:.25rem .65rem; border-radius:1rem; font-weight:700">Conector</span>
+      <button onclick="logoutSession()" style="background:transparent; border:none; color:var(--naranja); font-size:.75rem; font-weight:700; cursor:pointer;" title="Cerrar sesión institucional">Salir 🚪</button>
+    </div>
   </div>
 </nav>
 
@@ -693,14 +697,14 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
         <p class="kpi-n verde" id="kpi-matches">1</p>
         <p class="kpi-l">Matches Consolidados</p>
       </div>
-      <div class="kpi">
-        <p class="kpi-n gris">roa</p>
-        <p class="kpi-l" style="font-size: .6rem;">roa@escuela2702ema.edu.ar</p>
+      <div class="kpi" style="display:flex; flex-direction:column; justify-content:center">
+        <p class="kpi-n gris" id="kpi-user-role" style="font-size: 1.3rem; margin-top: .15rem;">Conector</p>
+        <p class="kpi-l" id="kpi-user-email" style="font-size: .6rem; text-transform:none; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">Sin Sesión</p>
       </div>
     </div>
 
     <!-- SECCIÓN CONFIGURACIÓN GOOGLE FORMS -->
-    <div style="background:#fff; border-radius:var(--radio); padding:1.5rem; margin-bottom:2rem; border:1px solid var(--gris-claro)">
+    <div id="config-google-forms" style="background:#fff; border-radius:var(--radio); padding:1.5rem; margin-bottom:2rem; border:1px solid var(--gris-claro)">
       <p class="form-section-title" style="margin-bottom:.5rem; border-bottom:none">⚙️ Configuración de Google Forms (roa@escuela2702ema.edu.ar)</p>
       <p style="color:var(--gris); font-size:.8rem; margin-bottom:1rem">Completá los enlaces y IDs de campo para conectar la app en tiempo real con tus Google Forms de la escuela.</p>
       
@@ -772,192 +776,248 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
 
     <!-- Grillas del Administrador -->
     <div class="admin-grid">
-      <!-- Columna Pedidos (Necesitas) -->
       <div>
-        <p class="admin-col-head ach-n">⚠️ Pedidos Activos</p>
+        <p class="admin-col-head ach-n">🙏 Pedidos por Objeto</p>
         <div id="admin-necesidades-list">
-          <!-- Dinámico -->
+          <!-- Carga dinámica -->
         </div>
       </div>
-
-      <!-- Columna Donaciones -->
       <div>
-        <p class="admin-col-head ach-d">🎁 Ofertas / Donaciones</p>
+        <p class="admin-col-head ach-d">📦 Donaciones Disponibles</p>
         <div id="admin-donaciones-list">
-          <!-- Dinámico -->
+          <!-- Carga dinámica -->
         </div>
       </div>
-
-      <!-- Columna Cruces (Matches) -->
       <div>
-        <p class="admin-col-head ach-c">⚡ Cruces / Matches</p>
+        <p class="admin-col-head ach-c">🔗 Cruces Sugeridos (Matches)</p>
         <div id="admin-matches-list">
-          <!-- Dinámico -->
+          <!-- Matches sugeridos listados por coincidencia de objeto -->
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ═══════ FOOTER ═══════ -->
 <footer>
-  <div class="footer-logo">
-    <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#FFF;font-weight:bold">ES</div>
-    <div>
-      <p class="footer-title">EMAL Nº 2702</p>
-      <p class="footer-sub">Escuela Municipal de Aprendizaje Laboral · Chubut</p>
+  <div style="max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:between;flex-wrap:wrap;gap:1.5rem">
+    <div class="footer-logo">
+      <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#FFF;font-weight:bold">ES</div>
+      <div>
+        <p class="footer-title">EMAL Nº 2702 — Rawson</p>
+        <p class="footer-sub">Chubut, Argentina — Ciclo Lectivo 2025</p>
+      </div>
+    </div>
+    <div style="font-size:.76rem;text-align:right">
+      <p style="color:rgba(255,255,255,0.7)">Iniciado con Nicolás Roa (roa@escuela2702ema.edu.ar)</p>
+      <p style="color:rgba(255,255,255,0.4);margin-top:.2rem">Desarrollo Tecnológico para Integración Comunitaria</p>
     </div>
   </div>
-  <p>&copy; 2025. Diseñado con solidaridad para Rawson, Chubut.</p>
 </footer>
 
-<!-- MODAL DE ÉXITO Y REGISTRO -->
-<div class="success-overlay" id="success-modal">
-  <div class="success-box">
-    <span class="success-icon" id="success-modal-icon">🎉</span>
-    <h3 class="success-title" id="success-modal-title">¡Registro Exitoso!</h3>
-    <p class="success-msg" id="success-modal-msg">Tus datos han quedado cargados correctamente en la base.</p>
+<!-- MODAL DE LOGIN INSTITUCIONAL -->
+<div class="success-overlay" id="login-modal" style="display:none; position:fixed; inset:0; background:rgba(13,31,51,0.8); z-index:1000; align-items:center; justify-content:center; backdrop-filter:blur(6px)">
+  <div class="success-box" style="max-width:440px; padding:2rem; box-shadow:0 24px 80px rgba(0,0,0,0.4)">
+    <span class="success-icon">🏫</span>
+    <h2 class="success-title">Acceso Conectores</h2>
+    <p class="success-msg" style="margin-bottom:1.2rem; font-size:0.82rem">Para ingresar al Panel Match debés verificar que sos alumno, directivo o conector de la EMAL Rawson.</p>
     
-    <!-- Alerta Match Detectado -->
-    <div class="success-match" id="success-match-alert">
-      <p class="sm-title">🔥 ¡SE DETECTÓ UN MATCH INMEDIATO! 🔥</p>
-      <p class="sm-body" id="success-match-desc">Existe una donación compatible para tu pedido que se acaba de vincular. Un conector escolar se pondrá en contacto pronto.</p>
-      <div id="autonomous-match-actions" style="margin-top:0.9rem; padding-top:0.8rem; border-top:1px dashed rgba(40,168,108,0.3)">
-        <span style="font-size:0.75rem; color:var(--azul); font-weight:700; display:block; margin-bottom:0.5rem; text-align:left">⚡ Contacto Directo Sincronizado:</span>
-        <div id="autonomous-match-links" style="display:grid; grid-template-columns:1fr; gap:0.5rem"></div>
+    <form id="form-login-inst" onsubmit="handleLoginSubmit(event)">
+      <div class="field" style="text-align:left; margin-bottom: 1rem">
+        <label for="login-email" style="font-size:0.78rem; font-weight:700; margin-bottom:0.3rem">Correo Institucional <span class="req">*</span></label>
+        <input type="email" id="login-email" placeholder="ej: nombre@escuela2702emal.edu.ar" required style="background:var(--crema); border:1.5px solid var(--gris-claro); width:100%">
+        <p class="field-hint" style="font-size:0.7rem">Dominio @escuela2702emal.edu.ar o @escuela2702ema.edu.ar</p>
       </div>
-    </div>
-
-    <button class="btn btn-fill btn-sm" onclick="closeSuccessModal()">Continuar</button>
+      <div class="field" style="text-align:left; margin-bottom: 1.2rem">
+        <label for="login-password" style="font-size:0.78rem; font-weight:700; margin-bottom:0.3rem">Contraseña / PIN Escolar <span class="req">*</span></label>
+        <input type="password" id="login-password" placeholder="••••••••" required style="width:100%; padding:.7rem .95rem; border-radius:.7rem; border:1.5px solid var(--gris-claro); background:var(--crema); font-family:sans-serif; outline:none; box-sizing:border-box">
+        <p class="field-hint" style="font-size:0.7rem">Para simulación podés usar tu contraseña habitual (ej: emal2702).</p>
+      </div>
+      
+      <div id="login-error-msg" style="color:var(--naranja); font-size:0.75rem; margin-top:0.5rem; margin-bottom:1rem; display:none; text-align:left; font-weight:700"></div>
+      
+      <button type="submit" class="btn btn-fill" style="width:100%; margin-top:0.3rem; background:var(--azul-med)">Ingresar al Panel</button>
+    </form>
+    
+    <button class="btn btn-outline btn-sm" onclick="closeLoginModal()" style="margin-top:0.8rem; width:100%">Cancelar y Volver</button>
   </div>
 </div>
 
-<!-- SCRIPT GENERAL -->
+<!-- JAVASCRIPT CONEXION GOOGLE FORMS -->
 <script>
-// Base de datos local simulada (Sincronizada con Google Forms por defecto)
-let baseNecesidades = [];
-let baseDonaciones = [];
-let baseMatches = [];
+/**
+ * ════════════════════════════════════════════════════════════════════════
+ * CONFIGURACIÓN DE CONEXIÓN CON TU GOOGLE FORM (EMAL RAWSON)
+ * ════════════════════════════════════════════════════════════════════════
+ * Para que las cargas desde este sitio web se guarden de verdad en tus Google Forms,
+ * completá los ID correspondientes creados desde tu cuenta institucional
+ * "roa@escuela2702ema.edu.ar" (o cualquier otra cuenta escolar).
+ *
+ * NOTA DE SEGURIDAD Y RESTRICCIÓN DE CUENTA INSTITUCIONAL:
+ * Si tu Google Form tiene activada la opción: "Restringir a los usuarios de EMAL..."
+ * los usuarios deben iniciar sesión en su cuenta institucional de Google de forma obligatoria.
+ * Esto significa que si este sitio web se carga en el celular de un vecino que NO tiene 
+ * la cuenta de la escuela, el envío de fondo (fetch) será bloqueado por Google por falta de sesión.
+ *
+ * RECOMENDACIONES DE IMPLEMENTACIÓN:
+ * Opción A (Recomendada para Formularios restringidos):
+ * Desactivá en la configuración de Google Forms la opción de restringir alumnos para que 
+ * cualquier vecino de Rawson pueda cargar el formulario desde su casa sin cuenta escolar.
+ *
+ * Opción B:
+ * Si o sí debe guardarse de forma interna. Convertí tu Formulario en una hoja abierta de Google Sheets
+ * y usá un Google Apps Script desplegado como Aplicación Web para recibir los datos de forma anónima, 
+ * el cual los cargará utilizando tus credenciales de "roa@escuela2702ema.edu.ar" de manera segura.
+ */
 
-// Configuración de los puntos de integración Google Forms (EMAL Rawson)
 const GOOGLE_FORMS_CONFIG = {
+  // CONFIGURACIÓN DE FORMULARIO - "NECESITA ALGO"
   necesita: {
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSc7mCOgA6P4fB_8J_Nre2DkaR89h9g69HbyH_r_n6B599V7ZQ/formResponse",
+    // Reemplazar con el ID de tu formulario de Google para necesidades
+    formUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfp_your_form_necesita_id_here/formResponse", 
+    // Mapeá los entry IDs correspondientes del formulario de Google (ver en el html inspeccionando el Form)
     fields: {
-      nombre: "entry.1234567890",
-      contacto: "entry.1122334455",
-      conector: "entry.9988776655",
-      categoria: "entry.4455667788",
-      detalle: "entry.3344556677",
-      zona: "entry.6677889900",
-      descripcion: "entry.5566778899"
+      nombre: "entry.1000001",    // ID de la pregunta "Nombre de Beneficiario"
+      contacto: "entry.1000002",  // ID de la pregunta "Celular / WhatsApp"
+      conector: "entry.1000003",  // ID de la pregunta "Nombre del Conector"
+      categoria: "entry.1000004", // ID de la pregunta "Categoría de Objeto"
+      detalle: "entry.1000005",   // ID de la pregunta "Objeto Específico"
+      zona: "entry.1000006",      // ID de la pregunta "Zona para entrega"
+      descripcion: "entry.1000007"// ID de la pregunta "Detalle adicional"
     }
   },
+
+  // CONFIGURACIÓN DE FORMULARIO - "DONACIONES"
   dona: {
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfD_uV6Y5p3A1e6H_W6r7s8t9y_x2z2v1v1w2w3x4y5z6a7b8/formResponse",
+    // Reemplazar con el ID de tu formulario de Google para donaciones
+    formUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfp_your_form_donaciones_id_here/formResponse",
     fields: {
-      nombre: "entry.2000000001",
-      contacto: "entry.2000000002",
-      email: "entry.2000000003",
-      categoria: "entry.2000000004",
-      detalle: "entry.2000000005",
-      zona: "entry.2000000006",
-      descripcion: "entry.2000000007"
+      nombre: "entry.2000001",
+      contacto: "entry.2000002",
+      email: "entry.2000003",
+      categoria: "entry.2000004",
+      detalle: "entry.2000005",
+      zona: "entry.2000006",
+      descripcion: "entry.2000007"
     }
   },
+
+  // CONFIGURACIÓN DE FORMULARIO - "CONECTORES"
   conecta: {
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdf9Y_x8w7v6t5r4e3w2q1a0b9c8d7e6f5g4h3i2j1k0/formResponse",
+    // Reemplazar con el ID de tu formulario de Google para inscripción de Conectores
+    formUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfp_your_form_conectores_id_here/formResponse",
     fields: {
-      nombre: "entry.3000000001",
-      contacto: "entry.3000000002",
-      email: "entry.3000000003",
-      zona: "entry.3000000004",
-      compromiso: "entry.3000000005"
+      nombre: "entry.3000001",
+      contacto: "entry.3000002",
+      email: "entry.3000003",
+      zona: "entry.3000004",
+      compromiso: "entry.3000005"
     }
   }
 };
 
-// Cargar Datos Iniciales (Ejemplos históricos de Rawson para poblar la App)
+// Bases de datos locales en memoria para simular el comportamiento de la App en tiempo real
+let baseNecesidades = [];
+let baseDonaciones = [];
+let baseConectores = [];
+let baseMatches = [];
+
+// Carga inicial de datos de ejemplo para que la App no se vea vacía
 function loadInitialData() {
   baseNecesidades = [
-    { id: 1, nombre: "Vecino Bº 3 de Abril(L.)", contacto: "2804561825", conector: "Estudiante Sofía M.", categoria: "ropa", detalle: "Campera de abrigo niño talle 8/10", zona: "Barrio 3 de Abril", descripcion: "Para niño escolar sin movilidad", estado: "pendiente" },
-    { id: 2, nombre: "Madre soltera (Laura C.)", contacto: "2804332211", conector: "Prof. Marcos G.", categoria: "calzado", detalle: "Zapatillas escolares talle 32", zona: "Barrio Gregorio Mayo", descripcion: "Estudiante de nivel primario", estado: "pendiente" },
-    { id: 3, nombre: "Familia Rawson Centro", contacto: "2804556677", conector: "Nicolás Rola", categoria: "muebles", detalle: "Mesa y 2 sillas plegables", zona: "Rawson Centro", descripcion: "Para re-armar habitación de estudio", estado: "pendiente" },
-    { id: 4, nombre: "Joven estudiante EMAL", contacto: "2804990011", conector: "Preceptor Juan P.", categoria: "mural", detalle: "Útiles: mochila y carpetas nº 3", zona: "Barrio Luis Vernet", descripcion: "Ingresante al ciclo nocturno de Rawson", estado: "pendiente" }
+    { id: 1, nombre: "Vecino Bº 3 de Abril", contacto: "2804221199", conector: "Nicolás R.", categoria: "ropa", detalle: "Abrigo niño talle 8", zona: "Barrio 3 de Abril", descripcion: "Familia numerosa con escasos recursos para afrontar el invierno del sur.", estado: "pendiente" },
+    { id: 2, nombre: "Familia Bº Gregorio Mayo", contacto: "2804557711", conector: "Marcos R.", categoria: "mural", detalle: "Manuales escolares 6º grado", zona: "Barrio Gregorio Mayo", descripcion: "Tres niños en primaria que necesitan libros.", estado: "pendiente" },
+    { id: 3, nombre: "Estudiante EMAL", contacto: "2804990022", conector: "Prof. Laura G.", categoria: "calzado", detalle: "Zapatillas talle 38", zona: "Rawson Centro", descripcion: "Para poder asistir a educación física.", estado: "pendiente" },
+    { id: 4, nombre: "Madre Sola Bº Vernet", contacto: "2804884433", conector: "Nicolás R.", categoria: "muebles", detalle: "Cuna o practicuna de bebé", zona: "Barrio Luis Vernet", descripcion: "Bebe recién nacido.", estado: "pendiente" }
   ];
 
   baseDonaciones = [
-    { id: 1, nombre: "Estela Maris", contacto: "2804153545", email: "estelam@gmail.com", categoria: "ropa", detalle: "Camperón abrigado color azul/gris talle 10", zona: "Rawson Centro", descripcion: "Excelente estado, lavado y en bolsa para dar", estado: "disponible" },
-    { id: 2, nombre: "Julio Altieri", contacto: "2804825222", email: "jaltieri@hotmail.com", categoria: "muebles", detalle: "Mesa ratona mediana y estantería", zona: "Barrio Gregorio Mayo", descripcion: "Puedo acercarla a la escuela EMAL por la tarde", estado: "disponible" },
-    { id: 3, nombre: "Sandra R.", contacto: "2804112233", email: "sandra.rawson@live.com.ar", categoria: "calzado", detalle: "Zapatillas talle 34 color negro", zona: "Barrio Puerto Rawson", descripcion: "Prácticamente nuevas, sin cordones", estado: "disponible" },
-    { id: 4, nombre: "Librería Avenida Chubut", contacto: "2804664422", email: "avenida_libreria@gmail.com", categoria: "mural", detalle: "Pack de 5 carpetas y repuestos de hojas grid", zona: "Rawson Centro", descripcion: "Donación institucional para alumnos de EMAL", estado: "disponible" }
+    { id: 1, nombre: "Marta Gómez", contacto: "2804558833", email: "marta@gmail.com", categoria: "ropa", detalle: "Campera de abrigo talle 8", zona: "Barrio 3 de Abril", descripcion: "Casi nueva, color azul.", estado: "disponible" },
+    { id: 2, nombre: "Carlos Pérez", contacto: "2804443311", email: "carlos@hotmail.com", categoria: "alimentos", detalle: "Leche larga vida x 12 unidades", zona: "Barrio Gregorio Mayo", descripcion: "Vence a fin de año.", estado: "disponible" },
+    { id: 3, nombre: "Elena Ramos", contacto: "2804929211", email: "elena@yahoo.com.ar", categoria: "muebles", detalle: "Cuna de madera sólida", zona: "Barrio Luis Vernet", descripcion: "Se puede desarmar para transporte.", estado: "disponible" },
+    { id: 4, nombre: "Papelería Rawson", contacto: "2804818133", email: "ventas@papeleria.com", categoria: "mural", detalle: "Lote de mochilas y carpetas", zona: "Rawson Centro", descripcion: "Donación corporativa para el inicio de clases.", estado: "disponible" }
   ];
 
   baseMatches = [
-    {
-      id: 1,
-      necesidad: { id: 99, nombre: "Familia Bº Vernet", contacto: "2804889900", categoria: "ropa", detalle: "Ropa de abrigo bebé", zona: "Barrio Luis Vernet" },
-      donacion: { id: 99, nombre: "Clara V.", contacto: "2804112233", categoria: "ropa", detalle: "Manta polar y batitas bebé", zona: "Rawson Centro" },
-      conector: "Prof. Marcos G.",
-      fecha: "18/06/2026",
-      estado: "finalizado"
-    }
+    { id: 1, necesidad: baseNecesidades[0], donacion: baseDonaciones[0], conector: "Nicolás R.", fecha: "Hoy", estado: "activo" }
   ];
 
   updateDashboard();
   renderLists();
 }
 
-// Navegación rápida entre secciones
+// Cambiar de pantalla / navegación SPA
 function showPage(pageId) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + pageId).classList.add('active');
-
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const activeBtn = document.getElementById('btn-nav-' + pageId);
-  if (activeBtn) activeBtn.classList.add('active');
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Interactividad botones de chips (Categoría)
-function selectChip(prefix, value) {
-  document.querySelectorAll('.' + prefix + '-chip').forEach(c => {
-    c.classList.remove('selected');
-  });
-  document.getElementById('chip-' + prefix + '-' + value).classList.add('selected');
-  document.getElementById(prefix + '-cat-selected').value = value;
-}
-
-// Interactividad botones de chips (Zona)
-function selectZona(prefix, value) {
-  document.querySelectorAll('.zona-chip').forEach(c => {
-    if (c.id.startsWith('zona-' + prefix)) {
-      c.classList.remove('selected');
+  // Verificar autorización para el Panel Match
+  if (pageId === 'admin') {
+    const session = localStorage.getItem('emal_user_session');
+    if (!session) {
+      openLoginModal();
+      return;
     }
-  });
-  document.getElementById('zona-' + prefix + '-' + value).classList.add('selected');
-  document.getElementById(prefix + '-zona-selected').value = value;
-}
-
-// Emoticones por Categoría
-function getCategoryEmoji(cat) {
-  switch (cat) {
-    case 'ropa': return '🧥';
-    case 'mural': return '📚';
-    case 'calzado': return '👟';
-    case 'alimentos': return '🍎';
-    case 'muebles': return '🪑';
-    default: return '❓';
   }
+
+  // Ocultar todas las páginas
+  document.querySelectorAll('.page').forEach(function(p) {
+    p.classList.remove('active');
+  });
+  
+  // Quitar active de botones nav
+  document.querySelectorAll('.nav-btn').forEach(function(btn) {
+    btn.classList.remove('active');
+  });
+
+  // Mostrar página seleccionada
+  const targetPage = document.getElementById('page-' + pageId);
+  if (targetPage) {
+    targetPage.classList.add('active');
+  }
+
+  // Activar botón del nav
+  const activeBtn = document.getElementById('btn-nav-' + pageId);
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+  }
+
+  // Scroll a top
+  window.scrollTo(0, 0);
 }
 
-// Acción de Procesar Formularios y Buscar Coincidencia de Forma Automatizada
-function handleFormSubmit(event, type) {
+// Seleccionar Chips de Objetos en los Formularios
+function selectChip(formPrefix, category) {
+  // Remover clase de los otros
+  document.querySelectorAll('.' + formPrefix + ' .obj-chip').forEach(function(chip) {
+    chip.classList.remove('selected');
+  });
+  // Agregar al seleccionado
+  const selectedChip = document.getElementById('chip-' + formPrefix + '-' + category);
+  if (selectedChip) {
+    selectedChip.classList.add('selected');
+  }
+  // Actualizar input escondido
+  document.getElementById(formPrefix + '-cat-selected').value = category;
+}
+
+// Seleccionar Chips de Zonas de Rawson
+function selectZona(formPrefix, zona) {
+  document.querySelectorAll('#page-' + formPrefix + ' .zona-chip').forEach(function(chip) {
+    chip.classList.remove('selected');
+  });
+  const selectedZona = document.getElementById('zona-' + formPrefix + '-' + zona);
+  if (selectedZona) {
+    selectedZona.classList.add('selected');
+  }
+  document.getElementById(formPrefix + '-zona-selected').value = zona;
+}
+
+// Intercepción de Formularios y Sanción de Carga
+function handleFormSubmit(event, formType) {
   event.preventDefault();
 
-  if (type === 'necesita') {
-    const item = {
+  let payload = {};
+  
+  if (formType === 'necesita') {
+    payload = {
       id: baseNecesidades.length + 1,
       nombre: document.getElementById('nec-nombre').value,
       contacto: document.getElementById('nec-contacto').value,
@@ -968,18 +1028,120 @@ function handleFormSubmit(event, type) {
       descripcion: document.getElementById('nec-desc').value,
       estado: "pendiente"
     };
+    baseNecesidades.push(payload);
+    
+    // Intento de envío a Google Forms (Background POST en AJAX sin bloqueo CORS)
+    enviarAGoogleForms(formType, payload);
 
-    // Registrar en segundo plano en Google Forms si está configurado
-    submitToGoogleForm(GOOGLE_FORMS_CONFIG.necesita, item);
+    // Revisar si hay un Match automático de inmediato
+    checkMatchInmediato(payload, 'necesidad');
 
-    baseNecesidades.push(item);
-    updateDashboard();
-    renderLists();
+  } else if (formType === 'dona') {
+    payload = {
+      id: baseDonaciones.length + 1,
+      nombre: document.getElementById('don-nombre').value,
+      contacto: document.getElementById('don-contacto').value,
+      email: document.getElementById('don-email').value,
+      categoria: document.getElementById('don-cat-selected').value,
+      detalle: document.getElementById('don-detalle-obj').value,
+      zona: document.getElementById('don-zona-selected').value,
+      descripcion: document.getElementById('don-desc').value,
+      estado: "disponible"
+    };
+    baseDonaciones.push(payload);
 
-    // Algoritmo de Match en tiempo real por misma categoría
-    const matchEncontrado = baseDonaciones.find(d => d.estado === 'disponible' && d.categoria === item.categoria);
+    enviarAGoogleForms(formType, payload);
+    checkMatchInmediato(payload, 'donacion');
 
+  } else if (formType === 'conecta') {
+    payload = {
+      id: baseConectores.length + 1,
+      nombre: document.getElementById('con-nombre-completo').value,
+      contacto: document.getElementById('con-cel').value,
+      email: document.getElementById('con-email-user').value,
+      zona: document.getElementById('con-zona-selected').value,
+      compromiso: document.getElementById('con-compromiso').value
+    };
+    baseConectores.push(payload);
+
+    enviarAGoogleForms(formType, payload);
+
+    openSuccessModal('Inscripción Completa', '¡Te sumaste a la red de Conectores!', 'Gracias por formar parte. Tu ayuda es indispensable para las familias de Rawson sin acceso a internet.', false);
+    document.getElementById('form-conecta-obj').reset();
+    return;
+  }
+
+  updateDashboard();
+  renderLists();
+}
+
+// Somete el payload mapeado en AJAX POST "no-cors" directo al Endpoint de Google Form institucional
+function enviarAGoogleForms(formType, payload) {
+  const config = GOOGLE_FORMS_CONFIG[formType];
+  if (!config || config.formUrl.includes('your_form')) {
+    console.log("Conexión con Google Forms simulada localmente. Cambiá la constante GOOGLE_FORMS_CONFIG con tus IDs reales.");
+    return;
+  }
+
+  // Preparamos los datos del formulario como URLSearchParams
+  const formData = new URLSearchParams();
+  
+  if (formType === 'necesita') {
+    formData.append(config.fields.nombre, payload.nombre);
+    formData.append(config.fields.contacto, payload.contacto);
+    formData.append(config.fields.conector, payload.conector);
+    formData.append(config.fields.categoria, payload.categoria);
+    formData.append(config.fields.detalle, payload.detalle);
+    formData.append(config.fields.zona, payload.zona);
+    formData.append(config.fields.descripcion, payload.descripcion);
+  } else if (formType === 'dona') {
+    formData.append(config.fields.nombre, payload.nombre);
+    formData.append(config.fields.contacto, payload.contacto);
+    formData.append(config.fields.email, payload.email);
+    formData.append(config.fields.categoria, payload.categoria);
+    formData.append(config.fields.detalle, payload.detalle);
+    formData.append(config.fields.zona, payload.zona);
+    formData.append(config.fields.descripcion, payload.descripcion);
+  } else if (formType === 'conecta') {
+    formData.append(config.fields.nombre, payload.nombre);
+    formData.append(config.fields.contacto, payload.contacto);
+    formData.append(config.fields.email, payload.email);
+    formData.append(config.fields.zona, payload.zona);
+    formData.append(config.fields.compromiso, payload.compromiso);
+  }
+
+  // Hacemos el envío de fondo sin obstaculizar la experiencia de usuario
+  fetch(config.formUrl, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: formData.toString()
+  })
+  .then(response => {
+    console.log("Intento de envío de datos a Google Forms exitoso.");
+  })
+  .catch(error => {
+    console.error("Error al enviar a Google Forms:", error);
+  });
+}
+
+// Analizar compatibilidad inmediata para dar aviso
+function checkMatchInmediato(item, role) {
+  let matchEncontrado = null;
+
+  if (role === 'necesidad') {
+    // Buscamos si hay alguna donación con la misma categoría
+    for (let i = 0; i < baseDonaciones.length; i++) {
+       if (baseDonaciones[i].categoria === item.categoria && baseDonaciones[i].estado === "disponible") {
+         matchEncontrado = baseDonaciones[i];
+         break;
+       }
+    }
+    
     if (matchEncontrado) {
+      // Consolidamos Match
       const nuevoMatch = {
         id: baseMatches.length + 1,
         necesidad: item,
@@ -1002,7 +1164,7 @@ function handleFormSubmit(event, type) {
 
       openSuccessModal(
         '¡Pedido Recibido!', 
-        '¡Registro Exitoso de tu Pedido!', 
+        '¡Registro de Necesidad Exitoso!', 
         'Hemos recibido y guardado la solicitud de ' + item.nombre + '.', 
         true, 
         '¡Se detectó afinidad directo! Coincide perfectamente con la donación disponible de ' + matchEncontrado.nombre + ' (' + matchEncontrado.detalle + ').',
@@ -1019,28 +1181,14 @@ function handleFormSubmit(event, type) {
       document.getElementById('form-necesita-obj').reset();
     }
 
-  } else if (type === 'dona') {
-    const item = {
-      id: baseDonaciones.length + 1,
-      nombre: document.getElementById('don-nombre').value,
-      contacto: document.getElementById('don-contacto').value,
-      email: document.getElementById('don-email').value,
-      categoria: document.getElementById('don-cat-selected').value,
-      detalle: document.getElementById('don-detalle-obj').value,
-      zona: document.getElementById('don-zona-selected').value,
-      descripcion: document.getElementById('don-desc').value,
-      estado: "disponible"
-    };
-
-    // Registrar en Google Forms
-    submitToGoogleForm(GOOGLE_FORMS_CONFIG.dona, item);
-
-    baseDonaciones.push(item);
-    updateDashboard();
-    renderLists();
-
-    // Algoritmo de Match en tiempo real por misma categoría
-    const matchEncontrado = baseNecesidades.find(n => n.estado === 'pendiente' && n.categoria === item.categoria);
+  } else if (role === 'donacion') {
+    // Buscamos si hay alguna necesidad compatible
+    for (let i = 0; i < baseNecesidades.length; i++) {
+       if (baseNecesidades[i].categoria === item.categoria && baseNecesidades[i].estado === "pendiente") {
+         matchEncontrado = baseNecesidades[i];
+         break;
+       }
+    }
 
     if (matchEncontrado) {
       const nuevoMatch = {
@@ -1081,78 +1229,68 @@ function handleFormSubmit(event, type) {
       );
       document.getElementById('form-dona-obj').reset();
     }
-
-  } else if (type === 'conecta') {
-    const item = {
-      nombre: document.getElementById('con-nombre-completo').value,
-      contacto: document.getElementById('con-cel').value,
-      email: document.getElementById('con-email-user').value,
-      zona: document.getElementById('con-zona-selected').value,
-      compromiso: document.getElementById('con-compromiso').value
-    };
-
-    // Registrar en Google Forms
-    submitToGoogleForm(GOOGLE_FORMS_CONFIG.conecta, item);
-
-    openSuccessModal(
-      '⚡ ¡Te sumaste!', 
-      '¡Inscripción Exitosa!', 
-      'Gracias conector ' + item.nombre + '. Tu predisposición para relevar en ' + item.zona + ' ya está activa. Coordinaremos un encuentro en laEMAL para otorgar accesos.', 
-      false
-    );
-    document.getElementById('form-conecta-obj').reset();
   }
 }
 
-// Enviar datos en segundo plano asíncrono simulando llamada directa de FormResponse CORS bypassable
-function submitToGoogleForm(config, item) {
-  if (!config.formUrl || config.formUrl.includes("1FAIpQLS")) return; // Solo simular si es el default educativo, si ponen uno real dispara fectch
-  
-  const formData = new FormData();
-  // El usuario de la EMAL Nicolást Roa podrá cambiar esto desde la pestaña Match
-  // para enlazarlo con su GForm educativo.
-  console.log("Enviando registro de forma transparente a Google Forms de la EMAL:", item);
+// Forzar una animación visual interactiva de Match desde el Home
+function animarMatch() {
+  const modal = document.getElementById('success-modal');
+  openSuccessModal(
+    '🔗 ¡Match Sincronizado!', 
+    '¡Coincidencia Confirmada!', 
+    'Se acaba de crear un nexo entre un pedido de ropa en Rawson y un donante del centro.', 
+    true, 
+    'El conector "Marcos R." ya fue notificado y tiene acceso al teléfono de ambas partes para agilizar la entrega.'
+  );
 }
 
-// Gatillar manualmente una unificacion entre pendientes compatibles
+// Ejecutar match manual desde el panel de control
 function triggerManualMatch() {
-  const necP = baseNecesidades.find(n => n.estado === 'pendiente');
-  const donP = baseDonaciones.find(d => d.estado === 'disponible' && d.categoria === (necP ? necP.categoria : ''));
+  // Tomamos el primer pedido pendiente y donacion disponible que compartan categoría
+  let nec = baseNecesidades.find(n => n.estado === 'pendiente');
+  let don = baseDonaciones.find(d => d.categoria === (nec ? nec.categoria : ''));
 
-  if (necP && donP) {
-    const m = {
+  if (nec && don) {
+    nec.estado = 'matched';
+    don.estado = 'matched';
+    const nuevoMatch = {
       id: baseMatches.length + 1,
-      necesidad: necP,
-      donacion: donP,
-      conector: necP.conector || "Sede EMAL",
+      necesidad: nec,
+      donacion: don,
+      conector: nec.conector || "Sede EMAL",
       fecha: "Manual",
       estado: "activo"
     };
-    baseMatches.push(m);
-    necP.estado = "matched";
-    donP.estado = "matched";
-
+    baseMatches.push(nuevoMatch);
     updateDashboard();
     renderLists();
-
-    const telDonante = donP.contacto.replace(/\D/g, '');
-    const txtDirecto = encodeURIComponent(`Hola ${donP.nombre}, vi tu donación de "${donP.detalle}" en Comunidad Solidaria de la EMAL. El sistema nos unió con mi pedido de "${necP.detalle}". ¿Cómo podemos coordinar?`);
-    const directButtonsHTML = `
-      <a href="https://wa.me/549${telDonante}?text=${txtDirecto}" target="_blank" style="text-decoration:none; text-align:center; display:block; background:#25D366; color:#fff; font-size:.78rem; font-weight:700; padding:0.6rem; border-radius:0.5rem; font-family:sans-serif">
-        🟢 Escribir directo al Donante (${donP.nombre}) por WhatsApp
-      </a>
-    `;
-
-    openSuccessModal(
-      '🔗 ¡Cruce Manual Exitoso!', 
-      '¡Unión Realizada!', 
-      'Se unieron las bases de ' + necP.nombre + ' y ' + donP.nombre + ' con éxito.', 
-      true, 
-      'Corresponde a la categoría ' + getCategoryEmoji(necP.categoria) + ' en ' + necP.zona + '.',
-      directButtonsHTML
-    );
+    
+    openSuccessModal('🔗 Match Manual Forzado', '¡Cruce Consolidado con Éxito!', 'Emparejaste a ' + nec.nombre + ' con ' + don.nombre + ' para el objeto: ' + nec.detalle, false);
   } else {
-    alert("🔍 No encontramos combinaciones de categoría libres en este instante para entrecruzar.");
+    alert("No se encontraron necesidades pendientes y donaciones compatibles sin asignar en este momento para realizar un Match.");
+  }
+}
+
+// Forzar el match explícito entre dos elementos particulares del Panel Admin
+function hacerMatchManualEspecifico(necId, donId) {
+  const nec = baseNecesidades.find(n => n.id === necId);
+  const don = baseDonaciones.find(d => d.id === donId);
+
+  if (nec && don) {
+    nec.estado = 'matched';
+    don.estado = 'matched';
+    const nuevoMatch = {
+      id: baseMatches.length + 1,
+      necesidad: nec,
+      donacion: don,
+      conector: nec.conector || "Coordinador EMAL",
+      fecha: "Manual",
+      estado: "activo"
+    };
+    baseMatches.push(nuevoMatch);
+    updateDashboard();
+    renderLists();
+    openSuccessModal('🔗 Enlace Cruzado', '¡Vínculo Consolidado!', 'Emparejaste ' + nec.detalle + ' con ' + don.detalle, false);
   }
 }
 
@@ -1292,32 +1430,22 @@ function renderLists() {
   const adminNecList = document.getElementById('admin-necesidades-list');
   adminNecList.innerHTML = '';
   baseNecesidades.forEach(n => {
+    const isMatched = n.estado === 'matched';
     const card = document.createElement('div');
-    card.className = `admin-card ${n.estado === 'matched' ? 'matched' : ''}`;
-    
-    // Buscar si hay posibilidad de match con algún donativo
-    let matchActionBtn = '';
-    if (n.estado === 'pendiente') {
-      const compatible = baseDonaciones.find(d => d.estado === 'disponible' && d.categoria === n.categoria);
-      if (compatible) {
-        matchActionBtn = `<button class="btn-hacer-match" onclick="triggerManualMatch()">⚡ Compatible con ${compatible.nombre}</button>`;
-      }
-    }
-
+    card.className = `admin-card ${isMatched ? 'matched' : ''}`;
     card.innerHTML = `
       <div class="ac-top">
         <div class="ac-icon n">${getCategoryEmoji(n.categoria)}</div>
         <div>
           <p class="ac-name">${n.nombre}</p>
-          <p class="ac-obj">Pide: <b>${n.detalle}</b></p>
+          <p class="ac-obj">Busca: ${n.detalle}</p>
         </div>
       </div>
-      <div style="font-size:.73rem;color:var(--gris);background:var(--crema);padding:.4rem;border-radius:.35rem;margin-top:.4rem"><b>Cel:</b> ${n.contacto} · <b>Conector:</b> ${n.conector}</div>
+      <p style="font-size: .75rem; color: var(--gris); line-height: 1.4">${n.descripcion || "Sin comentarios."}</p>
       <div class="ac-foot">
         <span class="ac-zone">📍 ${n.zona}</span>
-        <span class="ac-state ${n.estado === 'matched' ? 'state-match' : 'state-pendiente'}">${n.estado === 'matched' ? 'Vinculado' : 'Pendiente'}</span>
+        <span class="ac-state ${isMatched ? 'state-match' : 'state-pendiente'}">${isMatched ? 'Viculado' : 'Pendiente'}</span>
       </div>
-      ${matchActionBtn}
     `;
     adminNecList.appendChild(card);
   });
@@ -1326,32 +1454,35 @@ function renderLists() {
   const adminDonList = document.getElementById('admin-donaciones-list');
   adminDonList.innerHTML = '';
   baseDonaciones.forEach(d => {
+    const isMatched = d.estado === 'matched';
     const card = document.createElement('div');
-    card.className = `admin-card ${d.estado === 'matched' ? 'matched' : ''}`;
+    card.className = `admin-card ${isMatched ? 'matched' : ''}`;
     card.innerHTML = `
       <div class="ac-top">
         <div class="ac-icon d">${getCategoryEmoji(d.categoria)}</div>
         <div>
           <p class="ac-name">${d.nombre}</p>
-          <p class="ac-obj">Ofrece: <b>${d.detalle}</b></p>
+          <p class="ac-obj">Ofrece: ${d.detalle}</p>
         </div>
       </div>
-      <div style="font-size:.73rem;color:var(--gris);background:var(--crema);padding:.4rem;border-radius:.35rem;margin-top:.4rem"><b>Cel:</b> ${d.contacto} · <b>Email:</b> ${d.email}</div>
+      <p style="font-size: .75rem; color: var(--gris); line-height: 1.4">${d.descripcion || "Sin comentarios."}</p>
       <div class="ac-foot">
         <span class="ac-zone">📍 ${d.zona}</span>
-        <span class="ac-state ${d.estado === 'matched' ? 'state-match' : 'state-activo'}">${d.estado === 'matched' ? 'Asignado' : 'Disponible'}</span>
+        <span class="ac-state ${isMatched ? 'state-match' : 'state-activo'}">${isMatched ? 'Objetivo cumplido' : 'Disponible'}</span>
       </div>
     `;
     adminDonList.appendChild(card);
   });
 
-  // 5. Admin - Matches / Cruces
+  // 5. Admin - Matches sugeridos o consolidados
   const adminMatchesList = document.getElementById('admin-matches-list');
   adminMatchesList.innerHTML = '';
+  
   if (baseMatches.length === 0) {
     adminMatchesList.innerHTML = `
-      <div style="padding: 2rem; text-align:center; color: var(--gris); font-size: .8rem; border:2px dashed var(--gris-claro); border-radius:.75rem">
-        No hay cruces activos de reparto en este momento.
+      <div style="text-align:center;padding:2rem;color:var(--gris);font-size:.8rem">
+        <p>No hay cruces realizados hoy.</p>
+        <p style="font-size:.7rem;margin-top:.4rem">Los nuevos cruces se generarán automáticamente en cuanto coincidan las categorías.</p>
       </div>
     `;
   } else {
@@ -1420,103 +1551,15 @@ function renderLists() {
   }
 }
 
-// Inicializar la configuración de Google Forms de LocalStorage si existiese
-function initGoogleConfig() {
-  const saved = localStorage.getItem('emal_google_form_config');
-  if (saved) {
-    try {
-      const parsed = JSON.parse(saved);
-      GOOGLE_FORMS_CONFIG.necesita = parsed.necesita;
-      GOOGLE_FORMS_CONFIG.dona = parsed.dona;
-      GOOGLE_FORMS_CONFIG.conecta = parsed.conecta;
-    } catch (e) {
-      console.error("Error al parsear config de Google Forms", e);
-    }
-  }
-
-  // Rellenar los inputs del Panel Admin
-  document.getElementById('config-nec-url').value = GOOGLE_FORMS_CONFIG.necesita.formUrl;
-  document.getElementById('config-nec-nombre').value = GOOGLE_FORMS_CONFIG.necesita.fields.nombre;
-  document.getElementById('config-nec-contacto').value = GOOGLE_FORMS_CONFIG.necesita.fields.contacto;
-  document.getElementById('config-nec-conector').value = GOOGLE_FORMS_CONFIG.necesita.fields.conector;
-  document.getElementById('config-nec-categoria').value = GOOGLE_FORMS_CONFIG.necesita.fields.categoria;
-  document.getElementById('config-nec-detalle').value = GOOGLE_FORMS_CONFIG.necesita.fields.detalle;
-  document.getElementById('config-nec-zona').value = GOOGLE_FORMS_CONFIG.necesita.fields.zona;
-  document.getElementById('config-nec-descripcion').value = GOOGLE_FORMS_CONFIG.necesita.fields.descripcion;
-
-  document.getElementById('config-don-url').value = GOOGLE_FORMS_CONFIG.dona.formUrl;
-  document.getElementById('config-don-nombre').value = GOOGLE_FORMS_CONFIG.dona.fields.nombre;
-  document.getElementById('config-don-contacto').value = GOOGLE_FORMS_CONFIG.dona.fields.contacto;
-  document.getElementById('config-don-email').value = GOOGLE_FORMS_CONFIG.dona.fields.email;
-  document.getElementById('config-don-categoria').value = GOOGLE_FORMS_CONFIG.dona.fields.categoria;
-  document.getElementById('config-don-detalle').value = GOOGLE_FORMS_CONFIG.dona.fields.detalle;
-  document.getElementById('config-don-zona').value = GOOGLE_FORMS_CONFIG.dona.fields.zona;
-  document.getElementById('config-don-descripcion').value = GOOGLE_FORMS_CONFIG.dona.fields.descripcion;
-
-  document.getElementById('config-con-url').value = GOOGLE_FORMS_CONFIG.conecta.formUrl;
-  document.getElementById('config-con-nombre').value = GOOGLE_FORMS_CONFIG.conecta.fields.nombre;
-  document.getElementById('config-con-contacto').value = GOOGLE_FORMS_CONFIG.conecta.fields.contacto;
-  document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
-  document.getElementById('config-con-zona').value = GOOGLE_FORMS_CONFIG.conecta.fields.zona;
-  document.getElementById('config-con-compromiso').value = GOOGLE_FORMS_CONFIG.conecta.fields.compromiso;
-}
-
-function saveGoogleConfigObj() {
-  const newConfig = {
-    necesita: {
-      formUrl: document.getElementById('config-nec-url').value,
-      fields: {
-        nombre: document.getElementById('config-nec-nombre').value,
-        contacto: document.getElementById('config-nec-contacto').value,
-        conector: document.getElementById('config-nec-conector').value,
-        categoria: document.getElementById('config-nec-categoria').value,
-        detalle: document.getElementById('config-nec-detalle').value,
-        zona: document.getElementById('config-nec-zona').value,
-         descripcion: document.getElementById('config-nec-descripcion').value
-      }
-    },
-    dona: {
-      formUrl: document.getElementById('config-don-url').value,
-      fields: {
-        nombre: document.getElementById('config-don-nombre').value,
-        contacto: document.getElementById('config-don-contacto').value,
-        email: document.getElementById('config-don-email').value,
-        categoria: document.getElementById('config-don-categoria').value,
-        detalle: document.getElementById('config-don-detalle').value,
-        zona: document.getElementById('config-don-zona').value,
-        descripcion: document.getElementById('config-don-descripcion').value
-      }
-    },
-    conecta: {
-      formUrl: document.getElementById('config-con-url').value,
-      fields: {
-        nombre: document.getElementById('config-con-nombre').value,
-        contacto: document.getElementById('config-con-contacto').value,
-        email: document.getElementById('con-email-user').value,
-        zona: document.getElementById('config-con-zona').value,
-        compromiso: document.getElementById('config-con-compromiso').value
-      }
-    }
-  };
-
-  localStorage.setItem('emal_google_form_config', JSON.stringify(newConfig));
-  
-  // Actualizar en caliente
-  GOOGLE_FORMS_CONFIG.necesita.formUrl = newConfig.necesita.formUrl;
-  GOOGLE_FORMS_CONFIG.necesita.fields = newConfig.necesita.fields;
-  GOOGLE_FORMS_CONFIG.dona.formUrl = newConfig.dona.formUrl;
-  GOOGLE_FORMS_CONFIG.dona.fields = newConfig.dona.fields;
-  GOOGLE_FORMS_CONFIG.conecta.formUrl = newConfig.conecta.formUrl;
-  GOOGLE_FORMS_CONFIG.conecta.fields = newConfig.conecta.fields;
-
-  alert("⚙️ ¡Configuración guardada exitosamente!");
-}
-
-function resetGoogleConfigObj() {
-  if (confirm("¿Estás seguro de restablecer los valores de configuración a los de la EMAL?")) {
-    localStorage.removeItem('emal_google_form_config');
-    // Forzar recarga de valores originales
-    location.reload();
+// Convertir identificador de categoria a Emoji
+function getCategoryEmoji(cat) {
+  switch (cat) {
+    case 'ropa': return '🧥';
+    case 'mural': return '📚';
+    case 'calzado': return '👟';
+    case 'alimentos': return '🍎';
+    case 'muebles': return '🪑';
+    default: return '❓';
   }
 }
 
@@ -1549,13 +1592,359 @@ function openSuccessModal(iconText, title, message, hasMatch, matchDescription, 
   document.getElementById('success-modal').classList.add('show');
 }
 
-// Cerrar Modal de Éxito
+// Cerrar Modal
 function closeSuccessModal() {
   document.getElementById('success-modal').classList.remove('show');
+  showPage('home');
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// GESTION DINÁMICA DE LA CONFIGURACIÓN DE GOOGLE FORMS
+// ════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════
+// GESTION DINÁMICA DE LA CONFIGURACIÓN DE GOOGLE FORMS E INICIO DE SESIÓN
+// ════════════════════════════════════════════════════════════════════════
+function openLoginModal() {
+  const modal = document.getElementById('login-modal');
+  modal.style.display = 'flex';
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error-msg').style.display = 'none';
+}
+
+function closeLoginModal() {
+  const modal = document.getElementById('login-modal');
+  modal.style.display = 'none';
+  showPage('home');
+}
+
+function handleLoginSubmit(event) {
+  event.preventDefault();
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
+  const password = document.getElementById('login-password').value;
+  const errorMsg = document.getElementById('login-error-msg');
+
+  if (!email.endsWith('@escuela2702emal.edu.ar') && !email.endsWith('@escuela2702ema.edu.ar')) {
+    errorMsg.innerText = "❌ Acceso denegado. Debés ingresar una cuenta con dominio educativo @escuela2702emal.edu.ar (o @escuela2702ema.edu.ar).";
+    errorMsg.style.display = 'block';
+    return;
+  }
+
+  if (password.length < 4) {
+    errorMsg.innerText = "❌ La contraseña o PIN escolar debe tener al menos 4 caracteres.";
+    errorMsg.style.display = 'block';
+    return;
+  }
+
+  // Iniciar sesión con éxito
+  let role = 'conector';
+  let userName = 'Conector EMAL';
+  
+  if (email === 'roa@escuela2702emal.edu.ar' || email === 'roa@escuela2702ema.edu.ar') {
+    role = 'superadmin';
+    userName = 'Prof. Nicolás Roa';
+  }
+
+  const sessionData = {
+    email: email,
+    role: role,
+    name: userName,
+    loginTime: new Date().getTime()
+  };
+
+  localStorage.setItem('emal_user_session', JSON.stringify(sessionData));
+  
+  // Cerrar modal
+  const modal = document.getElementById('login-modal');
+  modal.style.display = 'none';
+
+  // Aplicar cambios en UI
+  applySessionToUI();
+
+  // Ir al Panel Admin
+  showPage('admin');
+
+  // Saludo personalizado
+  alert(`👋 ¡Ingreso Exitoso! Bienvenido/a, ${userName}.`);
+}
+
+function logoutSession() {
+  if (confirm("¿Estás seguro de cerrar tu sesión de conector?")) {
+    localStorage.removeItem('emal_user_session');
+    applySessionToUI();
+    showPage('home');
+  }
+}
+
+function applySessionToUI() {
+  const session = localStorage.getItem('emal_user_session');
+  const sessionNav = document.getElementById('session-nav-container');
+  const sessionBadge = document.getElementById('session-user-badge');
+  const configPanel = document.getElementById('config-google-forms');
+  const adminKPIEmail = document.getElementById('kpi-user-email');
+  const adminKPIRole = document.getElementById('kpi-user-role');
+
+  if (session) {
+    try {
+      const parsed = JSON.parse(session);
+      if (sessionNav) sessionNav.style.display = 'inline-flex';
+      
+      const isSuper = parsed.role === 'superadmin';
+      
+      if (sessionBadge) {
+        sessionBadge.innerText = isSuper ? 'Coordinador' : 'Conector';
+        sessionBadge.style.background = isSuper ? 'rgba(37,96,168,0.1)' : 'rgba(29,122,78,0.1)';
+        sessionBadge.style.color = isSuper ? 'var(--azul-med)' : 'var(--verde)';
+        sessionBadge.style.borderColor = isSuper ? 'rgba(37,96,168,0.2)' : 'rgba(29,122,78,0.2)';
+      }
+      
+      if (adminKPIEmail) {
+        adminKPIEmail.innerText = parsed.email;
+        adminKPIEmail.title = parsed.email;
+      }
+      if (adminKPIRole) {
+        adminKPIRole.innerText = isSuper ? 'Coordinador' : 'Conector';
+      }
+
+      // Configurar visibilidad/acceso del panel de forms para el Super Admin
+      if (configPanel) {
+        if (isSuper) {
+          configPanel.style.display = 'block';
+          // Restaurar HTML original si fue alterado por una sesión conector
+          configPanel.innerHTML = `
+            <p class="form-section-title" style="margin-bottom:.5rem; border-bottom:none">⚙️ Configuración de Google Forms (roa@escuela2702emal.edu.ar)</p>
+            <p style="color:var(--gris); font-size:.8rem; margin-bottom:1rem">Completá los enlaces y IDs de campo para conectar la app en tiempo real con tus Google Forms de la escuela.</p>
+            
+            <div style="display:grid; grid-template-columns:1fr; gap:1.2rem">
+              <!-- Necesita -->
+              <details style="background:var(--crema); border-radius:.75rem; padding:1rem">
+                <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Necesito Algo (Para Pedidos)</summary>
+                <div style="margin-top:1rem">
+                  <div class="field">
+                    <label style="font-size:.78rem">URL del FormResponse <span style="color:var(--gris)">(ej: https://docs.google.com/forms/d/e/.../formResponse)</span></label>
+                    <input type="text" id="config-nec-url" style="background:#fff">
+                  </div>
+                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
+                    <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-nec-nombre" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-nec-contacto" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Conector</label><input type="text" id="config-nec-conector" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-nec-categoria" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-nec-detalle" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-nec-zona" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-nec-descripcion" style="background:#fff"></div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Dona -->
+              <details style="background:var(--crema); border-radius:.75rem; padding:1rem">
+                <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Quiero Donar (Para Donaciones)</summary>
+                <div style="margin-top:1rem">
+                  <div class="field">
+                    <label style="font-size:.78rem">URL del FormResponse</label>
+                    <input type="text" id="config-don-url" style="background:#fff">
+                  </div>
+                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
+                    <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-don-nombre" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-don-contacto" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Email</label><input type="text" id="config-don-email" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-don-categoria" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-don-detalle" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-don-zona" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-don-descripcion" style="background:#fff"></div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Conecta -->
+              <details style="background:var(--crema); border-radius:.75rem; padding:1rem">
+                <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Ser Conector (Para Voluntarios)</summary>
+                <div style="margin-top:1rem">
+                  <div class="field">
+                    <label style="font-size:.78rem">URL del FormResponse</label>
+                    <input type="text" id="config-con-url" style="background:#fff">
+                  </div>
+                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
+                    <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-con-nombre" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-con-contacto" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Email</label><input type="text" id="config-con-email" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-con-zona" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Compromiso</label><input type="text" id="config-con-compromiso" style="background:#fff"></div>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap">
+              <button class="btn btn-sm btn-naranja" onclick="saveGoogleConfigObj()">Guardar Configuración</button>
+              <button class="btn btn-sm btn-outline" style="border-color:var(--azul-med); color:var(--azul-med)" onclick="resetGoogleConfigObj()">Restablecer Valores</button>
+            </div>
+          `;
+          // Rellenar valores
+          document.getElementById('config-nec-url').value = GOOGLE_FORMS_CONFIG.necesita.formUrl;
+          document.getElementById('config-nec-nombre').value = GOOGLE_FORMS_CONFIG.necesita.fields.nombre;
+          document.getElementById('config-nec-contacto').value = GOOGLE_FORMS_CONFIG.necesita.fields.contacto;
+          document.getElementById('config-nec-conector').value = GOOGLE_FORMS_CONFIG.necesita.fields.conector;
+          document.getElementById('config-nec-categoria').value = GOOGLE_FORMS_CONFIG.necesita.fields.categoria;
+          document.getElementById('config-nec-detalle').value = GOOGLE_FORMS_CONFIG.necesita.fields.detalle;
+          document.getElementById('config-nec-zona').value = GOOGLE_FORMS_CONFIG.necesita.fields.zona;
+          document.getElementById('config-nec-descripcion').value = GOOGLE_FORMS_CONFIG.necesita.fields.descripcion;
+
+          document.getElementById('config-don-url').value = GOOGLE_FORMS_CONFIG.dona.formUrl;
+          document.getElementById('config-don-nombre').value = GOOGLE_FORMS_CONFIG.dona.fields.nombre;
+          document.getElementById('config-don-contacto').value = GOOGLE_FORMS_CONFIG.dona.fields.contacto;
+          document.getElementById('config-don-email').value = GOOGLE_FORMS_CONFIG.dona.fields.email;
+          document.getElementById('config-don-categoria').value = GOOGLE_FORMS_CONFIG.dona.fields.categoria;
+          document.getElementById('config-don-detalle').value = GOOGLE_FORMS_CONFIG.dona.fields.detalle;
+          document.getElementById('config-don-zona').value = GOOGLE_FORMS_CONFIG.dona.fields.zona;
+          document.getElementById('config-don-descripcion').value = GOOGLE_FORMS_CONFIG.dona.fields.descripcion;
+
+          document.getElementById('config-con-url').value = GOOGLE_FORMS_CONFIG.conecta.formUrl;
+          document.getElementById('config-con-nombre').value = GOOGLE_FORMS_CONFIG.conecta.fields.nombre;
+          document.getElementById('config-con-contacto').value = GOOGLE_FORMS_CONFIG.conecta.fields.contacto;
+          document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
+          document.getElementById('config-con-zona').value = GOOGLE_FORMS_CONFIG.conecta.fields.zona;
+          document.getElementById('config-con-compromiso').value = GOOGLE_FORMS_CONFIG.conecta.fields.compromiso;
+        } else {
+          configPanel.style.display = 'block';
+          configPanel.innerHTML = `
+            <div style="background:rgba(26,58,92,0.04); border:1px solid rgba(26,58,92,0.1); border-radius:.75rem; padding:1.2rem; text-align:center; color:var(--azul); margin-top:0.2rem">
+              <span style="font-size:1.8rem; display:block; margin-bottom:0.4rem">🔒 Configuración Protegida</span>
+              <p style="font-size:0.83rem; font-weight:700; margin-bottom:0.25rem; color:var(--azul)">La edición de los endpoints de Google Forms está bloqueada temporalmente.</p>
+              <p style="font-size:0.75rem; color:var(--gris); line-height:1.4">Como Conector Académico podés operar y registrar los matches, pero solo el Coordinador General (<strong>roa@escuela2702emal.edu.ar</strong>) puede alterar las credenciales y IDs de los formularios de la escuela para evitar desconfiguraciones accidentales.</p>
+            </div>
+          `;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  } else {
+    if (sessionNav) sessionNav.style.display = 'none';
+    if (configPanel) configPanel.style.display = 'none';
+    if (adminKPIEmail) adminKPIEmail.innerText = 'Sin Sesión';
+    if (adminKPIRole) adminKPIRole.innerText = 'Invitado';
+  }
+}
+
+function initGoogleConfig() {
+  const savedConfig = localStorage.getItem('emal_google_form_config');
+  if (savedConfig) {
+    try {
+      const parsed = JSON.parse(savedConfig);
+      // Mutar GOOGLE_FORMS_CONFIG
+      if (parsed.necesita) {
+        GOOGLE_FORMS_CONFIG.necesita.formUrl = parsed.necesita.formUrl;
+        GOOGLE_FORMS_CONFIG.necesita.fields = parsed.necesita.fields;
+      }
+      if (parsed.dona) {
+        GOOGLE_FORMS_CONFIG.dona.formUrl = parsed.dona.formUrl;
+        GOOGLE_FORMS_CONFIG.dona.fields = parsed.dona.fields;
+      }
+      if (parsed.conecta) {
+        GOOGLE_FORMS_CONFIG.conecta.formUrl = parsed.conecta.formUrl;
+        GOOGLE_FORMS_CONFIG.conecta.fields = parsed.conecta.fields;
+      }
+    } catch (e) {
+      console.error("Error al parsear config de Google Forms", e);
+    }
+  }
+
+  // Solo rellenar si existe el elemento en el dom (por si estuviera oculto por applySessionToUI)
+  const elNecUrl = document.getElementById('config-nec-url');
+  if (elNecUrl) {
+    document.getElementById('config-nec-url').value = GOOGLE_FORMS_CONFIG.necesita.formUrl;
+    document.getElementById('config-nec-nombre').value = GOOGLE_FORMS_CONFIG.necesita.fields.nombre;
+    document.getElementById('config-nec-contacto').value = GOOGLE_FORMS_CONFIG.necesita.fields.contacto;
+    document.getElementById('config-nec-conector').value = GOOGLE_FORMS_CONFIG.necesita.fields.conector;
+    document.getElementById('config-nec-categoria').value = GOOGLE_FORMS_CONFIG.necesita.fields.categoria;
+    document.getElementById('config-nec-detalle').value = GOOGLE_FORMS_CONFIG.necesita.fields.detalle;
+    document.getElementById('config-nec-zona').value = GOOGLE_FORMS_CONFIG.necesita.fields.zona;
+    document.getElementById('config-nec-descripcion').value = GOOGLE_FORMS_CONFIG.necesita.fields.descripcion;
+
+    document.getElementById('config-don-url').value = GOOGLE_FORMS_CONFIG.dona.formUrl;
+    document.getElementById('config-don-nombre').value = GOOGLE_FORMS_CONFIG.dona.fields.nombre;
+    document.getElementById('config-don-contacto').value = GOOGLE_FORMS_CONFIG.dona.fields.contacto;
+    document.getElementById('config-don-email').value = GOOGLE_FORMS_CONFIG.dona.fields.email;
+    document.getElementById('config-don-categoria').value = GOOGLE_FORMS_CONFIG.dona.fields.categoria;
+    document.getElementById('config-don-detalle').value = GOOGLE_FORMS_CONFIG.dona.fields.detalle;
+    document.getElementById('config-don-zona').value = GOOGLE_FORMS_CONFIG.dona.fields.zona;
+    document.getElementById('config-don-descripcion').value = GOOGLE_FORMS_CONFIG.dona.fields.descripcion;
+
+    document.getElementById('config-con-url').value = GOOGLE_FORMS_CONFIG.conecta.formUrl;
+    document.getElementById('config-con-nombre').value = GOOGLE_FORMS_CONFIG.conecta.fields.nombre;
+    document.getElementById('config-con-contacto').value = GOOGLE_FORMS_CONFIG.conecta.fields.contacto;
+    document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
+    document.getElementById('config-con-zona').value = GOOGLE_FORMS_CONFIG.conecta.fields.zona;
+    document.getElementById('config-con-compromiso').value = GOOGLE_FORMS_CONFIG.conecta.fields.compromiso;
+  }
+}
+
+function saveGoogleConfigObj() {
+  const needsUrl = document.getElementById('config-nec-url');
+  if (!needsUrl) return; // Si no hay form, no guarda
+  
+  const newConfig = {
+    necesita: {
+      formUrl: document.getElementById('config-nec-url').value,
+      fields: {
+        nombre: document.getElementById('config-nec-nombre').value,
+        contacto: document.getElementById('config-nec-contacto').value,
+        conector: document.getElementById('config-nec-conector').value,
+        categoria: document.getElementById('config-nec-categoria').value,
+        detalle: document.getElementById('config-nec-detalle').value,
+        zona: document.getElementById('config-nec-zona').value,
+        descripcion: document.getElementById('config-nec-descripcion').value
+      }
+    },
+    dona: {
+      formUrl: document.getElementById('config-don-url').value,
+      fields: {
+        nombre: document.getElementById('config-don-nombre').value,
+        contacto: document.getElementById('config-don-contacto').value,
+        email: document.getElementById('config-don-email').value,
+        categoria: document.getElementById('config-don-categoria').value,
+        detalle: document.getElementById('config-don-detalle').value,
+        zona: document.getElementById('config-don-zona').value,
+        descripcion: document.getElementById('config-don-descripcion').value
+      }
+    },
+    conecta: {
+      formUrl: document.getElementById('config-con-url').value,
+      fields: {
+        nombre: document.getElementById('config-con-nombre').value,
+        contacto: document.getElementById('config-con-contacto').value,
+        email: document.getElementById('config-con-email').value,
+        zona: document.getElementById('config-con-zona').value,
+        compromiso: document.getElementById('config-con-compromiso').value
+      }
+    }
+  };
+
+  localStorage.setItem('emal_google_form_config', JSON.stringify(newConfig));
+  
+  // Actualizar en caliente
+  GOOGLE_FORMS_CONFIG.necesita.formUrl = newConfig.necesita.formUrl;
+  GOOGLE_FORMS_CONFIG.necesita.fields = newConfig.necesita.fields;
+  GOOGLE_FORMS_CONFIG.dona.formUrl = newConfig.dona.formUrl;
+  GOOGLE_FORMS_CONFIG.dona.fields = newConfig.dona.fields;
+  GOOGLE_FORMS_CONFIG.conecta.formUrl = newConfig.conecta.formUrl;
+  GOOGLE_FORMS_CONFIG.conecta.fields = newConfig.conecta.fields;
+
+  alert("⚙️ ¡Configuración guardada exitosamente!");
+}
+
+function resetGoogleConfigObj() {
+  if (confirm("¿Estás seguro de restablecer los valores de configuración a los de la EMAL?")) {
+    localStorage.removeItem('emal_google_form_config');
+    // Forzar recarga de valores originales
+    location.reload();
+  }
 }
 
 // Inicializar datos al cargar la vista
 window.onload = function() {
+  applySessionToUI();
   initGoogleConfig();
   loadInitialData();
 };

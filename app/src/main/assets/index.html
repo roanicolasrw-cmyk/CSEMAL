@@ -278,12 +278,16 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
       <div class="logo-sub">EMAL Nº 2702 · Rawson</div>
     </div>
   </a>
-  <div class="nav-btns">
+  <div class="nav-btns" style="display:flex; align-items:center; gap:0.5rem">
     <button id="btn-nav-home" class="nav-btn active" onclick="showPage('home')">Inicio</button>
     <button id="btn-nav-necesita" class="nav-btn" onclick="showPage('necesita')">Necesito algo</button>
     <button id="btn-nav-dona" class="nav-btn" onclick="showPage('dona')">Quiero donar</button>
     <button id="btn-nav-conecta" class="nav-btn" onclick="showPage('conecta')">Ser Conector</button>
     <button id="btn-nav-admin" class="nav-btn cta" onclick="showPage('admin')">Panel Match</button>
+    <div id="session-nav-container" style="display:none; align-items:center; gap:.4rem; padding-left:.5rem; border-left:1.5px solid var(--gris-claro)">
+      <span id="session-user-badge" style="font-size:.68rem; color:var(--azul-med); background:rgba(37,96,168,.08); padding:.25rem .65rem; border-radius:1rem; font-weight:700">Conector</span>
+      <button onclick="logoutSession()" style="background:transparent; border:none; color:var(--naranja); font-size:.75rem; font-weight:700; cursor:pointer;" title="Cerrar sesión institucional">Salir 🚪</button>
+    </div>
   </div>
 </nav>
 
@@ -693,14 +697,14 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
         <p class="kpi-n verde" id="kpi-matches">1</p>
         <p class="kpi-l">Matches Consolidados</p>
       </div>
-      <div class="kpi">
-        <p class="kpi-n gris">roa</p>
-        <p class="kpi-l" style="font-size: .6rem;">roa@escuela2702ema.edu.ar</p>
+      <div class="kpi" style="display:flex; flex-direction:column; justify-content:center">
+        <p class="kpi-n gris" id="kpi-user-role" style="font-size: 1.3rem; margin-top: .15rem;">Conector</p>
+        <p class="kpi-l" id="kpi-user-email" style="font-size: .6rem; text-transform:none; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">Sin Sesión</p>
       </div>
     </div>
 
     <!-- SECCIÓN CONFIGURACIÓN GOOGLE FORMS -->
-    <div style="background:#fff; border-radius:var(--radio); padding:1.5rem; margin-bottom:2rem; border:1px solid var(--gris-claro)">
+    <div id="config-google-forms" style="background:#fff; border-radius:var(--radio); padding:1.5rem; margin-bottom:2rem; border:1px solid var(--gris-claro)">
       <p class="form-section-title" style="margin-bottom:.5rem; border-bottom:none">⚙️ Configuración de Google Forms (roa@escuela2702ema.edu.ar)</p>
       <p style="color:var(--gris); font-size:.8rem; margin-bottom:1rem">Completá los enlaces y IDs de campo para conectar la app en tiempo real con tus Google Forms de la escuela.</p>
       
@@ -811,23 +815,31 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
   </div>
 </footer>
 
-<!-- MODAL EXITOSO -->
-<div class="success-overlay" id="success-modal">
-  <div class="success-box">
-    <span class="success-icon" id="success-modal-icon">🎉</span>
-    <h2 class="success-title" id="success-modal-title">¡Registro Exitoso!</h2>
-    <p class="success-msg" id="success-modal-msg">Tus datos han sido registrados en nuestro sistema de asistencia de la EMAL Rawson.</p>
+<!-- MODAL DE LOGIN INSTITUCIONAL -->
+<div class="success-overlay" id="login-modal" style="display:none; position:fixed; inset:0; background:rgba(13,31,51,0.8); z-index:1000; align-items:center; justify-content:center; backdrop-filter:blur(6px)">
+  <div class="success-box" style="max-width:440px; padding:2rem; box-shadow:0 24px 80px rgba(0,0,0,0.4)">
+    <span class="success-icon">🏫</span>
+    <h2 class="success-title">Acceso Conectores</h2>
+    <p class="success-msg" style="margin-bottom:1.2rem; font-size:0.82rem">Para ingresar al Panel Match debés verificar que sos alumno, directivo o conector de la EMAL Rawson.</p>
     
-    <div class="success-match" id="success-match-alert">
-      <p class="sm-title">🔥 ¡SE DETECTÓ UN MATCH INMEDIATO! 🔥</p>
-      <p class="sm-body" id="success-match-desc">Existe una donación compatible para tu pedido que se acaba de vincular. Un conector escolar se pondrá en contacto pronto.</p>
-      <div id="autonomous-match-actions" style="margin-top:0.9rem; padding-top:0.8rem; border-top:1px dashed rgba(40,168,108,0.3)">
-        <span style="font-size:0.75rem; color:var(--azul); font-weight:700; display:block; margin-bottom:0.5rem; text-align:left">⚡ Contacto Directo Sincronizado:</span>
-        <div id="autonomous-match-links" style="display:grid; grid-template-columns:1fr; gap:0.5rem"></div>
+    <form id="form-login-inst" onsubmit="handleLoginSubmit(event)">
+      <div class="field" style="text-align:left; margin-bottom: 1rem">
+        <label for="login-email" style="font-size:0.78rem; font-weight:700; margin-bottom:0.3rem">Correo Institucional <span class="req">*</span></label>
+        <input type="email" id="login-email" placeholder="ej: nombre@escuela2702emal.edu.ar" required style="background:var(--crema); border:1.5px solid var(--gris-claro); width:100%">
+        <p class="field-hint" style="font-size:0.7rem">Dominio @escuela2702emal.edu.ar o @escuela2702ema.edu.ar</p>
       </div>
-    </div>
-
-    <button class="btn btn-fill btn-sm" onclick="closeSuccessModal()">Continuar</button>
+      <div class="field" style="text-align:left; margin-bottom: 1.2rem">
+        <label for="login-password" style="font-size:0.78rem; font-weight:700; margin-bottom:0.3rem">Contraseña / PIN Escolar <span class="req">*</span></label>
+        <input type="password" id="login-password" placeholder="••••••••" required style="width:100%; padding:.7rem .95rem; border-radius:.7rem; border:1.5px solid var(--gris-claro); background:var(--crema); font-family:sans-serif; outline:none; box-sizing:border-box">
+        <p class="field-hint" style="font-size:0.7rem">Para simulación podés usar tu contraseña habitual (ej: emal2702).</p>
+      </div>
+      
+      <div id="login-error-msg" style="color:var(--naranja); font-size:0.75rem; margin-top:0.5rem; margin-bottom:1rem; display:none; text-align:left; font-weight:700"></div>
+      
+      <button type="submit" class="btn btn-fill" style="width:100%; margin-top:0.3rem; background:var(--azul-med)">Ingresar al Panel</button>
+    </form>
+    
+    <button class="btn btn-outline btn-sm" onclick="closeLoginModal()" style="margin-top:0.8rem; width:100%">Cancelar y Volver</button>
   </div>
 </div>
 
@@ -936,6 +948,15 @@ function loadInitialData() {
 
 // Cambiar de pantalla / navegación SPA
 function showPage(pageId) {
+  // Verificar autorización para el Panel Match
+  if (pageId === 'admin') {
+    const session = localStorage.getItem('emal_user_session');
+    if (!session) {
+      openLoginModal();
+      return;
+    }
+  }
+
   // Ocultar todas las páginas
   document.querySelectorAll('.page').forEach(function(p) {
     p.classList.remove('active');
@@ -1580,6 +1601,232 @@ function closeSuccessModal() {
 // ════════════════════════════════════════════════════════════════════════
 // GESTION DINÁMICA DE LA CONFIGURACIÓN DE GOOGLE FORMS
 // ════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════
+// GESTION DINÁMICA DE LA CONFIGURACIÓN DE GOOGLE FORMS E INICIO DE SESIÓN
+// ════════════════════════════════════════════════════════════════════════
+function openLoginModal() {
+  const modal = document.getElementById('login-modal');
+  modal.style.display = 'flex';
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error-msg').style.display = 'none';
+}
+
+function closeLoginModal() {
+  const modal = document.getElementById('login-modal');
+  modal.style.display = 'none';
+  showPage('home');
+}
+
+function handleLoginSubmit(event) {
+  event.preventDefault();
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
+  const password = document.getElementById('login-password').value;
+  const errorMsg = document.getElementById('login-error-msg');
+
+  if (!email.endsWith('@escuela2702emal.edu.ar') && !email.endsWith('@escuela2702ema.edu.ar')) {
+    errorMsg.innerText = "❌ Acceso denegado. Debés ingresar una cuenta con dominio educativo @escuela2702emal.edu.ar (o @escuela2702ema.edu.ar).";
+    errorMsg.style.display = 'block';
+    return;
+  }
+
+  if (password.length < 4) {
+    errorMsg.innerText = "❌ La contraseña o PIN escolar debe tener al menos 4 caracteres.";
+    errorMsg.style.display = 'block';
+    return;
+  }
+
+  // Iniciar sesión con éxito
+  let role = 'conector';
+  let userName = 'Conector EMAL';
+  
+  if (email === 'roa@escuela2702emal.edu.ar' || email === 'roa@escuela2702ema.edu.ar') {
+    role = 'superadmin';
+    userName = 'Prof. Nicolás Roa';
+  }
+
+  const sessionData = {
+    email: email,
+    role: role,
+    name: userName,
+    loginTime: new Date().getTime()
+  };
+
+  localStorage.setItem('emal_user_session', JSON.stringify(sessionData));
+  
+  // Cerrar modal
+  const modal = document.getElementById('login-modal');
+  modal.style.display = 'none';
+
+  // Aplicar cambios en UI
+  applySessionToUI();
+
+  // Ir al Panel Admin
+  showPage('admin');
+
+  // Saludo personalizado
+  alert(`👋 ¡Ingreso Exitoso! Bienvenido/a, ${userName}.`);
+}
+
+function logoutSession() {
+  if (confirm("¿Estás seguro de cerrar tu sesión de conector?")) {
+    localStorage.removeItem('emal_user_session');
+    applySessionToUI();
+    showPage('home');
+  }
+}
+
+function applySessionToUI() {
+  const session = localStorage.getItem('emal_user_session');
+  const sessionNav = document.getElementById('session-nav-container');
+  const sessionBadge = document.getElementById('session-user-badge');
+  const configPanel = document.getElementById('config-google-forms');
+  const adminKPIEmail = document.getElementById('kpi-user-email');
+  const adminKPIRole = document.getElementById('kpi-user-role');
+
+  if (session) {
+    try {
+      const parsed = JSON.parse(session);
+      if (sessionNav) sessionNav.style.display = 'inline-flex';
+      
+      const isSuper = parsed.role === 'superadmin';
+      
+      if (sessionBadge) {
+        sessionBadge.innerText = isSuper ? 'Coordinador' : 'Conector';
+        sessionBadge.style.background = isSuper ? 'rgba(37,96,168,0.1)' : 'rgba(29,122,78,0.1)';
+        sessionBadge.style.color = isSuper ? 'var(--azul-med)' : 'var(--verde)';
+        sessionBadge.style.borderColor = isSuper ? 'rgba(37,96,168,0.2)' : 'rgba(29,122,78,0.2)';
+      }
+      
+      if (adminKPIEmail) {
+        adminKPIEmail.innerText = parsed.email;
+        adminKPIEmail.title = parsed.email;
+      }
+      if (adminKPIRole) {
+        adminKPIRole.innerText = isSuper ? 'Coordinador' : 'Conector';
+      }
+
+      // Configurar visibilidad/acceso del panel de forms para el Super Admin
+      if (configPanel) {
+        if (isSuper) {
+          configPanel.style.display = 'block';
+          // Restaurar HTML original si fue alterado por una sesión conector
+          configPanel.innerHTML = `
+            <p class="form-section-title" style="margin-bottom:.5rem; border-bottom:none">⚙️ Configuración de Google Forms (roa@escuela2702emal.edu.ar)</p>
+            <p style="color:var(--gris); font-size:.8rem; margin-bottom:1rem">Completá los enlaces y IDs de campo para conectar la app en tiempo real con tus Google Forms de la escuela.</p>
+            
+            <div style="display:grid; grid-template-columns:1fr; gap:1.2rem">
+              <!-- Necesita -->
+              <details style="background:var(--crema); border-radius:.75rem; padding:1rem">
+                <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Necesito Algo (Para Pedidos)</summary>
+                <div style="margin-top:1rem">
+                  <div class="field">
+                    <label style="font-size:.78rem">URL del FormResponse <span style="color:var(--gris)">(ej: https://docs.google.com/forms/d/e/.../formResponse)</span></label>
+                    <input type="text" id="config-nec-url" style="background:#fff">
+                  </div>
+                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
+                    <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-nec-nombre" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-nec-contacto" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Conector</label><input type="text" id="config-nec-conector" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-nec-categoria" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-nec-detalle" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-nec-zona" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-nec-descripcion" style="background:#fff"></div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Dona -->
+              <details style="background:var(--crema); border-radius:.75rem; padding:1rem">
+                <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Quiero Donar (Para Donaciones)</summary>
+                <div style="margin-top:1rem">
+                  <div class="field">
+                    <label style="font-size:.78rem">URL del FormResponse</label>
+                    <input type="text" id="config-don-url" style="background:#fff">
+                  </div>
+                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
+                    <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-don-nombre" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-don-contacto" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Email</label><input type="text" id="config-don-email" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Categoría</label><input type="text" id="config-don-categoria" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Detalle</label><input type="text" id="config-don-detalle" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-don-zona" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Descripción</label><input type="text" id="config-don-descripcion" style="background:#fff"></div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Conecta -->
+              <details style="background:var(--crema); border-radius:.75rem; padding:1rem">
+                <summary style="font-weight:700; font-size:.85rem; color:var(--azul); cursor:pointer">Formulario: Ser Conector (Para Voluntarios)</summary>
+                <div style="margin-top:1rem">
+                  <div class="field">
+                    <label style="font-size:.78rem">URL del FormResponse</label>
+                    <input type="text" id="config-con-url" style="background:#fff">
+                  </div>
+                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
+                    <div class="field"><label style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-con-nombre" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-con-contacto" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Email</label><input type="text" id="config-con-email" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-con-zona" style="background:#fff"></div>
+                    <div class="field"><label style="font-size:.72rem">entry ID Compromiso</label><input type="text" id="config-con-compromiso" style="background:#fff"></div>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap">
+              <button class="btn btn-sm btn-naranja" onclick="saveGoogleConfigObj()">Guardar Configuración</button>
+              <button class="btn btn-sm btn-outline" style="border-color:var(--azul-med); color:var(--azul-med)" onclick="resetGoogleConfigObj()">Restablecer Valores</button>
+            </div>
+          `;
+          // Rellenar valores
+          document.getElementById('config-nec-url').value = GOOGLE_FORMS_CONFIG.necesita.formUrl;
+          document.getElementById('config-nec-nombre').value = GOOGLE_FORMS_CONFIG.necesita.fields.nombre;
+          document.getElementById('config-nec-contacto').value = GOOGLE_FORMS_CONFIG.necesita.fields.contacto;
+          document.getElementById('config-nec-conector').value = GOOGLE_FORMS_CONFIG.necesita.fields.conector;
+          document.getElementById('config-nec-categoria').value = GOOGLE_FORMS_CONFIG.necesita.fields.categoria;
+          document.getElementById('config-nec-detalle').value = GOOGLE_FORMS_CONFIG.necesita.fields.detalle;
+          document.getElementById('config-nec-zona').value = GOOGLE_FORMS_CONFIG.necesita.fields.zona;
+          document.getElementById('config-nec-descripcion').value = GOOGLE_FORMS_CONFIG.necesita.fields.descripcion;
+
+          document.getElementById('config-don-url').value = GOOGLE_FORMS_CONFIG.dona.formUrl;
+          document.getElementById('config-don-nombre').value = GOOGLE_FORMS_CONFIG.dona.fields.nombre;
+          document.getElementById('config-don-contacto').value = GOOGLE_FORMS_CONFIG.dona.fields.contacto;
+          document.getElementById('config-don-email').value = GOOGLE_FORMS_CONFIG.dona.fields.email;
+          document.getElementById('config-don-categoria').value = GOOGLE_FORMS_CONFIG.dona.fields.categoria;
+          document.getElementById('config-don-detalle').value = GOOGLE_FORMS_CONFIG.dona.fields.detalle;
+          document.getElementById('config-don-zona').value = GOOGLE_FORMS_CONFIG.dona.fields.zona;
+          document.getElementById('config-don-descripcion').value = GOOGLE_FORMS_CONFIG.dona.fields.descripcion;
+
+          document.getElementById('config-con-url').value = GOOGLE_FORMS_CONFIG.conecta.formUrl;
+          document.getElementById('config-con-nombre').value = GOOGLE_FORMS_CONFIG.conecta.fields.nombre;
+          document.getElementById('config-con-contacto').value = GOOGLE_FORMS_CONFIG.conecta.fields.contacto;
+          document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
+          document.getElementById('config-con-zona').value = GOOGLE_FORMS_CONFIG.conecta.fields.zona;
+          document.getElementById('config-con-compromiso').value = GOOGLE_FORMS_CONFIG.conecta.fields.compromiso;
+        } else {
+          configPanel.style.display = 'block';
+          configPanel.innerHTML = `
+            <div style="background:rgba(26,58,92,0.04); border:1px solid rgba(26,58,92,0.1); border-radius:.75rem; padding:1.2rem; text-align:center; color:var(--azul); margin-top:0.2rem">
+              <span style="font-size:1.8rem; display:block; margin-bottom:0.4rem">🔒 Configuración Protegida</span>
+              <p style="font-size:0.83rem; font-weight:700; margin-bottom:0.25rem; color:var(--azul)">La edición de los endpoints de Google Forms está bloqueada temporalmente.</p>
+              <p style="font-size:0.75rem; color:var(--gris); line-height:1.4">Como Conector Académico podés operar y registrar los matches, pero solo el Coordinador General (<strong>roa@escuela2702emal.edu.ar</strong>) puede alterar las credenciales y IDs de los formularios de la escuela para evitar desconfiguraciones accidentales.</p>
+            </div>
+          `;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  } else {
+    if (sessionNav) sessionNav.style.display = 'none';
+    if (configPanel) configPanel.style.display = 'none';
+    if (adminKPIEmail) adminKPIEmail.innerText = 'Sin Sesión';
+    if (adminKPIRole) adminKPIRole.innerText = 'Invitado';
+  }
+}
+
 function initGoogleConfig() {
   const savedConfig = localStorage.getItem('emal_google_form_config');
   if (savedConfig) {
@@ -1603,34 +1850,40 @@ function initGoogleConfig() {
     }
   }
 
-  // Rellenar los inputs del Panel Admin
-  document.getElementById('config-nec-url').value = GOOGLE_FORMS_CONFIG.necesita.formUrl;
-  document.getElementById('config-nec-nombre').value = GOOGLE_FORMS_CONFIG.necesita.fields.nombre;
-  document.getElementById('config-nec-contacto').value = GOOGLE_FORMS_CONFIG.necesita.fields.contacto;
-  document.getElementById('config-nec-conector').value = GOOGLE_FORMS_CONFIG.necesita.fields.conector;
-  document.getElementById('config-nec-categoria').value = GOOGLE_FORMS_CONFIG.necesita.fields.categoria;
-  document.getElementById('config-nec-detalle').value = GOOGLE_FORMS_CONFIG.necesita.fields.detalle;
-  document.getElementById('config-nec-zona').value = GOOGLE_FORMS_CONFIG.necesita.fields.zona;
-  document.getElementById('config-nec-descripcion').value = GOOGLE_FORMS_CONFIG.necesita.fields.descripcion;
+  // Solo rellenar si existe el elemento en el dom (por si estuviera oculto por applySessionToUI)
+  const elNecUrl = document.getElementById('config-nec-url');
+  if (elNecUrl) {
+    document.getElementById('config-nec-url').value = GOOGLE_FORMS_CONFIG.necesita.formUrl;
+    document.getElementById('config-nec-nombre').value = GOOGLE_FORMS_CONFIG.necesita.fields.nombre;
+    document.getElementById('config-nec-contacto').value = GOOGLE_FORMS_CONFIG.necesita.fields.contacto;
+    document.getElementById('config-nec-conector').value = GOOGLE_FORMS_CONFIG.necesita.fields.conector;
+    document.getElementById('config-nec-categoria').value = GOOGLE_FORMS_CONFIG.necesita.fields.categoria;
+    document.getElementById('config-nec-detalle').value = GOOGLE_FORMS_CONFIG.necesita.fields.detalle;
+    document.getElementById('config-nec-zona').value = GOOGLE_FORMS_CONFIG.necesita.fields.zona;
+    document.getElementById('config-nec-descripcion').value = GOOGLE_FORMS_CONFIG.necesita.fields.descripcion;
 
-  document.getElementById('config-don-url').value = GOOGLE_FORMS_CONFIG.dona.formUrl;
-  document.getElementById('config-don-nombre').value = GOOGLE_FORMS_CONFIG.dona.fields.nombre;
-  document.getElementById('config-don-contacto').value = GOOGLE_FORMS_CONFIG.dona.fields.contacto;
-  document.getElementById('config-don-email').value = GOOGLE_FORMS_CONFIG.dona.fields.email;
-  document.getElementById('config-don-categoria').value = GOOGLE_FORMS_CONFIG.dona.fields.categoria;
-  document.getElementById('config-don-detalle').value = GOOGLE_FORMS_CONFIG.dona.fields.detalle;
-  document.getElementById('config-don-zona').value = GOOGLE_FORMS_CONFIG.dona.fields.zona;
-  document.getElementById('config-don-descripcion').value = GOOGLE_FORMS_CONFIG.dona.fields.descripcion;
+    document.getElementById('config-don-url').value = GOOGLE_FORMS_CONFIG.dona.formUrl;
+    document.getElementById('config-don-nombre').value = GOOGLE_FORMS_CONFIG.dona.fields.nombre;
+    document.getElementById('config-don-contacto').value = GOOGLE_FORMS_CONFIG.dona.fields.contacto;
+    document.getElementById('config-don-email').value = GOOGLE_FORMS_CONFIG.dona.fields.email;
+    document.getElementById('config-don-categoria').value = GOOGLE_FORMS_CONFIG.dona.fields.categoria;
+    document.getElementById('config-don-detalle').value = GOOGLE_FORMS_CONFIG.dona.fields.detalle;
+    document.getElementById('config-don-zona').value = GOOGLE_FORMS_CONFIG.dona.fields.zona;
+    document.getElementById('config-don-descripcion').value = GOOGLE_FORMS_CONFIG.dona.fields.descripcion;
 
-  document.getElementById('config-con-url').value = GOOGLE_FORMS_CONFIG.conecta.formUrl;
-  document.getElementById('config-con-nombre').value = GOOGLE_FORMS_CONFIG.conecta.fields.nombre;
-  document.getElementById('config-con-contacto').value = GOOGLE_FORMS_CONFIG.conecta.fields.contacto;
-  document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
-  document.getElementById('config-con-zona').value = GOOGLE_FORMS_CONFIG.conecta.fields.zona;
-  document.getElementById('config-con-compromiso').value = GOOGLE_FORMS_CONFIG.conecta.fields.compromiso;
+    document.getElementById('config-con-url').value = GOOGLE_FORMS_CONFIG.conecta.formUrl;
+    document.getElementById('config-con-nombre').value = GOOGLE_FORMS_CONFIG.conecta.fields.nombre;
+    document.getElementById('config-con-contacto').value = GOOGLE_FORMS_CONFIG.conecta.fields.contacto;
+    document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
+    document.getElementById('config-con-zona').value = GOOGLE_FORMS_CONFIG.conecta.fields.zona;
+    document.getElementById('config-con-compromiso').value = GOOGLE_FORMS_CONFIG.conecta.fields.compromiso;
+  }
 }
 
 function saveGoogleConfigObj() {
+  const needsUrl = document.getElementById('config-nec-url');
+  if (!needsUrl) return; // Si no hay form, no guarda
+  
   const newConfig = {
     necesita: {
       formUrl: document.getElementById('config-nec-url').value,
@@ -1691,6 +1944,7 @@ function resetGoogleConfigObj() {
 
 // Inicializar datos al cargar la vista
 window.onload = function() {
+  applySessionToUI();
   initGoogleConfig();
   loadInitialData();
 };
