@@ -2156,6 +2156,10 @@ function applySessionToUI() {
                     <label for="config-nec-url" style="font-size:.78rem">URL del FormResponse <span style="color:var(--gris)">(ej: https://docs.google.com/forms/d/e/.../formResponse)</span></label>
                     <input type="text" id="config-nec-url" style="background:#fff">
                   </div>
+                  <div class="field">
+                    <label for="config-nec-csv" style="font-size:.78rem">URL de Sincronización (CSV de Google Sheet)</label>
+                    <input type="text" id="config-nec-csv" style="background:#fff">
+                  </div>
                   <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
                     <div class="field"><label for="config-nec-nombre" style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-nec-nombre" style="background:#fff"></div>
                     <div class="field"><label for="config-nec-contacto" style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-nec-contacto" style="background:#fff"></div>
@@ -2175,6 +2179,10 @@ function applySessionToUI() {
                   <div class="field">
                     <label for="config-don-url" style="font-size:.78rem">URL del FormResponse</label>
                     <input type="text" id="config-don-url" style="background:#fff">
+                  </div>
+                  <div class="field">
+                    <label for="config-don-csv" style="font-size:.78rem">URL de Sincronización (CSV)</label>
+                    <input type="text" id="config-don-csv" style="background:#fff">
                   </div>
                   <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
                     <div class="field"><label for="config-don-nombre" style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-don-nombre" style="background:#fff"></div>
@@ -2196,10 +2204,15 @@ function applySessionToUI() {
                     <label for="config-con-url" style="font-size:.78rem">URL del FormResponse</label>
                     <input type="text" id="config-con-url" style="background:#fff">
                   </div>
+                  <div class="field">
+                    <label for="config-con-csv" style="font-size:.78rem">URL de Sincronización (CSV)</label>
+                    <input type="text" id="config-con-csv" style="background:#fff">
+                  </div>
                   <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.5rem">
                     <div class="field"><label for="config-con-nombre" style="font-size:.72rem">entry ID Nombre</label><input type="text" id="config-con-nombre" style="background:#fff"></div>
                     <div class="field"><label for="config-con-contacto" style="font-size:.72rem">entry ID Contacto</label><input type="text" id="config-con-contacto" style="background:#fff"></div>
                     <div class="field"><label for="config-con-email" style="font-size:.72rem">entry ID Email</label><input type="text" id="config-con-email" style="background:#fff"></div>
+                    <div class="field"><label for="config-con-detalle" style="font-size:.72rem">entry ID Objeto</label><input type="text" id="config-con-detalle" style="background:#fff"></div>
                     <div class="field"><label for="config-con-zona" style="font-size:.72rem">entry ID Zona</label><input type="text" id="config-con-zona" style="background:#fff"></div>
                     <div class="field"><label for="config-con-compromiso" style="font-size:.72rem">entry ID Compromiso</label><input type="text" id="config-con-compromiso" style="background:#fff"></div>
                   </div>
@@ -2214,6 +2227,7 @@ function applySessionToUI() {
           `;
           // Rellenar valores
           document.getElementById('config-nec-url').value = GOOGLE_FORMS_CONFIG.necesita.formUrl;
+          document.getElementById('config-nec-csv').value = GOOGLE_FORMS_CONFIG.necesita.sheetCsvUrl || '';
           document.getElementById('config-nec-nombre').value = GOOGLE_FORMS_CONFIG.necesita.fields.nombre;
           document.getElementById('config-nec-contacto').value = GOOGLE_FORMS_CONFIG.necesita.fields.contacto;
           document.getElementById('config-nec-conector').value = GOOGLE_FORMS_CONFIG.necesita.fields.conector;
@@ -2223,6 +2237,7 @@ function applySessionToUI() {
           document.getElementById('config-nec-descripcion').value = GOOGLE_FORMS_CONFIG.necesita.fields.descripcion;
 
           document.getElementById('config-don-url').value = GOOGLE_FORMS_CONFIG.dona.formUrl;
+          document.getElementById('config-don-csv').value = GOOGLE_FORMS_CONFIG.dona.sheetCsvUrl || '';
           document.getElementById('config-don-nombre').value = GOOGLE_FORMS_CONFIG.dona.fields.nombre;
           document.getElementById('config-don-contacto').value = GOOGLE_FORMS_CONFIG.dona.fields.contacto;
           document.getElementById('config-don-email').value = GOOGLE_FORMS_CONFIG.dona.fields.email;
@@ -2232,6 +2247,7 @@ function applySessionToUI() {
           document.getElementById('config-don-descripcion').value = GOOGLE_FORMS_CONFIG.dona.fields.descripcion;
 
           document.getElementById('config-con-url').value = GOOGLE_FORMS_CONFIG.conecta.formUrl;
+          document.getElementById('config-con-csv').value = GOOGLE_FORMS_CONFIG.conecta.sheetCsvUrl || '';
           document.getElementById('config-con-nombre').value = GOOGLE_FORMS_CONFIG.conecta.fields.nombre;
           document.getElementById('config-con-contacto').value = GOOGLE_FORMS_CONFIG.conecta.fields.contacto;
           document.getElementById('config-con-email').value = GOOGLE_FORMS_CONFIG.conecta.fields.email;
@@ -2268,7 +2284,7 @@ function applySessionToUI() {
     if (configPanel) configPanel.style.display = 'none';
     if (configSheetsPanel) configSheetsPanel.style.display = 'none';
     if (adminKPIEmail) adminKPIEmail.innerText = 'Sin Sesión';
-    if (adminKPIRole) adminKPIRole.innerText = 'Invitado';
+   if (adminKPIRole) adminKPIRole.innerText = 'Invitado';
   }
 }
 
