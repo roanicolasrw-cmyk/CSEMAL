@@ -1014,34 +1014,31 @@ const GOOGLE_FORMS_CONFIG = {
   }
 };
 
-// Bases de datos locales en memoria para simular el comportamiento de la App en tiempo real
+// Bases de datos locales en memoria
 let baseNecesidades = [];
 let baseDonaciones = [];
 let baseConectores = [];
 let baseMatches = [];
 
-// Carga inicial de datos de ejemplo para que la App no se vea vacía
+// Carga inicial - Ahora vacía para que sea "Real" y solo use datos nuevos
 function loadInitialData() {
-  baseNecesidades = [
-    { id: 1, nombre: "Vecino Bº 3 de Abril", contacto: "2804221199", conector: "Nicolás R.", categoria: "ropa", detalle: "Abrigo niño talle 8", zona: "Barrio 3 de Abril", descripcion: "Familia numerosa con escasos recursos para afrontar el invierno del sur.", estado: "matched" },
-    { id: 2, nombre: "Familia Bº Gregorio Mayo", contacto: "2804557711", conector: "Marcos R.", categoria: "mural", detalle: "Manuales escolares 6º grado", zona: "Barrio Gregorio Mayo", descripcion: "Tres niños en primaria que necesitan libros.", estado: "pendiente" },
-    { id: 3, nombre: "Estudiante EMAL", contacto: "2804990022", conector: "Prof. Laura G.", categoria: "calzado", detalle: "Zapatillas talle 38", zona: "Rawson Centro", descripcion: "Para poder asistir a educación física.", estado: "pendiente" },
-    { id: 4, nombre: "Madre Sola Bº Vernet", contacto: "2804884433", conector: "Nicolás R.", categoria: "muebles", detalle: "Cuna o practicuna de bebé", zona: "Barrio Luis Vernet", descripcion: "Bebe recién nacido.", estado: "pendiente" }
-  ];
+  const localNec = localStorage.getItem('emal_data_necesidades');
+  const localDon = localStorage.getItem('emal_data_donaciones');
+  const localMat = localStorage.getItem('emal_data_matches');
 
-  baseDonaciones = [
-    { id: 1, nombre: "Marta Gómez", contacto: "2804558833", email: "marta@gmail.com", categoria: "ropa", detalle: "Campera de abrigo talle 8", zona: "Barrio 3 de Abril", descripcion: "Casi nueva, color azul.", estado: "matched" },
-    { id: 2, nombre: "Carlos Pérez", contacto: "2804443311", email: "carlos@hotmail.com", categoria: "alimentos", detalle: "Leche larga vida x 12 unidades", zona: "Barrio Gregorio Mayo", descripcion: "Vence a fin de año.", estado: "disponible" },
-    { id: 3, nombre: "Elena Ramos", contacto: "2804929211", email: "elena@yahoo.com.ar", categoria: "muebles", detalle: "Cuna de madera sólida", zona: "Barrio Luis Vernet", descripcion: "Se puede desarmar para transporte.", estado: "disponible" },
-    { id: 4, nombre: "Papelería Rawson", contacto: "2804818133", email: "ventas@papeleria.com", categoria: "mural", detalle: "Lote de mochilas y carpetas", zona: "Rawson Centro", descripcion: "Donación corporativa para el inicio de clases.", estado: "disponible" }
-  ];
-
-  baseMatches = [
-    { id: 1, necesidad: baseNecesidades[0], donacion: baseDonaciones[0], conector: "Nicolás R.", fecha: "Hoy", estado: "activo" }
-  ];
+  if (localNec) baseNecesidades = JSON.parse(localNec);
+  if (localDon) baseDonaciones = JSON.parse(localDon);
+  if (localMat) baseMatches = JSON.parse(localMat);
 
   updateDashboard();
   renderLists();
+}
+
+// Persistir datos localmente para que no se borren al refrescar en este dispositivo
+function persistLocalData() {
+  localStorage.setItem('emal_data_necesidades', JSON.stringify(baseNecesidades));
+  localStorage.setItem('emal_data_donaciones', JSON.stringify(baseDonaciones));
+  localStorage.setItem('emal_data_matches', JSON.stringify(baseMatches));
 }
 
 // Cambiar de pantalla / navegación SPA
@@ -1183,12 +1180,14 @@ function handleFormSubmit(event, formType) {
       estado: "pendiente"
     };
     baseNecesidades.push(payload);
-    
+    persistLocalData(); // Guardar en el navegador
+
     // Intento de envío a Google Forms (Background POST en AJAX sin bloqueo CORS)
     enviarAGoogleForms(formType, payload);
 
     // Revisar si hay un Match automático de inmediato
     checkMatchInmediato(payload, 'necesidad');
+    persistLocalData(); // Guardar cambios de estado si hubo match
 
   } else if (formType === 'dona') {
     const cat = document.getElementById('don-cat-selected').value;
@@ -1214,9 +1213,11 @@ function handleFormSubmit(event, formType) {
       estado: "disponible"
     };
     baseDonaciones.push(payload);
+    persistLocalData(); // Guardar en el navegador
 
     enviarAGoogleForms(formType, payload);
     checkMatchInmediato(payload, 'donacion');
+    persistLocalData(); // Guardar cambios de estado si hubo match
 
   } else if (formType === 'conecta') {
     const zona = document.getElementById('con-zona-selected').value;
@@ -1510,51 +1511,30 @@ function updateDashboard() {
   document.getElementById('kpi-matches').innerText = baseMatches.length;
 }
 
-// Representar todas las listas dinámicas de la aplicación (Resguardando Privacidad según Directivas EMAL)
+// Representar todas las listas dinámicas de la aplicación
 function renderLists() {
-  // 1. Home - Necesidades (Métricas Anónimas Agrupadas por Privacidad de las Familias)
+  // 1. Home - Necesidades (Anonimizadas)
   const homeNecList = document.getElementById('home-necesidades-list');
   homeNecList.innerHTML = `
-    <p class="match-col-title">📊 Necesidades por Rubro</p>
+    <p class="match-col-title">🙏 Solicitudes de Ayuda</p>
     <p style="font-size:0.75rem; color:var(--gris); margin-bottom:1rem; padding: 0 0.5rem; line-height:1.4">
-      🔒 <strong>Garantía de Confidencialidad:</strong> Protegemos la identidad de las familias de Rawson. Abajo podés ver el resumen anónimo de lo más solicitado hoy:
+      Listado de lo que necesitan las familias hoy. Si tenés algo de esto, cargá tu donación:
     </p>
   `;
   
-  // Agrupar cantidad de necesidades activas (pendiente) por categoría
-  const categoriasCount = {};
+  let hasActiveNeeds = false;
   baseNecesidades.forEach(n => {
     if (n.estado === 'pendiente') {
-      categoriasCount[n.categoria] = (categoriasCount[n.categoria] || 0) + 1;
-    }
-  });
-
-  const categoriesOrdered = ['ropa', 'mural', 'calzado', 'alimentos', 'muebles', 'otros'];
-  let hasActiveNeeds = false;
-
-  categoriesOrdered.forEach(cat => {
-    const count = categoriasCount[cat] || 0;
-    if (count > 0) {
       hasActiveNeeds = true;
       const card = document.createElement('div');
-      card.className = `match-item`;
-      card.style.cursor = 'default';
-      
-      let catLabel = cat;
-      if (cat === 'ropa') catLabel = 'Ropa y Abrigo';
-      if (cat === 'mural') catLabel = 'Útiles y Libros';
-      if (cat === 'calzado') catLabel = 'Calzado Escolar/Uso';
-      if (cat === 'alimentos') catLabel = 'Alimentos / Conservas';
-      if (cat === 'muebles') catLabel = 'Mobiliario para hogar';
-      if (cat === 'otros') catLabel = 'Otros Objetos';
-
+      card.className = 'match-item';
       card.innerHTML = `
-        <div class="mi-icon naranja">${getCategoryEmoji(cat)}</div>
+        <div class="mi-icon naranja">${getCategoryEmoji(n.categoria)}</div>
         <div style="flex-grow:1">
-          <p class="mi-obj" style="text-transform: capitalize; font-weight:700">${catLabel}</p>
-          <p class="mi-meta">📍 Hay ${count} pedido(s) esperando compatibilidad</p>
+          <p class="mi-obj" style="font-weight:700">${n.detalle}</p>
+          <p class="mi-meta">📍 Zona: ${n.zona} · Pendiente</p>
         </div>
-        <span class="mi-badge urgente" style="background:rgba(240,112,48,.1); color:var(--naranja); font-size:0.65rem">Requerido</span>
+        <span class="mi-badge urgente" style="background:rgba(240,112,48,.08); color:var(--naranja); font-size:0.65rem">Necesario</span>
       `;
       homeNecList.appendChild(card);
     }
@@ -1563,17 +1543,17 @@ function renderLists() {
   if (!hasActiveNeeds) {
     homeNecList.innerHTML += `
       <div style="text-align:center; padding:1.5rem; color:var(--gris); font-size:0.75rem">
-        🎉 ¡Estupendo! No hay necesidades acumuladas urgentes sin coordinar en este momento.
+        🎉 No hay pedidos pendientes sin coordinar en este momento.
       </div>
     `;
   }
 
-  // 2. Home - Donaciones (Catálogo Solidario Anónimo Abierto de Rawson)
+  // 2. Home - Donaciones (Catálogo Solidario)
   const homeDonList = document.getElementById('home-donaciones-list');
   homeDonList.innerHTML = `
     <p class="match-col-title">🎁 Donaciones Disponibles</p>
     <p style="font-size:0.75rem; color:var(--gris); margin-bottom:1rem; padding: 0 0.5rem; line-height:1.4">
-      ¿Necesitás algo de la lista? Hacé clic sobre el objeto para solicitarlo de forma confidencial y directa:
+      Objetos listos para entrega. Hacé clic para solicitarlo de forma confidencial:
     </p>
   `;
 
@@ -1585,22 +1565,19 @@ function renderLists() {
       card.className = `match-item`;
       card.style.cursor = 'pointer';
       
-      // Al hacer clic, redirige al form de necesidades auto-completando los campos
       card.onclick = () => {
         showPage('necesita');
         selectChip('nec', d.categoria);
         document.getElementById('nec-detalle-obj').value = d.detalle;
-        document.getElementById('nec-desc').value = `Solicito la donación libre registrada de: "${d.detalle}" para retirar o coordinar entrega.`;
-        
-        // Efecto scroll y alerta útil
-        alert(`✨ ¡Excelente elección! Pre-seleccionamos "${d.detalle}" en el formulario de pedido. Completá tus datos para finalizar.`);
+        document.getElementById('nec-desc').value = `Solicito la donación registrada de: "${d.detalle}".`;
+        alert(`✨ ¡Excelente! Pre-seleccionamos "${d.detalle}" en el formulario. Completá tus datos.`);
       };
 
       card.innerHTML = `
         <div class="mi-icon azul">${getCategoryEmoji(d.categoria)}</div>
         <div style="flex-grow:1">
           <p class="mi-obj" style="font-weight:700">${d.detalle}</p>
-          <p class="mi-meta">📍 Ubicación: ${d.zona} · Disponible hoy</p>
+          <p class="mi-meta">📍 Ubicación: ${d.zona} · Disponible</p>
         </div>
         <span class="mi-badge disponible" style="background:rgba(37,96,168,.08); color:var(--azul-med); font-size:0.65rem">Solicitar</span>
       `;
@@ -1611,7 +1588,7 @@ function renderLists() {
   if (!hasAvailableDonations) {
     homeDonList.innerHTML += `
       <div style="text-align:center; padding:1.5rem; color:var(--gris); font-size:0.75rem">
-        Aún no hay aportes libres listados listos para entrega inmediata hoy.
+        Aún no hay aportes libres listados hoy.
       </div>
     `;
   }
