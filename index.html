@@ -967,27 +967,25 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
  * el cual los cargará utilizando tus credenciales de "roa@escuela2702ema.edu.ar" de manera segura.
  */
 
-const GOOGLE_FORMS_CONFIG = {
   // CONFIGURACIÓN DE FORMULARIO - "NECESITA ALGO"
   necesita: {
-    // Reemplazar con el ID de tu formulario de Google para necesidades
     formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSd-dJfJE55gU7lmsZ7Val-mjMH6gOdVHnonoBRhBWJHM8f6FQ/formResponse",
-    // Mapeá los entry IDs correspondientes del formulario de Google (ver en el html inspeccionando el Form)
+    sheetCsvUrl: "", // URL de "Publicar en la web" como CSV
     fields: {
-      nombre: "entry.291855479",    // ID de la pregunta "Nombre de Beneficiario"
-      contacto: "entry.1861795326",  // ID de la pregunta "Celular / WhatsApp"
-      conector: "entry.3780034",  // ID de la pregunta "Nombre del Conector"
-      categoria: "entry.306821300", // ID de la pregunta "Categoría de Objeto"
-      detalle: "entry.1029237954",   // ID de la pregunta "Objeto Específico"
-      zona: "entry.1204601316",      // ID de la pregunta "Zona para entrega"
-      descripcion: "entry.520352941"// ID de la pregunta "Detalle adicional"
+      nombre: "entry.291855479",
+      contacto: "entry.1861795326",
+      conector: "entry.3780034",
+      categoria: "entry.306821300",
+      detalle: "entry.1029237954",
+      zona: "entry.1204601316",
+      descripcion: "entry.520352941"
     }
   },
 
   // CONFIGURACIÓN DE FORMULARIO - "DONACIONES"
   dona: {
-    // Reemplazar con el ID de tu formulario de Google para donaciones
     formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeCHz7ixNqYRYHUrUPcKMQ7JzVTKDNpCtOcX4rXq7PianwpiQ/formResponse",
+    sheetCsvUrl: "", // URL de "Publicar en la web" como CSV
     fields: {
       nombre: "entry.291855479",
       contacto: "entry.1861795326",
@@ -1001,8 +999,8 @@ const GOOGLE_FORMS_CONFIG = {
 
   // CONFIGURACIÓN DE FORMULARIO - "CONECTORES"
   conecta: {
-    // Reemplazar con el ID de tu formulario de Google para inscripción de Conectores
     formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSflN43TZwoJzjoDyOwCw2VXKftsYsZHhYu12T0eW1bylCyr2w/formResponse",
+    sheetCsvUrl: "", // URL de "Publicar en la web" como CSV
     fields: {
       nombre: "entry.291855479",
       contacto: "entry.1861795326",
