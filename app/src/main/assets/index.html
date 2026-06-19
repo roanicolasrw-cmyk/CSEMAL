@@ -1084,33 +1084,47 @@ function ensureEntryFormat(val) {
 // Seleccionar Chips de Objetos en los Formularios
 function selectChip(formPrefix, category) {
   const pageId = getPageIdByPrefix(formPrefix);
-  if (pageId) {
-    document.querySelectorAll('#' + pageId + ' .obj-chip').forEach(function(chip) {
-      chip.classList.remove('selected');
-    });
-  }
-  // Agregar al seleccionado
   const selectedChip = document.getElementById('chip-' + formPrefix + '-' + category);
+  
   if (selectedChip) {
-    selectedChip.classList.add('selected');
+    if (selectedChip.classList.contains('selected')) {
+      // Si ya está seleccionado, lo desmarcamos
+      selectedChip.classList.remove('selected');
+      document.getElementById(formPrefix + '-cat-selected').value = '';
+    } else {
+      // Si no, desmarcamos los demás de ese contenedor y marcamos este
+      if (pageId) {
+        document.querySelectorAll('#' + pageId + ' .obj-chip').forEach(function(chip) {
+          chip.classList.remove('selected');
+        });
+      }
+      selectedChip.classList.add('selected');
+      document.getElementById(formPrefix + '-cat-selected').value = category;
+    }
   }
-  // Actualizar input escondido
-  document.getElementById(formPrefix + '-cat-selected').value = category;
 }
 
 // Seleccionar Chips de Zonas de Rawson
 function selectZona(formPrefix, zona) {
   const pageId = getPageIdByPrefix(formPrefix);
-  if (pageId) {
-    document.querySelectorAll('#' + pageId + ' .zona-chip').forEach(function(chip) {
-      chip.classList.remove('selected');
-    });
-  }
   const selectedZona = document.getElementById('zona-' + formPrefix + '-' + zona);
+  
   if (selectedZona) {
-    selectedZona.classList.add('selected');
+    if (selectedZona.classList.contains('selected')) {
+      // Si ya está seleccionado, lo desmarcamos
+      selectedZona.classList.remove('selected');
+      document.getElementById(formPrefix + '-zona-selected').value = '';
+    } else {
+      // Si no, desmarcamos los demás de ese contenedor y marcamos este
+      if (pageId) {
+        document.querySelectorAll('#' + pageId + ' .zona-chip').forEach(function(chip) {
+          chip.classList.remove('selected');
+        });
+      }
+      selectedZona.classList.add('selected');
+      document.getElementById(formPrefix + '-zona-selected').value = zona;
+    }
   }
-  document.getElementById(formPrefix + '-zona-selected').value = zona;
 }
 
 // Intercepción de Formularios y Sanción de Carga
@@ -1120,14 +1134,25 @@ function handleFormSubmit(event, formType) {
   let payload = {};
   
   if (formType === 'necesita') {
+    const cat = document.getElementById('nec-cat-selected').value;
+    if (!cat) {
+      alert("⚠️ Por favor, seleccioná una Categoría del Objeto para tu solicitud.");
+      return;
+    }
+    const zona = document.getElementById('nec-zona-selected').value;
+    if (!zona) {
+      alert("⚠️ Por favor, seleccioná una Zona de Rawson para la entrega.");
+      return;
+    }
+
     payload = {
       id: baseNecesidades.length + 1,
       nombre: document.getElementById('nec-nombre').value,
       contacto: document.getElementById('nec-contacto').value,
       conector: document.getElementById('nec-conector').value,
-      categoria: document.getElementById('nec-cat-selected').value,
+      categoria: cat,
       detalle: document.getElementById('nec-detalle-obj').value,
-      zona: document.getElementById('nec-zona-selected').value,
+      zona: zona,
       descripcion: document.getElementById('nec-desc').value,
       estado: "pendiente"
     };
@@ -1140,14 +1165,25 @@ function handleFormSubmit(event, formType) {
     checkMatchInmediato(payload, 'necesidad');
 
   } else if (formType === 'dona') {
+    const cat = document.getElementById('don-cat-selected').value;
+    if (!cat) {
+      alert("⚠️ Por favor, seleccioná una Categoría del Objeto para tu donación.");
+      return;
+    }
+    const zona = document.getElementById('don-zona-selected').value;
+    if (!zona) {
+      alert("⚠️ Por favor, seleccioná la Zona de procedencia o de entrega.");
+      return;
+    }
+
     payload = {
       id: baseDonaciones.length + 1,
       nombre: document.getElementById('don-nombre').value,
       contacto: document.getElementById('don-contacto').value,
       email: document.getElementById('don-email').value,
-      categoria: document.getElementById('don-cat-selected').value,
+      categoria: cat,
       detalle: document.getElementById('don-detalle-obj').value,
-      zona: document.getElementById('don-zona-selected').value,
+      zona: zona,
       descripcion: document.getElementById('don-desc').value,
       estado: "disponible"
     };
@@ -1157,12 +1193,18 @@ function handleFormSubmit(event, formType) {
     checkMatchInmediato(payload, 'donacion');
 
   } else if (formType === 'conecta') {
+    const zona = document.getElementById('con-zona-selected').value;
+    if (!zona) {
+      alert("⚠️ Por favor, seleccioná tu Zona de Mayor Frecuencia.");
+      return;
+    }
+
     payload = {
       id: baseConectores.length + 1,
       nombre: document.getElementById('con-nombre-completo').value,
       contacto: document.getElementById('con-cel').value,
       email: document.getElementById('con-email-user').value,
-      zona: document.getElementById('con-zona-selected').value,
+      zona: zona,
       compromiso: document.getElementById('con-compromiso').value
     };
     baseConectores.push(payload);
