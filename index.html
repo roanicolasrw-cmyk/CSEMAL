@@ -500,8 +500,8 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
             <input type="tel" id="nec-contacto" placeholder="Ej: 2804XXXXXX" required>
           </div>
           <div class="field">
-            <label for="nec-conector">Nombre del Conector EMAL <span class="req">*</span></label>
-            <input type="text" id="nec-conector" placeholder="Ej: Estudiante Nicolás R." required>
+            <label for="nec-conector">Nombre del Conector EMAL (Si corresponde)</label>
+            <input type="text" id="nec-conector" placeholder="Ej: Estudiante Nicolás R.">
           </div>
         </div>
 
@@ -599,6 +599,10 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
             <label for="don-email">Email institucional o personal <span class="req">*</span></label>
             <input type="email" id="don-email" placeholder="Ej: roa@escuela2702ema.edu.ar" required>
           </div>
+        </div>
+        <div class="field">
+          <label for="don-conector">Nombre del Conector EMAL (Si corresponde)</label>
+          <input type="text" id="don-conector" placeholder="Ej: Estudiante Nicolás R.">
         </div>
 
         <p class="form-section-title">📐 El Objeto Disponible</p>
@@ -1467,6 +1471,7 @@ function handleFormSubmit(event, formType) {
       nombre: document.getElementById('don-nombre').value,
       contacto: document.getElementById('don-contacto').value,
       email: document.getElementById('don-email').value,
+      conector: document.getElementById('don-conector').value,
       categoria: cat,
       detalle: document.getElementById('don-detalle-obj').value,
       zona: zona,
@@ -1907,6 +1912,7 @@ function renderLists() {
         <div>
           <p class="ac-name">${n.nombre}</p>
           <p class="ac-obj">Busca: ${n.detalle}</p>
+          ${n.conector ? `<p style="font-size:0.65rem; color:var(--verde); font-weight:700">👤 Conector: ${n.conector}</p>` : ''}
         </div>
       </div>
       <p style="font-size: .75rem; color: var(--gris); line-height: 1.4">${n.descripcion || "Sin comentarios."}</p>
@@ -1931,6 +1937,7 @@ function renderLists() {
         <div>
           <p class="ac-name">${d.nombre}</p>
           <p class="ac-obj">Ofrece: ${d.detalle}</p>
+          ${d.conector ? `<p style="font-size:0.65rem; color:var(--verde); font-weight:700">👤 Conector: ${d.conector}</p>` : ''}
         </div>
       </div>
       <p style="font-size: .75rem; color: var(--gris); line-height: 1.4">${d.descripcion || "Sin comentarios."}</p>
