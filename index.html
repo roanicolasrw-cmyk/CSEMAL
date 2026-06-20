@@ -990,7 +990,7 @@ const GOOGLE_FORMS_CONFIG = {
   // CONFIGURACIÓN DE FORMULARIO - "NECESITA ALGO"
   necesita: {
     formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSd-dJfJE55gU7lmsZ7Val-mjMH6gOdVHnonoBRhBWJHM8f6FQ/formResponse",
-    sheetCsvUrl: "",
+    sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSenBFdPkFae98-EQZ41EuO0q3MA75qcJ-cwn_15-puzUCZKq7WlDwrnGwn7so4jxoCNoIEj-aViMcF/pub?gid=213487393&single=true&output=csv",
     fields: {
       nombre: "entry.291855479",
       contacto: "entry.1861795326",
@@ -1005,7 +1005,7 @@ const GOOGLE_FORMS_CONFIG = {
   // CONFIGURACIÓN DE FORMULARIO - "DONACIONES"
   dona: {
     formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeCHz7ixNqYRYHUrUPcKMQ7JzVTKDNpCtOcX4rXq7PianwpiQ/formResponse",
-    sheetCsvUrl: "",
+    sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTAnSmlLHDKcSN1jH5F0FIYamDzlytuvbhPP_vNnc39Ebg8K1l6eNplui2uuHAoTbuChC5NKgdxFNrW/pub?gid=539051450&single=true&output=csv",
     fields: {
       nombre: "entry.291855479",
       contacto: "entry.1861795326",
@@ -1020,7 +1020,7 @@ const GOOGLE_FORMS_CONFIG = {
   // CONFIGURACIÓN DE FORMULARIO - "CONECTORES"
   conecta: {
     formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSflN43TZwoJzjoDyOwCw2VXKftsYsZHhYu12T0eW1bylCyr2w/formResponse",
-    sheetCsvUrl: "",
+    sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQJy9IsxtK0E177R9w3viHGYJMDZD5YvJ1g03iTHX9JZ7VlQE3d2ZGGRwr6kLq660vSDX6z6c8AGMzs/pub?gid=1430000253&single=true&output=csv",
     fields: {
       nombre: "entry.291855479",
       contacto: "entry.1861795326",
@@ -1029,6 +1029,10 @@ const GOOGLE_FORMS_CONFIG = {
       zona: "entry.1204601316",
       compromiso: "entry.520352941"
     }
+  },
+  // CONFIGURACIÓN DE MATCHES
+  matches: {
+    sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQW77-gmFjZfO2U2sDUcrz7kTrq5yC8wMPXbGvEoJa-KEZL_IhFBLwuGlM82z-6B0DmiTuzQH0-Wujv/pub?gid=0&single=true&output=csv"
   }
 };
 
@@ -1067,23 +1071,21 @@ function loadInitialData() {
   baseConectores = [];
   baseMatches = [];
 
-  // Intentar cargar configuración de URLs de Google Sheets
+  // Intentar cargar configuración de URLs de Google Sheets (si se cambiaron localmente)
   const savedConfig = localStorage.getItem('emal_sheets_config');
   if (savedConfig) {
     const parsed = JSON.parse(savedConfig);
-    // Asignar URLs a la configuración global para el motor de sync
-    GOOGLE_FORMS_CONFIG.necesita.sheetCsvUrl = parsed.necesitaSheetUrl || "";
-    GOOGLE_FORMS_CONFIG.dona.sheetCsvUrl = parsed.donaSheetUrl || "";
-    GOOGLE_FORMS_CONFIG.conecta.sheetCsvUrl = parsed.conectaSheetUrl || "";
-    if (GOOGLE_FORMS_CONFIG.matches) GOOGLE_FORMS_CONFIG.matches.sheetCsvUrl = parsed.matchesSheetUrl || "";
-
-    // Disparar sincronización inmediata
-    sincronizarGoogleSheets();
-  } else {
-    // Si no hay configuración, mostrar listas vacías (estado real inicial)
-    updateDashboard();
-    renderLists();
+    if (parsed.necesitaSheetUrl) GOOGLE_FORMS_CONFIG.necesita.sheetCsvUrl = parsed.necesitaSheetUrl;
+    if (parsed.donaSheetUrl) GOOGLE_FORMS_CONFIG.dona.sheetCsvUrl = parsed.donaSheetUrl;
+    if (parsed.conectaSheetUrl) GOOGLE_FORMS_CONFIG.conecta.sheetCsvUrl = parsed.conectaSheetUrl;
+    if (parsed.matchesSheetUrl && GOOGLE_FORMS_CONFIG.matches) GOOGLE_FORMS_CONFIG.matches.sheetCsvUrl = parsed.matchesSheetUrl;
   }
+
+  // Cargar respaldo local
+  loadStoredSheetsData();
+
+  // Disparar sincronización inmediata (global para todos)
+  sincronizarGoogleSheets();
 }
 
 // Convertir las filas leídas de Google Sheets al formato JSON de la app de forma robusta
@@ -1222,107 +1224,102 @@ function mapCSVToJSON(csvRows) {
   });
 }
 
-// Acción de sincronizar hojas en caliente desde la web en cualquier dispositivo
+// Acción de sincronizar hojas en caliente (Automática para todos)
 async function sincronizarGoogleSheets() {
-  const necUrl = document.getElementById('config-sheet-nec-url').value.trim();
-  const donUrl = document.getElementById('config-sheet-don-url').value.trim();
-  const conUrl = document.getElementById('config-sheet-con-url').value.trim();
-  const matUrl = document.getElementById('config-sheet-mat-url').value.trim();
+  // Intentar obtener de inputs (si estamos en admin) o de la config global (para el público)
+  const elNec = document.getElementById('config-sheet-nec-url');
+  const elDon = document.getElementById('config-sheet-don-url');
+  const elCon = document.getElementById('config-sheet-con-url');
+  const elMat = document.getElementById('config-sheet-mat-url');
 
-  // Guardar configuración
-  const sheetsConfig = {
-    necesitaSheetUrl: necUrl,
-    donaSheetUrl: donUrl,
-    conectaSheetUrl: conUrl,
-    matchesSheetUrl: matUrl
-  };
-  localStorage.setItem('emal_sheets_config', JSON.stringify(sheetsConfig));
+  const necUrl = (elNec ? elNec.value.trim() : '') || GOOGLE_FORMS_CONFIG.necesita.sheetCsvUrl;
+  const donUrl = (elDon ? elDon.value.trim() : '') || GOOGLE_FORMS_CONFIG.dona.sheetCsvUrl;
+  const conUrl = (elCon ? elCon.value.trim() : '') || GOOGLE_FORMS_CONFIG.conecta.sheetCsvUrl;
+  const matUrl = (elMat ? elMat.value.trim() : '') || (GOOGLE_FORMS_CONFIG.matches ? GOOGLE_FORMS_CONFIG.matches.sheetCsvUrl : '');
 
-  if (!necUrl && !donUrl && !conUrl && !matUrl) {
-    alert("⚠️ Por favor, ingresá al menos una URL de Google Sheets publicada como CSV para sincronizar.");
-    return;
+  // Guardar configuración local solo si estamos en modo admin editando
+  if (elNec || elDon || elCon || elMat) {
+    const sheetsConfig = {
+      necesitaSheetUrl: necUrl,
+      donaSheetUrl: donUrl,
+      conectaSheetUrl: conUrl,
+      matchesSheetUrl: matUrl
+    };
+    localStorage.setItem('emal_sheets_config', JSON.stringify(sheetsConfig));
   }
 
-  let summary = "";
+  if (!necUrl && !donUrl && !conUrl && !matUrl) return;
+
   const btn = document.getElementById('btn-sync-sheets');
-  const origText = btn.innerText;
-  btn.innerText = "⏳ Sincronizando datos...";
-  btn.disabled = true;
+  const origText = btn ? btn.innerText : '';
+  if (btn) {
+    btn.innerText = "⏳ Sincronizando...";
+    btn.disabled = true;
+  }
 
   try {
+    // Sync Necesidades
     if (necUrl) {
-      try {
-        const res = await fetch(necUrl);
-        const text = await res.text();
-        const rows = parseCSV(text);
-        if (rows.length > 0) {
-          const mapped = mapCSVToJSON(rows);
-          baseNecesidades = mapped;
-          localStorage.setItem('emal_sheets_needs', JSON.stringify(baseNecesidades));
-          summary += `✅ Se sincronizaron ${baseNecesidades.length} Pedidos / Necesidades.\n`;
-        }
-      } catch (e) {
-        summary += `❌ Error al sincronizar Pedidos: ${e.message}\n`;
+      const res = await fetch(necUrl);
+      const text = await res.text();
+      const rows = parseCSV(text);
+      if (rows.length > 1) {
+        baseNecesidades = mapCSVToJSON(rows, 'necesita');
+        localStorage.setItem('emal_sheets_needs', JSON.stringify(baseNecesidades));
       }
     }
 
+    // Sync Donaciones
     if (donUrl) {
-      try {
-        const res = await fetch(donUrl);
-        const text = await res.text();
-        const rows = parseCSV(text);
-        if (rows.length > 0) {
-          const mapped = mapCSVToJSON(rows);
-          baseDonaciones = mapped;
-          localStorage.setItem('emal_sheets_donations', JSON.stringify(baseDonaciones));
-          summary += `✅ Se sincronizaron ${baseDonaciones.length} Donaciones.\n`;
-        }
-      } catch (e) {
-        summary += `❌ Error al sincronizar Donaciones: ${e.message}\n`;
+      const res = await fetch(donUrl);
+      const text = await res.text();
+      const rows = parseCSV(text);
+      if (rows.length > 1) {
+        baseDonaciones = mapCSVToJSON(rows, 'donacion');
+        localStorage.setItem('emal_sheets_donations', JSON.stringify(baseDonaciones));
       }
     }
 
+    // Sync Conectores
     if (conUrl) {
-      try {
-        const res = await fetch(conUrl);
-        const text = await res.text();
-        const rows = parseCSV(text);
-        if (rows.length > 0) {
-          const mapped = mapCSVToJSON(rows);
-          baseConectores = mapped;
-          localStorage.setItem('emal_sheets_connectors', JSON.stringify(baseConectores));
-          summary += `✅ Se sincronizaron ${baseConectores.length} Conectores.\n`;
-        }
-      } catch (e) {
-        summary += `❌ Error al sincronizar Conectores: ${e.message}\n`;
+      const res = await fetch(conUrl);
+      const text = await res.text();
+      const rows = parseCSV(text);
+      if (rows.length > 1) {
+        baseConectores = mapCSVToJSON(rows, 'conector');
+        localStorage.setItem('emal_sheets_connectors', JSON.stringify(baseConectores));
       }
     }
 
+    // Sync Matches
     if (matUrl) {
-      try {
-        const res = await fetch(matUrl);
-        const text = await res.text();
-        const rows = parseCSV(text);
-        if (rows.length > 0) {
-          const mapped = mapCSVToJSON(rows);
-          baseMatches = mapped;
-          localStorage.setItem('emal_sheets_matches', JSON.stringify(baseMatches));
-          summary += `✅ Se sincronizaron ${baseMatches.length} Matches Históricos.\n`;
-        }
-      } catch (e) {
-        summary += `❌ Error al sincronizar Matches: ${e.message}\n`;
+      const res = await fetch(matUrl);
+      const text = await res.text();
+      const rows = parseCSV(text);
+      if (rows.length > 1) {
+        // Para matches, el mapeo es distinto
+        const headers = rows[0].map(h => h.toLowerCase().trim());
+        const dataRows = rows.slice(1);
+        baseMatches = dataRows.map((row, idx) => ({
+          id: idx + 1,
+          necesidad: { detalle: row[headers.indexOf('objeto') || 3] || 'Pedido' },
+          donacion: { nombre: row[headers.indexOf('donante') || 2] || 'Donante' },
+          conector: row[headers.indexOf('conector') || 4] || 'EMAL',
+          estado: 'activo'
+        }));
+        localStorage.setItem('emal_sheets_matches', JSON.stringify(baseMatches));
       }
     }
 
     updateDashboard();
     renderLists();
-
-    alert(`📊 Resultados de Sincronización:\n\n${summary}`);
   } catch (error) {
-    alert("❌ Error letal durante la sincronización: " + error.message);
+    console.error("Error en sincronización global:", error);
   } finally {
-    btn.innerText = origText;
-    btn.disabled = false;
+    if (btn) {
+      btn.innerText = origText;
+      btn.disabled = false;
+    }
   }
 }
 
