@@ -1147,29 +1147,39 @@ function mapCSVToJSON(csvRows) {
   const zonaIdx = getIndex(['zona', 'barrio', 'dirección', 'direccion']);
   const descripcionIdx = getIndex(['descripcion', 'descripción', 'comentario', 'detalles', 'adicional']);
   const estadoIdx = getIndex(['estado', 'situacion', 'situación']);
-  const compromisoIdx = getIndex(['compromiso', 'disponibilidad', 'horas']);
 
   return dataRows.map((row, idx) => {
     const valByIdx = (index, fallbackCol) => {
       if (index !== -1 && index < row.length) return row[index];
-      if (fallbackCol < row.length) return row[fallbackCol];
+      if (fallbackCol < row.length) return row[fallbackCol] || '';
       return '';
     };
 
-    const rawEstado = valByIdx(estadoIdx, 8).toLowerCase();
-    
+    // Normalización de categoría para que coincida con los IDs de la web (ropa, mural, calzado, etc)
+    let rawCat = (valByIdx(categoriaIdx, 4) || "").toLowerCase();
+    let catId = "otros";
+    if (rawCat.includes("ropa") || rawCat.includes("abrigo")) catId = "ropa";
+    else if (rawCat.includes("util") || rawCat.includes("libro") || rawCat.includes("mural")) catId = "mural";
+    else if (rawCat.includes("calzado") || rawCat.includes("zapato") || rawCat.includes("zapatilla")) catId = "calzado";
+    else if (rawCat.includes("alim")) catId = "alimentos";
+    else if (rawCat.includes("mueble") || rawCat.includes("mobil")) catId = "muebles";
+
+    let rawEstado = (valByIdx(estadoIdx, 8) || "").toLowerCase();
+    let estadoLimpio = "pendiente";
+    if (rawEstado.includes("match") || rawEstado.includes("vinc") || rawEstado.includes("coincid")) estadoLimpio = "matched";
+    if (rawEstado.includes("entreg") || rawEstado.includes("final") || rawEstado.includes("cumpl")) estadoLimpio = "entregado";
+
     return {
-      id: idx + 1,
+      id: idx + 100, // Evitar colisión con IDs locales bajos
       nombre: valByIdx(nombreIdx, 0) || ("Usuario " + (idx + 1)),
       contacto: valByIdx(contactoIdx, 1),
       email: valByIdx(emailIdx, 2),
-      conector: valByIdx(conectorIdx, 3) || "General EMAL",
-      categoria: (valByIdx(categoriaIdx, 4) || "otros").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+      conector: valByIdx(conectorIdx, 3),
+      categoria: catId,
       detalle: valByIdx(detalleIdx, 5),
       zona: valByIdx(zonaIdx, 6) || "Rawson Centro",
       descripcion: valByIdx(descripcionIdx, 7),
-      estado: rawEstado || "pendiente",
-      compromiso: valByIdx(compromisoIdx, 4)
+      estado: estadoLimpio
     };
   });
 }
