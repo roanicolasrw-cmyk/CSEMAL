@@ -1460,80 +1460,28 @@ function enviarAGoogleForms(formType, payload) {
     }
 
     // MAPEO EXACTO PARA EVITAR ERROR 400 (Bad Request)
-    // Los valores deben coincidir al 100% con las opciones del Google Form
-    const catMap = {
-      'ropa': 'Ropa / Abrigo',
-      'mural': 'Útiles / Libros',
-      'calzado': 'Calzado',
-      'alimentos': 'Alimentos',
-      'muebles': 'Mobiliario',
-      'otros': 'Otros'
-    };
-
-    const zonaMap = {
-      'Rawson Centro': 'Rawson Centro',
-      'Barrio 3 de Abril': 'Barrio 3 de Abril',
-      'Barrio Gregorio Mayo': 'Barrio Gregorio Mayo',
-      'Barrio Luis Vernet': 'Barrio Luis Vernet',
-      'Barrio Puerto Rawson': 'Puerto Rawson / Playa Unión',
-      'Puerto Rawson': 'Puerto Rawson / Playa Unión',
-      'Área 12': 'Area 12',
-      'Area 12': 'Area 12',
-      'Otro Barrio': 'Otro',
-      'Todos los sectores': 'Otro'
-    };
+    const catMap = { 'ropa': 'Ropa / Abrigo', 'mural': 'Útiles / Libros', 'calzado': 'Calzado', 'alimentos': 'Alimentos', 'muebles': 'Mobiliario', 'otros': 'Otros' };
+    const zonaMap = { 'Rawson Centro': 'Rawson Centro', 'Barrio 3 de Abril': 'Barrio 3 de Abril', 'Barrio Gregorio Mayo': 'Barrio Gregorio Mayo', 'Barrio Luis Vernet': 'Barrio Luis Vernet', 'Barrio Puerto Rawson': 'Puerto Rawson / Playa Unión', 'Puerto Rawson': 'Puerto Rawson / Playa Unión', 'Área 12': 'Area 12', 'Area 12': 'Area 12', 'Otro Barrio': 'Otro', 'Todos los sectores': 'Otro' };
 
     const categoriaLimpia = catMap[payload.categoria] || payload.categoria;
     const zonaLimpia = zonaMap[payload.zona] || payload.zona;
 
-    // Preparamos los datos del formulario como URLSearchParams
     const formData = new URLSearchParams();
-    
     if (config.fields) {
-      if (formType === 'necesita') {
-        if (config.fields.nombre) formData.append(config.fields.nombre, payload.nombre || '');
-        if (config.fields.contacto) formData.append(config.fields.contacto, payload.contacto || '');
-        if (config.fields.conector) formData.append(config.fields.conector, payload.conector || '');
-        if (config.fields.categoria) formData.append(config.fields.categoria, categoriaLimpia);
-        if (config.fields.detalle) formData.append(config.fields.detalle, payload.detalle || '');
-        if (config.fields.zona) formData.append(config.fields.zona, zonaLimpia);
-        if (config.fields.descripcion) formData.append(config.fields.descripcion, payload.descripcion || 'Sin detalle adicional');
-      } else if (formType === 'dona') {
-        if (config.fields.nombre) formData.append(config.fields.nombre, payload.nombre || '');
-        if (config.fields.contacto) formData.append(config.fields.contacto, payload.contacto || '');
-        if (config.fields.email) formData.append(config.fields.email, payload.email || '');
-        if (config.fields.categoria) formData.append(config.fields.categoria, categoriaLimpia);
-        if (config.fields.detalle) formData.append(config.fields.detalle, payload.detalle || '');
-        if (config.fields.zona) formData.append(config.fields.zona, zonaLimpia);
-        if (config.fields.descripcion) formData.append(config.fields.descripcion, payload.descripcion || 'Sin detalle adicional');
-      } else if (formType === 'conecta') {
-        if (config.fields.nombre) formData.append(config.fields.nombre, payload.nombre || '');
-        if (config.fields.contacto) formData.append(config.fields.contacto, payload.contacto || '');
-        if (config.fields.email) formData.append(config.fields.email, payload.email || '');
-        if (config.fields.detalle) formData.append(config.fields.detalle, payload.detalle || 'Registro Conector');
-        if (config.fields.zona) formData.append(config.fields.zona, zonaLimpia);
-        if (config.fields.compromiso) formData.append(config.fields.compromiso, payload.compromiso || '');
+      for (let key in config.fields) {
+        let val = payload[key] || '';
+        if (key === 'categoria') val = categoriaLimpia;
+        if (key === 'zona') val = zonaLimpia;
+        if (key === 'descripcion' && !val) val = 'Sin detalle adicional';
+        if (key === 'detalle' && formType === 'conecta' && !val) val = 'Registro Conector';
+        formData.append(config.fields[key], val);
       }
     }
 
-    // Hacemos el envío de fondo sin obstaculizar la experiencia de usuario
-    fetch(config.formUrl, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: formData.toString()
-    })
-    .then(response => {
-      console.log("Intento de envío de datos a Google Forms exitoso.");
-    })
-    .catch(error => {
-      console.error("Error al enviar a Google Forms:", error);
-    });
-  } catch (error) {
-    console.error("Error fatal interceptado en enviarAGoogleForms:", error);
-  }
+    fetch(config.formUrl, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: formData.toString() })
+    .then(() => console.log("Datos enviados a Google con éxito."))
+    .catch(e => console.error("Error al enviar a Google Forms:", e));
+  } catch (error) { console.error("Error en enviarAGoogleForms:", error); }
 }
 
 // Analizar compatibilidad inmediata para dar aviso
@@ -1550,42 +1498,42 @@ function checkMatchInmediato(item, role) {
     }
     
     if (matchEncontrado) {
-      // Consolidamos Match
+      // Consolidamos Match Real
       const nuevoMatch = {
-        id: baseMatches.length + 1,
+        id: Date.now(), // ID único real
         necesidad: item,
         donacion: matchEncontrado,
         conector: item.conector || "Sede EMAL",
-        fecha: "Instante",
+        fecha: new Date().toLocaleDateString(),
         estado: "activo"
       };
       baseMatches.push(nuevoMatch);
       item.estado = "matched";
       matchEncontrado.estado = "matched";
-      persistLocalData(); // Guardar el Match localmente
+      persistLocalData();
 
       const telDonante = matchEncontrado.contacto.replace(/\D/g, '');
-      const txtDirecto = encodeURIComponent(`Hola ${matchEncontrado.nombre}, vi tu donación de "${matchEncontrado.detalle}" en Comunidad Solidaria de la EMAL. El sistema nos unió con mi pedido de "${item.detalle}". ¿Cómo podemos coordinar?`);
+      const txtDirecto = encodeURIComponent(`Hola ${matchEncontrado.nombre}, te contacto desde la App Comunidad Solidaria de la EMAL. Mi pedido de "${item.detalle}" coincide con tu donación de "${matchEncontrado.detalle}". ¿Podemos coordinar la entrega?`);
       const directButtonsHTML = `
         <a href="https://wa.me/549${telDonante}?text=${txtDirecto}" target="_blank" style="text-decoration:none; text-align:center; display:block; background:#25D366; color:#fff; font-size:.78rem; font-weight:700; padding:0.6rem; border-radius:0.5rem; font-family:sans-serif">
-          🟢 Escribir directo al Donante (${matchEncontrado.nombre}) por WhatsApp
+          🟢 Contactar al Donante (${matchEncontrado.nombre}) por WhatsApp
         </a>
       `;
 
       openSuccessModal(
-        '¡Pedido Recibido!', 
-        '¡Registro de Necesidad Exitoso!', 
-        'Hemos recibido y guardado la solicitud de ' + item.nombre + '.', 
+        '🤝 ¡Enlace Logrado!',
+        '¡Cruce Exitoso!',
+        'Tu pedido ha sido guardado y ya encontramos a alguien que ofrece lo que buscás.',
         true, 
-        '¡Se detectó afinidad directo! Coincide perfectamente con la donación disponible de ' + matchEncontrado.nombre + ' (' + matchEncontrado.detalle + ').',
+        `Coincidís con ${matchEncontrado.nombre} (${matchEncontrado.detalle}).`,
         directButtonsHTML
       );
       document.getElementById('form-necesita-obj').reset();
     } else {
       openSuccessModal(
-        '¡Pedido Publicado!', 
-        '¡Registro Exitoso de tu Pedido!', 
-        'Los datos de ' + item.nombre + ' se guardaron. El sistema ya está buscando donadores compatibles en Rawson de forma confidencial.', 
+        '🙏 Pedido Registrado',
+        '¡Registro Exitoso!',
+        'Guardamos tu necesidad. El sistema buscará automáticamente un donante en Rawson y te avisaremos.',
         false
       );
       document.getElementById('form-necesita-obj').reset();
@@ -1602,20 +1550,20 @@ function checkMatchInmediato(item, role) {
 
     if (matchEncontrado) {
       const nuevoMatch = {
-        id: baseMatches.length + 1,
+        id: Date.now(),
         necesidad: matchEncontrado,
         donacion: item,
         conector: matchEncontrado.conector || "Sede EMAL",
-        fecha: "Instante",
+        fecha: new Date().toLocaleDateString(),
         estado: "activo"
       };
       baseMatches.push(nuevoMatch);
       item.estado = "matched";
       matchEncontrado.estado = "matched";
-      persistLocalData(); // Guardar el Match localmente
+      persistLocalData();
 
       const telBeneficiario = matchEncontrado.contacto.replace(/\D/g, '');
-      const txtDirecto = encodeURIComponent(`Hola ${matchEncontrado.nombre}, vi tu pedido de "${matchEncontrado.detalle}" en Comunidad Solidaria de la EMAL. Dispongo de uno para donarte. ¿Cómo coordinamos la entrega?`);
+      const txtDirecto = encodeURIComponent(`Hola ${matchEncontrado.nombre}, te contacto desde la App Comunidad Solidaria de la EMAL. Tengo para donarte el objeto "${item.detalle}" que estás necesitando. ¿Cómo coordinamos la entrega?`);
       const directButtonsHTML = `
         <a href="https://wa.me/549${telBeneficiario}?text=${txtDirecto}" target="_blank" style="text-decoration:none; text-align:center; display:block; background:#25D366; color:#fff; font-size:.78rem; font-weight:700; padding:0.6rem; border-radius:0.5rem; font-family:sans-serif">
           🟢 Contactar al Beneficiario (${matchEncontrado.nombre}) por WhatsApp
@@ -1623,19 +1571,19 @@ function checkMatchInmediato(item, role) {
       `;
 
       openSuccessModal(
-        '¡Muchísimas Gracias!', 
-        '¡Donación Registrada!', 
-        'Gracias ' + item.nombre + ', tu aporte ha quedado asentado en el sistema solidario.', 
+        '🎁 ¡Donación Vinculada!',
+        '¡Gracias por tu Solidaridad!',
+        'Tu donación fue registrada y ya tiene un destinatario directo esperando.',
         true, 
-        '¡Encontramos un receptor directo de inmediato! ' + matchEncontrado.nombre + ' necesita un elemento igual en ' + matchEncontrado.zona + '.',
+        `Coincidís con el pedido de ${matchEncontrado.nombre} (${matchEncontrado.detalle}) en ${matchEncontrado.zona}.`,
         directButtonsHTML
       );
       document.getElementById('form-dona-obj').reset();
     } else {
       openSuccessModal(
-        '¡Muchas Gracias por Dar!', 
-        '¡Donación Registrada!', 
-        'Tu aporte de ' + item.detalle + ' ya está disponible en nuestro catálogo. ¡Te avisamos en cuanto haya una necesidad compatible de forma privada!', 
+        '📦 Donación Publicada',
+        '¡Muchísimas Gracias!',
+        'Tu aporte de ' + item.detalle + ' ya está disponible en el catálogo comunitario para quienes lo necesiten.',
         false
       );
       document.getElementById('form-dona-obj').reset();
