@@ -1,21 +1,45 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Comunidad Solidaria - Proyecto EMAL 2702
 
-# Run and deploy your AI Studio app
+Este es el repositorio de la plataforma **Comunidad Solidaria**, un proyecto nacido en la **Escuela Municipal de Aprendizaje Laboral (EMAL) Nº 2702** de Rawson, Chubut. 
 
-This contains everything you need to run your app locally.
+La idea es simple: usar la tecnología para que los vecinos que tienen algo para donar se encuentren con los que lo necesitan, sin vueltas y sin costo.
 
-View your app in AI Studio: https://ai.studio/apps/e16a9df5-9875-4b07-bb0f-57971a157a18
+![Portada de Comunidad Solidaria](screenshot_home.png)
 
-## Run Locally
+## 💡 Sobre el proyecto
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
+El proyecto surgió al ver que mucha gente en Rawson quería ayudar pero no sabía cómo llegar a las familias que realmente lo necesitaban. Creamos esta herramienta para centralizar esos pedidos y donaciones.
 
+Un pilar fundamental son los **Conectores**. Son alumnos y profes de la EMAL que salen al barrio a hablar con los vecinos que no tienen internet o no se llevan bien con la tecnología, cargando sus pedidos en la app por ellos.
 
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
+## 🛠️ Cómo está armado (Arquitectura)
+
+Para que esto fuera sostenible y gratuito para la escuela, decidimos no usar servidores complicados ni bases de datos pagas. Todo funciona integrado con **Google Workspace**.
+
+*   **Frontend**: Una interfaz sencilla en HTML, CSS y JavaScript que corre en cualquier celular.
+*   **Formularios**: Usamos Google Forms para que la carga de datos sea segura y fácil de configurar.
+*   **Base de datos**: Todo se guarda en un Google Sheet (una planilla de cálculo), lo que permite a los profes gestionar todo desde una interfaz que ya conocen.
+*   **El "Match"**: El sistema cruza automáticamente los datos de donaciones y pedidos por categoría y barrio, facilitando la logística.
+
+![Esquema de funcionamiento del sistema](screenshot_architecture.png)
+
+## 🚀 Instalación y Setup
+
+Si querés probarlo o instalarlo para otra institución:
+
+1. Cloná el repo.
+2. Abrí el `index.html` en un navegador.
+3. Para que guarde datos de verdad, vas a tener que crear tus propios formularios en Google y poner los IDs en la configuración del archivo principal.
+
+## 📸 Capturas de la App
+
+A continuación se muestran algunas pantallas del sistema en funcionamiento:
+
+![Formulario de donación](screenshot_form.png)
+*Formulario simple para que los vecinos registren sus aportes.*
+
+![Panel de Match para Conectores](screenshot_admin.png)
+*El panel donde los voluntarios de la EMAL coordinan las entregas.*
+
+---
+Hecho con ❤️ por la comunidad de la **EMAL 2702 - Rawson**.
