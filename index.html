@@ -437,11 +437,10 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
       </div>
     </div>
 
-    <!-- TABLERO DE MATCHES DEL DÍA (NUEVO) -->
+    <!-- Cruces Solidarios -->
     <div id="home-matches-section" style="margin-top: 2.5rem; display: none;">
       <p class="match-col-title" style="background:rgba(40,168,108,.1); color:var(--verde); margin-bottom: 1.2rem">✅ Cruces Solidarios del Día</p>
       <div id="home-matches-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
-        <!-- Dinámico -->
       </div>
     </div>
   </div>
@@ -982,29 +981,9 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.5);padding:2rem 3rem;dis
 
 <!-- JAVASCRIPT CONEXION GOOGLE FORMS -->
 <script>
-/**
- * ════════════════════════════════════════════════════════════════════════
- * CONFIGURACIÓN DE CONEXIÓN CON TU GOOGLE FORM (EMAL RAWSON)
- * ════════════════════════════════════════════════════════════════════════
- * Para que las cargas desde este sitio web se guarden de verdad en tus Google Forms,
- * completá los ID correspondientes creados desde tu cuenta institucional
- * "roa@escuela2702ema.edu.ar" (o cualquier otra cuenta escolar).
- *
- * NOTA DE SEGURIDAD Y RESTRICCIÓN DE CUENTA INSTITUCIONAL:
- * Si tu Google Form tiene activada la opción: "Restringir a los usuarios de EMAL..."
- * los usuarios deben iniciar sesión en su cuenta institucional de Google de forma obligatoria.
- * Esto significa que si este sitio web se carga en el celular de un vecino que NO tiene 
- * la cuenta de la escuela, el envío de fondo (fetch) será bloqueado por Google por falta de sesión.
- *
- * RECOMENDACIONES DE IMPLEMENTACIÓN:
- * Opción A (Recomendada para Formularios restringidos):
- * Desactivá en la configuración de Google Forms la opción de restringir alumnos para que 
- * cualquier vecino de Rawson pueda cargar el formulario desde su casa sin cuenta escolar.
- *
- * Opción B:
- * Si o sí debe guardarse de forma interna. Convertí tu Formulario en una hoja abierta de Google Sheets
- * y usá un Google Apps Script desplegado como Aplicación Web para recibir los datos de forma anónima, 
- * el cual los cargará utilizando tus credenciales de "roa@escuela2702ema.edu.ar" de manera segura.
+/*
+ * Configuración de Google Forms
+ * roa@escuela2702ema.edu.ar
  */
 
 const GOOGLE_FORMS_CONFIG = {
@@ -1057,7 +1036,7 @@ const GOOGLE_FORMS_CONFIG = {
   }
 };
 
-// Bases de datos locales en memoria para simular el comportamiento de la App en tiempo real
+// Bases de datos locales
 let baseNecesidades = [];
 let baseDonaciones = [];
 let baseConectores = [];
@@ -1450,7 +1429,7 @@ function handleFormSubmit(event, formType) {
   renderLists();
 }
 
-// Somete el payload mapeado en AJAX POST "no-cors" directo al Endpoint de Google Form institucional
+// Somete el payload a Google Form
 function enviarAGoogleForms(formType, payload) {
   try {
     const config = GOOGLE_FORMS_CONFIG[formType];
@@ -1484,7 +1463,7 @@ function enviarAGoogleForms(formType, payload) {
   } catch (error) { console.error("Error en enviarAGoogleForms:", error); }
 }
 
-// Analizar compatibilidad inmediata para dar aviso
+// Analizar compatibilidad
 function checkMatchInmediato(item, role) {
   let matchEncontrado = null;
 
@@ -1591,7 +1570,7 @@ function checkMatchInmediato(item, role) {
   }
 }
 
-// Forzar una animación visual interactiva de Match desde el Home
+// Animación visual de Match
 function animarMatch() {
   const modal = document.getElementById('success-modal');
   openSuccessModal(
@@ -1992,12 +1971,7 @@ function closeSuccessModal() {
   showPage('home');
 }
 
-// ════════════════════════════════════════════════════════════════════════
-// GESTION DINÁMICA DE LA CONFIGURACIÓN DE GOOGLE FORMS
-// ════════════════════════════════════════════════════════════════════════
-// ════════════════════════════════════════════════════════════════════════
-// GESTION DINÁMICA DE LA CONFIGURACIÓN DE GOOGLE FORMS E INICIO DE SESIÓN
-// ════════════════════════════════════════════════════════════════════════
+/* GESTION DE CONFIGURACIÓN E INICIO DE SESIÓN */
 function openLoginModal() {
   const modal = document.getElementById('login-modal');
   modal.style.display = 'flex';
