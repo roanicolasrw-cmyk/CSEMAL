@@ -1,45 +1,45 @@
 # Comunidad Solidaria - Proyecto EMAL 2702
 
-Este es el repositorio de la plataforma **Comunidad Solidaria**, un proyecto nacido en la **Escuela Municipal de Aprendizaje Laboral (EMAL) Nº 2702** de Rawson, Chubut. 
-
-La idea es simple: usar la tecnología para que los vecinos que tienen algo para donar se encuentren con los que lo necesitan, sin vueltas y sin costo.
+Plataforma comunitaria de la **Escuela Municipal de Aprendizaje Laboral (EMAL) Nº 2702** de Rawson, Chubut. Diseñada para facilitar el intercambio de donaciones y la gestión de necesidades en el barrio.
 
 ![Portada de Comunidad Solidaria](screenshot_home.png)
 
-## 💡 Sobre el proyecto
+## 💡 Propósito del Proyecto
 
-El proyecto surgió al ver que mucha gente en Rawson quería ayudar pero no sabía cómo llegar a las familias que realmente lo necesitaban. Creamos esta herramienta para centralizar esos pedidos y donaciones.
+El sistema busca eliminar las barreras entre quienes quieren ayudar y quienes necesitan asistencia. Introducimos el rol de los **Conectores** (alumnos y docentes voluntarios) que actúan como puente para familias que no tienen acceso a dispositivos móviles o internet, asegurando que la solidaridad llegue a todos.
 
-Un pilar fundamental son los **Conectores**. Son alumnos y profes de la EMAL que salen al barrio a hablar con los vecinos que no tienen internet o no se llevan bien con la tecnología, cargando sus pedidos en la app por ellos.
+## 🏗️ Arquitectura y Funcionamiento
 
-## 🛠️ Cómo está armado (Arquitectura)
+El proyecto utiliza una arquitectura **"Serverless-lite"** para garantizar costo cero y facilidad de mantenimiento para la escuela.
 
-Para que esto fuera sostenible y gratuito para la escuela, decidimos no usar servidores complicados ni bases de datos pagas. Todo funciona integrado con **Google Workspace**.
-
-*   **Frontend**: Una interfaz sencilla en HTML, CSS y JavaScript que corre en cualquier celular.
-*   **Formularios**: Usamos Google Forms para que la carga de datos sea segura y fácil de configurar.
-*   **Base de datos**: Todo se guarda en un Google Sheet (una planilla de cálculo), lo que permite a los profes gestionar todo desde una interfaz que ya conocen.
-*   **El "Match"**: El sistema cruza automáticamente los datos de donaciones y pedidos por categoría y barrio, facilitando la logística.
+1.  **Interfaz (Frontend)**: Web App desarrollada en HTML5, CSS3 y Vanilla JavaScript. No requiere servidores pesados y funciona en cualquier navegador móvil.
+2.  **Captura de Datos**: Se integra con **Google Forms**. Los registros se envían directamente a formularios institucionales, garantizando seguridad y orden.
+3.  **Gestión y Match**: Los datos se almacenan en **Google Sheets**. La aplicación sincroniza esta información en tiempo real para sugerir "Matches" (coincidencias) entre donantes y beneficiarios.
+4.  **Logística**: Los Conectores coordinan las entregas directamente, agilizando el proceso mediante vínculos a WhatsApp.
 
 ![Esquema de funcionamiento del sistema](screenshot_architecture.png)
 
-## 🚀 Instalación y Setup
+## 🛠️ Pasos para la Puesta en Marcha
 
-Si querés probarlo o instalarlo para otra institución:
+Para implementar este sistema en la escuela o cualquier otra organización, solo se requiere:
 
-1. Cloná el repo.
-2. Abrí el `index.html` en un navegador.
-3. Para que guarde datos de verdad, vas a tener que crear tus propios formularios en Google y poner los IDs en la configuración del archivo principal.
+1.  **Repositorio**: Descargar los archivos del proyecto.
+2.  **Configuración de Formularios**: 
+    *   Crear 3 formularios en Google (Necesidades, Donaciones, Conectores).
+    *   Vincular cada formulario a una hoja de cálculo de Google Sheets.
+3.  **Vincular la App**: 
+    *   Obtener los IDs de campo (`entry.ID`) de los formularios creados.
+    *   Actualizar el objeto `GOOGLE_FORMS_CONFIG` en el archivo `index.html`.
+4.  **Publicación**: Abrir el archivo `index.html` en un navegador o subirlo a cualquier hosting estático gratuito (como GitHub Pages).
 
 ## 📸 Capturas de la App
 
-A continuación se muestran algunas pantallas del sistema en funcionamiento:
-
 ![Formulario de donación](screenshot_form.png)
-*Formulario simple para que los vecinos registren sus aportes.*
+*Interfaz de registro de aportes comunitarios.*
 
 ![Panel de Match para Conectores](screenshot_admin.png)
-*El panel donde los voluntarios de la EMAL coordinan las entregas.*
+*Panel de administración donde se gestionan los cruces y entregas.*
 
 ---
-Hecho con ❤️ por la comunidad de la **EMAL 2702 - Rawson**.
+Proyecto educativo para la integración comunitaria.  
+**EMAL 2702 - Rawson, Chubut.**

@@ -1,36 +1,33 @@
 # Arquitectura del Sistema: Comunidad Solidaria
 
-Este documento explica cómo está armado el sistema de la EMAL 2702. La idea fue hacer algo robusto pero que no dependiera de servidores costosos ni bases de datos complicadas.
+Este documento detalla la estructura técnica y lógica de la plataforma. El diseño prioriza la **autonomía institucional**, el **costo cero** y la **facilidad de uso** para personas con conocimientos básicos de ofimática.
 
-## 🛠️ El "Motor" de Datos (Google Workspace)
+## 📐 Componentes Principales
 
-En lugar de programar un backend desde cero, usamos las herramientas que la escuela ya tiene:
+### 1. Capa de Presentación (Web App)
+*   **Tecnologías**: HTML puro, CSS (con variables dinámicas) y JavaScript nativo.
+*   **Navegación**: Funciona como una SPA (Single Page Application) para cargar instantáneamente en conexiones de baja velocidad.
+*   **Adaptabilidad**: Diseño 100% responsivo, optimizado para celulares usados por los Conectores en el terreno.
 
-### 1. Captura de datos (Frontend -> Google Forms)
-Cuando un usuario completa un formulario en la web, el JavaScript recolecta los campos y los envía mediante un `POST` asíncrono directamente al `formResponse` de un Google Form. 
-*   **Ventaja**: No necesitamos un servidor intermedio para procesar datos.
-*   **Seguridad**: Los datos quedan guardados en la cuenta institucional de la escuela.
+### 2. Motor de Datos (Google Workspace)
+En lugar de una base de datos SQL o servidores complejos, el sistema se apoya en el ecosistema de Google para la gestión de información:
+*   **Entrada (POST)**: JavaScript envía los datos de los formularios directamente a los endpoints de **Google Forms**.
+*   **Persistencia**: Los datos se organizan automáticamente en **Google Sheets**.
+*   **Salida (FETCH)**: La aplicación lee los datos publicados en formato **CSV** desde las hojas de cálculo para refrescar el tablero de control.
 
-### 2. Almacenamiento (Google Sheets)
-Cada Google Form está vinculado a una hoja de cálculo. Esto permite que los directivos o profes puedan ver, editar o borrar registros directamente desde un Excel en la nube, sin entrar a la base de datos.
+### 3. Lógica de "Match"
+El proceso de emparejamiento ocurre en el lado del cliente (Navegador):
+*   **Filtros**: El script compara las categorías de los pedidos pendientes contra las donaciones disponibles.
+*   **Zonificación**: Prioriza las coincidencias en el mismo barrio o zona de Rawson para facilitar el transporte.
+*   **Acción**: Genera botones directos de WhatsApp para que el Conector contacte a ambas partes sin intermediarios técnicos.
 
-### 3. Distribución (Google Sheets -> Frontend)
-Para que la app muestre los datos, publicamos las hojas de cálculo como **CSV**. 
-*   La app descarga estos archivos de texto livianos.
-*   Un script en el navegador (JS) los "parsea" y los convierte en las tarjetas que vemos en el Inicio y en el Panel Admin.
+## 🔄 Flujo de Información
 
-## 🧠 Lógica de Match (El Cerebro)
-
-El sistema de coincidencias no ocurre en un servidor, sino en el navegador del usuario que entra al Panel de Match:
-1.  Busca en la lista de "Necesidades" y en la de "Donaciones".
-2.  Compara por **Categoría** (ej: "Ropa") y **Zona** (ej: "Barrio 3 de Abril").
-3.  Si coinciden, genera un aviso de "Match" y permite que el Conector vea los datos de contacto para coordinar la entrega por WhatsApp.
-
-## 📱 Interfaz de Usuario
-
-*   **Diseño**: Se usó CSS puro con variables para que sea fácil cambiar los colores de la escuela.
-*   **Portabilidad**: Está pensado para que funcione bien en celulares viejos (que es lo que suelen tener los vecinos o alumnos en el barrio).
-*   **Offline-ish**: Usamos `localStorage` para que si se corta el internet un segundo, los datos que ya se cargaron no se pierdan.
+1.  **Registro**: Un vecino o conector carga un dato (ej: "Necesito Calzado").
+2.  **Sincronización**: El dato viaja a la nube de Google.
+3.  **Actualización**: El Panel Admin detecta el nuevo registro al sincronizar el CSV.
+4.  **Vinculación**: Si existe una donación compatible, el sistema muestra el aviso de "Match".
+5.  **Entrega**: El conector coordina, entrega y marca el pedido como "Finalizado".
 
 ---
-Este sistema es un ejemplo de cómo usar "tecnología de guerrilla" para resolver problemas sociales reales sin presupuesto técnico.
+Esta arquitectura permite que la **EMAL 2702** sea dueña de sus datos y de la herramienta, sin depender de servicios externos pagados ni de mantenimiento especializado.

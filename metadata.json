@@ -1,6 +1,5 @@
 {
   "name": "Comunidad Solidaria",
   "description": "Aplicación comunitaria de Match de la Escuela EMAL Nº 2702 para conectar donaciones y necesidades de Rawson, Chubut.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "requestFramePermissions": []
 }
