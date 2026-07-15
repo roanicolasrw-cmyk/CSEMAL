@@ -1,45 +1,48 @@
-# Comunidad Solidaria - Proyecto EMAL 2702
+# Comunidad Solidaria — EMAL Nº 2702 (Rawson)
 
-Plataforma comunitaria de la **Escuela Municipal de Aprendizaje Laboral (EMAL) Nº 2702** de Rawson, Chubut. Diseñada para facilitar el intercambio de donaciones y la gestión de necesidades en el barrio.
+Plataforma social diseñada para conectar la solidaridad de los vecinos de Rawson, Chubut. Este es un proyecto de la **Escuela Municipal de Aprendizaje Laboral (EMAL) Nº 2702**, enfocado en facilitar el intercambio de donaciones y la asistencia comunitaria.
 
 ![Portada de Comunidad Solidaria](screenshot_home.png)
 
-## 💡 Propósito del Proyecto
+## 🔴 El Problema
+En nuestra comunidad, muchas familias tienen objetos en buen estado que ya no usan (ropa, muebles, herramientas), mientras que otras familias los necesitan urgentemente. Sin embargo, existe una **barrera de comunicación**:
+*   No hay un lugar centralizado para publicar donaciones.
+*   Muchas familias no tienen acceso a internet o no saben usar redes sociales para pedir ayuda.
+*   Las donaciones a veces se pierden por falta de logística o coordinación.
 
-El sistema busca eliminar las barreras entre quienes quieren ayudar y quienes necesitan asistencia. Introducimos el rol de los **Conectores** (alumnos y docentes voluntarios) que actúan como puente para familias que no tienen acceso a dispositivos móviles o internet, asegurando que la solidaridad llegue a todos.
+## 🟢 La Solución
+**Comunidad Solidaria** funciona como un puente inteligente. No es solo una página web, es una red humana asistida por tecnología:
+1.  **Plataforma de Match**: Un sistema simple donde se registran las ofertas y las necesidades.
+2.  **Los Conectores**: Alumnos y docentes de la EMAL actúan como voluntarios. Ellos visitan a los vecinos sin internet, relevan lo que necesitan y lo cargan en el sistema.
+3.  **Gestión Transparente**: La escuela coordina el nexo final para asegurar que las cosas lleguen a quien realmente las necesita.
 
-## 🏗️ Arquitectura y Funcionamiento
+## 📋 Caso de Uso: El camino de una donación
+Así es como el sistema transforma una intención en una realidad:
 
-El proyecto utiliza una arquitectura **"Serverless-lite"** para garantizar costo cero y facilidad de mantenimiento para la escuela.
+1.  **Tengo una cama ortopédica**: Un vecino decide donar un objeto importante.
+2.  **La publico**: Registra los datos y fotos en la WebApp en segundos.
+3.  **Una familia la necesita**: El sistema detecta que hay un pedido previo de una familia en el Barrio 3 de Abril.
+4.  **La solicita**: El Conector a cargo recibe la alerta de "Match".
+5.  **Coordina el retiro**: Se ponen en contacto donante y receptor para organizar el traslado.
 
-1.  **Interfaz (Frontend)**: Web App desarrollada en HTML5, CSS3 y Vanilla JavaScript. No requiere servidores pesados y funciona en cualquier navegador móvil.
-2.  **Captura de Datos**: Se integra con **Google Forms**. Los registros se envían directamente a formularios institucionales, garantizando seguridad y orden.
-3.  **Gestión y Match**: Los datos se almacenan en **Google Sheets**. La aplicación sincroniza esta información en tiempo real para sugerir "Matches" (coincidencias) entre donantes y beneficiarios.
-4.  **Logística**: Los Conectores coordinan las entregas directamente, agilizando el proceso mediante vínculos a WhatsApp.
+## 🏗️ Arquitectura (Cómo funciona por dentro)
+Hemos diseñado una arquitectura **"Serverless-lite"** para que el proyecto no tenga costos de mantenimiento y sea fácil de administrar por cualquier docente:
 
-![Esquema de funcionamiento del sistema](screenshot_architecture.png)
+*   **Frontend**: Una Web App liviana (HTML/JS) que vuela en cualquier celular.
+*   **Entrada de Datos**: Conectada directamente a **Google Forms** para asegurar que la información llegue de forma estructurada.
+*   **Base de Datos**: Todo se gestiona desde un **Google Sheet** (planilla de cálculo). Los profes pueden editar o borrar registros desde una herramienta que ya conocen.
+*   **Sincronización**: La app lee los datos en tiempo real mediante archivos CSV públicos de Google, permitiendo que la información esté siempre al día en el Panel de Match.
 
-## 🛠️ Pasos para la Puesta en Marcha
+![Esquema de Arquitectura Comunitaria](screenshot_architecture.png)
 
-Para implementar este sistema en la escuela o cualquier otra organización, solo se requiere:
-
-1.  **Repositorio**: Descargar los archivos del proyecto.
-2.  **Configuración de Formularios**: 
-    *   Crear 3 formularios en Google (Necesidades, Donaciones, Conectores).
-    *   Vincular cada formulario a una hoja de cálculo de Google Sheets.
-3.  **Vincular la App**: 
-    *   Obtener los IDs de campo (`entry.ID`) de los formularios creados.
-    *   Actualizar el objeto `GOOGLE_FORMS_CONFIG` en el archivo `index.html`.
-4.  **Publicación**: Abrir el archivo `index.html` en un navegador o subirlo a cualquier hosting estático gratuito (como GitHub Pages).
-
-## 📸 Capturas de la App
+## 📸 Un vistazo a la App
 
 ![Formulario de donación](screenshot_form.png)
-*Interfaz de registro de aportes comunitarios.*
+*Interfaz de registro: Simple, directa y sin complicaciones.*
 
 ![Panel de Match para Conectores](screenshot_admin.png)
-*Panel de administración donde se gestionan los cruces y entregas.*
+*El centro de control donde ocurre la magia de la conexión.*
 
 ---
-Proyecto educativo para la integración comunitaria.  
-**EMAL 2702 - Rawson, Chubut.**
+**EMAL Nº 2702 — Rawson, Chubut**  
+*Transformando la tecnología en una herramienta de cambio social.*
